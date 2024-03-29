@@ -1,31 +1,33 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
 
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'"
-    />
-    <meta
-      http-equiv="X-Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'"
-    />
-    <link href="./style.css" rel="stylesheet">
+<head>
+  <meta charset="UTF-8" />
 
-    <title>NightLight Pack Downloader</title>
-  </head>
-  <body>
-    <div class="topbar">
-      <button class="topbar-button">GitHub</button>
-    </div>
-    <div class="sidebar">
-      <button class="sidebar-button">NightLight</button>
-      <button class="sidebar-button">Manage Packs</button>
-      <button class="sidebar-button">Options</button>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+  <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+  <link href="./style.css" rel="stylesheet">
 
-      <p class="info" id="info"></p>
-    </div>
-  </body>
-  <script src="./renderer.js"></script>
+  <title>NightLight Pack Downloader</title>
+</head>
+
+<body>
+  <div class="topbar">
+    <!-- <button class="topbar-button" onclick="window.location.href = 'https://github.com/thisMicki/nightlight_pack_downloader';">GitHub</button> -->
+
+    <a onclick="window.open('','page','location=0,toolbar=0,...')" href="https://github.com/thisMicki/nightlight_pack_downloader" target="page"><button class="topbar-button">GitHub</button></a>
+
+  </div>
+  <div class="sidebar">
+    <button class="sidebar-button">NightLight</button>
+    <button class="sidebar-button">Manage Packs</button>
+    <button class="sidebar-button">Options</button>
+
+    <p class="info" id="info"></p>
+  </div>
+</body>
+<script src="./renderer.js"></script>
+
+
+
 </html>
