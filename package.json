@@ -1,0 +1,12 @@
+{
+  "name": "nightlight_pack_downloader",
+  "version": "1.0.0",
+  "description": "App for downloading Packs like Icon or Perk packs for Dead by Daylight from NightLight.gg",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "thisMicki",
+  "license": "MIT"
+}
