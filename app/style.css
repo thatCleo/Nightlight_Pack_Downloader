@@ -1,0 +1,79 @@
+body {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: #121212;
+    color: #f2f2f2;
+    margin: 0;
+}
+
+.topbar {
+    display: flex;
+    background-color: #1a1a1a;
+    height: 45px;
+}
+
+.topbar-button {
+    cursor: pointer;
+    background-color: #15667a;
+    color: #f2f2f2;
+    font-size: 15px;
+
+    /*height: 100%;*/
+
+    border-style: solid;
+    border: 1px solid #15667a;
+    border-radius: 5px;
+
+    position: absolute; /* to make it relative to the parent div */
+    right: 0; /* move to the left */
+    margin: 5px 10px;
+
+    padding: 4px 16px;
+
+    transition: 150ms;
+}
+
+.topbar-button:hover {
+    background-color: #13596b;
+}
+
+.topbar-button:active {
+    background-color: #0f4d56;
+}
+
+.sidebar {
+    background-color: #1e1e1e;
+    margin-left: 0px;
+    margin-right: calc(80%);
+    height: calc(100vh - 45px); /* stretch from top of page to bottom */
+    max-width: 185px;
+}
+
+.sidebar-button {
+    cursor: pointer;
+    background-color: #1e1e1e;
+    color: #f2f2f2;
+    font-size: 15px;
+    height: 45px;
+    width: calc(100%);
+    border: none;
+
+    transition: 150ms;
+}
+
+.sidebar-button:hover {
+    background-color: #1b1b1b;
+}
+
+.sidebar-button:active {
+    background-color: #15667a;
+}
+
+.info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 10px;
+    font-style: italic;
+    color: #5c5c5c;
+}
