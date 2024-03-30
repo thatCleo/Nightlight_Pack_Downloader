@@ -7,16 +7,12 @@ const createWindow = () => {
     height: 900,
     autoHideMenuBar: true,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: true
     }
   })
 
   win.loadFile('app/index.html')
-
-  // const view = new BrowserView()
-  // win.setBrowserView(view)
-  // view.setBounds({ x: 0, y: 0, width: 300, height: 300 })
-  // view.webContents.loadURL('https://nightlight.gg/')
 }
 
 app.whenReady().then(() => {

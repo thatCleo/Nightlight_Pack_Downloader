@@ -14,5 +14,15 @@ function removeNavigation() {
         mainContainer[0].style.marginLeft = "0px";
     }
 
-    const main = document.getElementById('main').style.marginTop = "20px";
+    const desktopAppDowloadInfo = document.getElementsByClassName('alert-info');
+    if(desktopAppDowloadInfo.length > 0 && desktopAppDowloadInfo[0].innerText.includes('To install packs automatically')) {
+        desktopAppDowloadInfo[0].remove();
+    }
+
+    const main = document.getElementById('main');
+    if(main != null) {
+        main.style.marginLeft = "0px";
+        main.style.marginRight = "20px";
+        main.style.marginTop = "20px";
+    }
 }

@@ -7,40 +7,50 @@
   <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
   <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" /> -->
 
-  <meta http-equiv="Content-Security-Policy" content="default-src *; script-src *" />
-  <meta http-equiv="X-Content-Security-Policy" content="default-src *; script-src *" />
+  <meta http-equiv="Content-Security-Policy" content="default-src *; script-src *; img-src *" />
+  <meta http-equiv="X-Content-Security-Policy" content="default-src *; script-src *; img-src *" />
 
   <link href="./css/nightlight-styles.css" rel="stylesheet">
   <link href="./css/nightlight-css-bundle.css" rel="stylesheet">
   <link href="./css/style.css" rel="stylesheet">
 
   <title>NightLight Pack Downloader</title>
-  
+
+  <script>
+    function downloadPack(string) {
+      console.log(string);
+    }
+  </script>
+
+
 </head>
 
 <body>
   <div class="topbar">
     <!-- <button class="topbar-button" onclick="window.location.href = 'https://github.com/thisMicki/nightlight_pack_downloader';">GitHub</button> -->
 
-    <a onclick="window.open('','page','location=0,toolbar=0,...')"
-      href="https://github.com/thisMicki/nightlight_pack_downloader" target="page"><button
+    <a href="https://github.com/thisMicki/nightlight_pack_downloader" target="page"><button
         class="topbar-button">GitHub</button></a>
 
   </div>
   <div class="flex-container">
     <div class="sidebar">
-      <button class="sidebar-button">NightLight</button>
-      <button class="sidebar-button">Manage Packs</button>
-      <button class="sidebar-button">Options</button>
+      <button id="nightlight" class="sidebar-button">NightLight</button>
+      <button id="manage-packs" class="sidebar-button">Manage Packs</button>
+      <button id="options" class="sidebar-button">Options</button>
 
       <p class="info" id="info"></p>
     </div>
-    <div class="webview-container" id="webview-container">
-    </div>
+    <div class="webview-container" id="webview-container-page" style="display: block;"></div>
+    <div class="webview-container" id="manage-packs-page" style="display: none;"></div>
+    <div class="webview-container" id="options-page" style="display: none;"></div>
   </div>
 
 </body>
 
+<script src="./js/buttonEvents.js"></script>
+<script src="./js/webFunctions.js"></script>
+<script src="./js/createTiles.js"></script>
 <script src="./js/renderer.js"></script>
 <script src="./js/websiteCleanup.js"></script>
 

@@ -4,6 +4,7 @@ body {
     color: #f2f2f2;
     margin: 0;
     display: block;
+    overflow: hidden;
 }
 
 .topbar {
@@ -86,11 +87,6 @@ body {
 .webview-container {
     width: calc(100% - 185px);
     height: 100%;
-}
-
-.nighlight-webview {
-    display: block;
-    height: 1000px;
-    width: 100%;
-    background-color: red;
+    display: none;
+    overflow-y: auto;
 }
