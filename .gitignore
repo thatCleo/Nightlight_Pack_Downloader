@@ -1,3 +1,7 @@
+# Dowloaded Packs and cached images
+packfiles/
+cached_images/
+
 # Logs
 logs
 *.log
