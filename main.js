@@ -1,16 +1,22 @@
-const { app, BrowserWindow } = require('electron/main')
+const { app, BrowserWindow, session } = require('electron')
 const path = require('node:path')
 
 const createWindow = () => {
   const win = new BrowserWindow({
     width: 1600,
     height: 900,
+    autoHideMenuBar: true,
     webPreferences: {
-        preload: path.join(__dirname, 'preload.js')
-      }
+      preload: path.join(__dirname, 'preload.js')
+    }
   })
 
   win.loadFile('app/index.html')
+
+  // const view = new BrowserView()
+  // win.setBrowserView(view)
+  // view.setBounds({ x: 0, y: 0, width: 300, height: 300 })
+  // view.webContents.loadURL('https://nightlight.gg/')
 }
 
 app.whenReady().then(() => {

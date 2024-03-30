@@ -3,6 +3,7 @@ body {
     background-color: #121212;
     color: #f2f2f2;
     margin: 0;
+    display: block;
 }
 
 .topbar {
@@ -40,12 +41,16 @@ body {
     background-color: #0f4d56;
 }
 
+.flex-container {
+    display: flex;
+    height: calc(100vh - 45px);
+}
+
 .sidebar {
     background-color: #1e1e1e;
     margin-left: 0px;
-    margin-right: calc(80%);
-    height: calc(100vh - 45px); /* stretch from top of page to bottom */
-    max-width: 185px;
+    height: 100%; /* stretch from top of page to bottom */
+    width: 185px;
 }
 
 .sidebar-button {
@@ -71,9 +76,21 @@ body {
 .info {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-content: center;
 
     font-size: 10px;
     font-style: italic;
     color: #5c5c5c;
+}
+
+.webview-container {
+    width: calc(100% - 185px);
+    height: 100%;
+}
+
+.nighlight-webview {
+    display: block;
+    height: 1000px;
+    width: 100%;
+    background-color: red;
 }
