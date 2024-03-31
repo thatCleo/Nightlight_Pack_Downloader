@@ -9,7 +9,9 @@ let current_page = 1;
 let total_pages = -1;
 let total_packs = -1;
 
-let sort_by = 'downloads';
+/* Filter varaibles */
+let sort_by_default;
+let sort_by = sort_by_default = 'downloads';
 
 document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('click', function (event) {
@@ -18,7 +20,8 @@ document.addEventListener('DOMContentLoaded', function () {
             downloadPack(value, event.target);
         }
 
-        if (event.target.id.includes('button_page_nav')) {
+        else if (event.target.id.includes('button_page_nav')) {
+            console.log(`Prev Page: ${current_page}`);
             if (event.target.id.includes('button_page_nav_0')) { // First page Button
                 current_page = 1;
                 enablePageNavButtons();
@@ -49,8 +52,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 disablePageNavButtonsNext();
             }
 
+            console.log(`Page: ${current_page}`);
+
             createPackTiles(current_page, packs_per_page, 'downloads', '', 'any');
             scrollToTop();
+        }
+
+        else if (event.target.id.includes('button_filter_reset')) {
+            disableFilterResetButton();
+            sort_by = sort_by_default;
+            document.getElementById('filter_sort_by').value = sort_by_default;
         }
     });
     document.addEventListener('change', function (event) {
@@ -63,6 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             createPackTiles(current_page, packs_per_page, 'downloads', '', 'any');
         }
+
         else if (event.target.id == "input_page_nav") {
             const value = event.target.value;
             current_page = value;
@@ -85,7 +97,9 @@ document.addEventListener('DOMContentLoaded', function () {
             createPackTiles(current_page, packs_per_page, sort_by, '', 'any');
             scrollToTop();
         }
+
         else if (event.target.id == "filter_sort_by") {
+            enableFilterResetButton();
             const value = event.target.value;
             sort_by = value;
             createPackTiles(current_page, packs_per_page, sort_by, '', 'any');
@@ -131,6 +145,18 @@ function enablePageNavButtons() {
     buttons[1].disabled = false;
     buttons[2].disabled = false;
     buttons[3].disabled = false;
+}
+
+function disableFilterResetButton() {
+    console.log('Filter reset button disabled');
+    const button = document.getElementById('button_filter_reset');
+    button.className = button.className.replace("disabled", "");
+}
+
+function enableFilterResetButton() {
+    console.log('Filter reset button enabled');
+    const button = document.getElementById('button_filter_reset');
+    button.className += "disabled";
 }
 
 function scrollToTop() {

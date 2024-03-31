@@ -53,14 +53,6 @@ function addFilters() {
     filterSortBy.id = "filter_sort_by";
     filterSortBy.value = "downloads";
 }
-/* Sort by:
-    - title
-    - downloads
-    - updated
-    - created
-    - dbd_version
-    - random    
-    */
 
 function addNavigation() {
     let perPage = document.getElementsByClassName('d-md-inline');
@@ -82,6 +74,9 @@ function addNavigation() {
     const buttons = document.getElementsByClassName("btn-secondary")
 
     for (let i = 0; i < buttons.length; i++) {
+        if (i == 0) {
+            buttons[i].id += 'button_filter_reset';
+        }
         if (i >= 4) {
             buttons[i].id = `button_page_nav button_page_nav_${i - 4}`;
             buttons[i].className += " button_page_nav";
