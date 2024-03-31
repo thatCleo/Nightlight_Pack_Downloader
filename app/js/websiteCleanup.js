@@ -48,4 +48,16 @@ function addNavigation() {
         perPage.innerHTML = options;
         perPage.id += "packs_per_page";
     }
+
+    const buttons = document.getElementsByClassName("btn-secondary")
+    console.log(buttons.length + " buttons");
+
+    for(let i = 0; i < buttons.length; i++) {
+        if(i >= 4) {
+            buttons[i].id = `button_page_nav button_page_nav_${i - 4}`;
+            buttons[i].className += " button_page_nav";
+            buttons[i].childNodes[0].id += `button_page_nav button_page_nav_${i - 4}`
+            buttons[i].childNodes[0].childNodes[0].id += `button_page_nav button_page_nav_${i - 4}`
+        }
+    }
 }

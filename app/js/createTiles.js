@@ -12,7 +12,9 @@ function setPackTiles(json) {
   const allData = JSON.parse(json);
   const packData = allData.data.packs;
 
-  setNavElemets(packData.length, packs_per_page, allData.data.total_packs);
+  total_packs = allData.data.total_packs;
+
+  setNavElemets(packData.length, packs_per_page);
 
   console.log(packData.length);
 
@@ -151,7 +153,7 @@ function downloadAvatar(user_id, avatar_id, pack_id) {
     })
 }
 
-function setNavElemets(current_visible_packs, packs_per_page, total_packs) {
+function setNavElemets(current_visible_packs, packs_per_page) {
   const navPageInfoArray = document.getElementsByClassName('d-md-inline');
   if (navPageInfoArray.length == 2) {
     navPageInfo = navPageInfoArray[1].parentElement;
@@ -162,11 +164,11 @@ function setNavElemets(current_visible_packs, packs_per_page, total_packs) {
   if (pageNum.length == 1) {
     pageNum = pageNum[0];
 
-    const pageNumInput = `<input style="width:3rem;padding:.3rem .5rem;font-size:14px;border-radius:2.5px;" value="1" min="1" step="1" max="NaN" type="number" pattern="\d*" class="form-control text-center">`;
+    const pageNumInput = `<input id="input_page_nav" style="width:3rem;padding:.3rem .5rem;font-size:14px;border-radius:2.5px;" value="${current_page}" min="1" step="1" max="NaN" type="number" pattern="\d*" class="form-control text-center">`;
     pageNum.innerHTML = pageNumInput;
 
     const pageOf = document.createElement('span');
-    const total_pages = getTotalPageNum(packs_per_page, total_packs);
+    total_pages = getTotalPageNum(packs_per_page, total_packs);
     pageOf.innerHTML = `<span class="d-none d-md-inline"> of ${total_pages}</span>`;
 
     pageNum.appendChild(pageOf);
@@ -174,7 +176,7 @@ function setNavElemets(current_visible_packs, packs_per_page, total_packs) {
 }
 
 function getTotalPageNum(packs_per_age, total_packs) {
-  const total_pages = Math.ceil(total_packs / packs_per_age);
+  total_pages = Math.ceil(total_packs / packs_per_age);
   return total_pages
 }
 
