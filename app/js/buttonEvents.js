@@ -9,6 +9,8 @@ let current_page = 1;
 let total_pages = -1;
 let total_packs = -1;
 
+let sort_by = 'downloads';
+
 document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('click', function (event) {
         if (event.target.classList.contains('download-pack')) {
@@ -80,8 +82,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 disablePageNavButtonsNext();
             }
 
-            createPackTiles(current_page, packs_per_page, 'downloads', '', 'any');
+            createPackTiles(current_page, packs_per_page, sort_by, '', 'any');
             scrollToTop();
+        }
+        else if (event.target.id == "filter_sort_by") {
+            const value = event.target.value;
+            sort_by = value;
+            createPackTiles(current_page, packs_per_page, sort_by, '', 'any');
         }
     });
 });

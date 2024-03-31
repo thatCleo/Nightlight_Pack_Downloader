@@ -12,7 +12,9 @@ function setWebEmbed(string, status) {
     webview.innerHTML = string;
 
     removeNavigation();
+    addFilters();
     addNavigation();
+
     createPackTiles(1, 12, 'downloads', '', 'any');
 }
 
