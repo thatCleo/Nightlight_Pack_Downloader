@@ -78,6 +78,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 current_page = total_pages;
             }
 
+            enablePageNavButtons();
+            if(current_page == 1) {
+                disablePageNavButtonsPrev();
+            }
+            if(current_page == total_pages) {
+                disablePageNavButtonsNext();
+            }
+
             createPackTiles(current_page, packs_per_page, 'downloads', '', 'any');
         }
     });

@@ -21,10 +21,24 @@ function setPackTiles(json) {
   packData.forEach(pack => {
 
     downloadBanner(pack.id, pack.current_version);
-    downloadAvatar(pack.creators[0].user.user_id, pack.creators[0].user.avatar_id, pack.id);
 
-    const creatorAvatar = `${directory.currentPath()}/cached_images/placeholder/avatar.png`;
-    const creatorName = pack.creators[0].username
+
+    let avatar_elemets = '<div class="_1he3xh8">';
+    pack.creators.forEach(creator => {
+      const creatorAvatar = `${directory.currentPath()}/cached_images/placeholder/avatar.png`;
+      const creatorName = creator.username;
+      console.log(creator.user);
+      if (creator.user != null) {
+        console.log('Downloading avatar...');
+        downloadAvatar(creator.user.user_id, creator.user.avatar_id, pack.id);
+        avatar_elemets += `<span class="d-flex align-items-center"><img id="pack-avatar-${pack.id}-${creator.user.user_id}" src="${creatorAvatar}" alt="${creatorName}" class="avatar">${creatorName}</span>`;
+      } else {
+        console.log('No user found');
+        avatar_elemets += `<span class="d-flex align-items-center"><img id="pack-avatar-${pack.id}-null" src="${creatorAvatar}" alt="${creatorName}" class="avatar">${creatorName}</span>`;
+      }
+    });
+    avatar_elemets += '</div>';
+
     const packTile = document.createElement('div');
     let dbdVersionTitle = pack.dbd_version;
     const packLastUpdated = `${formatRelativeTime(pack.updated_at)} Days Ago`;
@@ -61,8 +75,7 @@ function setPackTiles(json) {
       Variants coming soon...
       <div class="_15ryw142 _15ryw140 end-0 position-absolute"></div>
     </div>
-    <div class="_1he3xh8"><span class="d-flex align-items-center"><img
-          id="pack-avatar-${pack.id}-${pack.creators[0].user.user_id}" src="${creatorAvatar}" alt="${creatorName}" class="avatar">${creatorName}</span></div>
+    ${avatar_elemets}
     <div class="_1he3xha"><span><svg focusable="false" data-prefix="fas" data-icon="code-branch" role="img"
           xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-code-branch">
           <path fill="currentColor"
