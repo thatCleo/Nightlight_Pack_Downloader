@@ -12,8 +12,11 @@ function setWebEmbed(string, status) {
     webview.innerHTML = string;
 
     removeNavigation();
+    addNavigation();
     createPackTiles(1, 12, 'downloads', '', 'any');
 }
+
+
 
 function createPackTiles(page, per_page, sort_by, includes, include_mode) {
     console.log("Creating Pack Tiles...")

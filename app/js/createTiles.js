@@ -1,3 +1,5 @@
+let navPageInfo;
+
 function setPackTiles(json) {
   const packview = document.getElementsByClassName('row-cols-1');
   if (packview.length != 1) {
@@ -5,8 +7,12 @@ function setPackTiles(json) {
     return;
   }
 
+  packview[0].innerHTML = '';
+
   const allData = JSON.parse(json);
   const packData = allData.data.packs;
+
+  setNavElemets(packData.length, packs_per_page, allData.data.total_packs);
 
   console.log(packData.length);
 
@@ -117,13 +123,11 @@ function downloadBanner(pack_id, current_version) {
 
   downloadFile(downloadURL, directoryPath, fileName)
     .then((filePath) => {
-      console.log(`File downloaded: ${filePath}`);
       const banner_div = document.getElementById(`pack-banner-${pack_id}`);
       if (banner_div) {
         const banner_img = banner_div.querySelector('img');
         if (banner_img) {
           banner_img.src = filePath;
-          console.log(`Banner added to ${pack_id}`);
         }
       }
     })
@@ -134,7 +138,7 @@ function downloadAvatar(user_id, avatar_id, pack_id) {
   const directoryPath = `${directory.currentPath()}/cached_images/${user_id}_${avatar_id}`;
   const fileName = `${user_id}_${avatar_id}.png`;
 
-  if(avatar_id == null) {
+  if (avatar_id == null) {
     return;
   }
 
@@ -143,9 +147,35 @@ function downloadAvatar(user_id, avatar_id, pack_id) {
       const banner_img = document.getElementById(`pack-avatar-${pack_id}-${user_id}`);
       if (banner_img) {
         banner_img.src = filePath;
-        console.log(`Banner added to ${user_id}`);
       }
     })
+}
+
+function setNavElemets(current_visible_packs, packs_per_page, total_packs) {
+  const navPageInfoArray = document.getElementsByClassName('d-md-inline');
+  if (navPageInfoArray.length == 2) {
+    navPageInfo = navPageInfoArray[1].parentElement;
+    navPageInfo.innerHTML = `<span class="d-none d-md-inline">Showing ${current_visible_packs} of ${total_packs}</span>`;
+  }
+
+  let pageNum = document.getElementsByClassName('mx-1');
+  if (pageNum.length == 1) {
+    pageNum = pageNum[0];
+
+    const pageNumInput = `<input style="width:3rem;padding:.3rem .5rem;font-size:14px;border-radius:2.5px;" value="1" min="1" step="1" max="NaN" type="number" pattern="\d*" class="form-control text-center">`;
+    pageNum.innerHTML = pageNumInput;
+
+    const pageOf = document.createElement('span');
+    const total_pages = getTotalPageNum(packs_per_page, total_packs);
+    pageOf.innerHTML = `<span class="d-none d-md-inline"> of ${total_pages}</span>`;
+
+    pageNum.appendChild(pageOf);
+  }
+}
+
+function getTotalPageNum(packs_per_age, total_packs) {
+  const total_pages = Math.ceil(total_packs / packs_per_age);
+  return total_pages
 }
 
 /* Pack tile */
