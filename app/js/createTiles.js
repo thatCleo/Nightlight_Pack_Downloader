@@ -122,8 +122,20 @@ function downloadBanner(pack_id, current_version) {
   const directoryPath = `${directory.currentPath()}/cached_images/${pack_id}_${current_version}`;
   const fileName = `banner.png`;
 
-  downloadFile(downloadURL, directoryPath, fileName)
-    .then((filePath) => {
+  fs.access(`${directoryPath}/${fileName}`, fs.constants.F_OK, (err) => {
+    if (err) {
+      downloadFile(downloadURL, directoryPath, fileName)
+        .then((filePath) => {
+          const banner_div = document.getElementById(`pack-banner-${pack_id}`);
+          if (banner_div) {
+            const banner_img = banner_div.querySelector('img');
+            if (banner_img) {
+              banner_img.src = filePath;
+            }
+          }
+        })
+    } else {
+      filePath = `${directoryPath}/${fileName}`;
       const banner_div = document.getElementById(`pack-banner-${pack_id}`);
       if (banner_div) {
         const banner_img = banner_div.querySelector('img');
@@ -131,7 +143,8 @@ function downloadBanner(pack_id, current_version) {
           banner_img.src = filePath;
         }
       }
-    })
+    }
+  });
 }
 
 function downloadAvatar(user_id, avatar_id, pack_id) {
@@ -143,13 +156,22 @@ function downloadAvatar(user_id, avatar_id, pack_id) {
     return;
   }
 
-  downloadFile(downloadURL, directoryPath, fileName)
-    .then((filePath) => {
+  fs.access(`${directoryPath}/${fileName}`, fs.constants.F_OK, (err) => {
+    if (err) {
+      downloadFile(downloadURL, directoryPath, fileName)
+        .then((filePath) => {
+          const banner_img = document.getElementById(`pack-avatar-${pack_id}-${user_id}`);
+          if (banner_img) {
+            banner_img.src = filePath;
+          }
+        })
+    } else {
       const banner_img = document.getElementById(`pack-avatar-${pack_id}-${user_id}`);
       if (banner_img) {
         banner_img.src = filePath;
       }
-    })
+    }
+  });
 }
 
 function setNavElemets(current_visible_packs, packs_per_page) {

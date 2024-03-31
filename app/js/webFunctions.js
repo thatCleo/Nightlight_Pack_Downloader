@@ -11,7 +11,6 @@ function httpGet(url, callback) {
     console.log(`Requesting ${url}`);
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", url, true);
-    // xmlHttp.setRequestHeader(`Content-Security-Policy`, `default-src 'self'; connect-src 'self' ${url};`);
     xmlHttp.setRequestHeader(`Content-Security-Policy`, `connect-src 'https://nightlight.gg/*';`);
 
     xmlHttp.onreadystatechange = function () {
