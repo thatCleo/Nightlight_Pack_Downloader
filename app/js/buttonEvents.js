@@ -127,7 +127,7 @@ function enablePageNavButtons() {
 }
 
 function scrollToTop() {
-    window.scrollTo({
+    webviewPage.scrollTo({
         top: 0,
         behavior: 'smooth'
     });
