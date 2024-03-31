@@ -53,19 +53,8 @@ function setPackTiles(json) {
 <div id="pack-banner-${pack.id}" class="_1he3xh0"><img src="${directory.currentPath()}/cached_images/placeholder/banner.png"
     loading="lazy" alt="Pack Banner for ${pack.title}" class="_1he3xh1">
   <div class="_1he3xh5">
-    <div class="_1he3xh2"><svg focusable="false" data-prefix="fas" data-icon="star" role="img"
-        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="svg-inline--fa fa-star">
-        <path fill="currentColor"
-          d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z">
-        </path>
-      </svg></div><span class="_1he3xh6">${pack.title}</span>
-    <div class="_1he3xh7 badge bg-secondary">v${pack.version}</div><span role="button" class="_1he3xhd"><svg
-        focusable="false" data-prefix="fas" data-icon="share" role="img" xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 512 512" class="svg-inline--fa fa-share">
-        <path fill="currentColor"
-          d="M307 34.8c-11.5 5.1-19 16.6-19 29.2v64H176C78.8 128 0 206.8 0 304C0 417.3 81.5 467.9 100.2 478.1c2.5 1.4 5.3 1.9 8.1 1.9c10.9 0 19.7-8.9 19.7-19.7c0-7.5-4.3-14.4-9.8-19.5C108.8 431.9 96 414.4 96 384c0-53 43-96 96-96h96v64c0 12.6 7.4 24.1 19 29.2s25 3 34.4-5.4l160-144c6.7-6.1 10.6-14.7 10.6-23.8s-3.8-17.7-10.6-23.8l-160-144c-9.4-8.5-22.9-10.6-34.4-5.4z">
-        </path>
-      </svg></span>
+    <span class="_1he3xh6">${pack.title}</span>
+    <div class="_1he3xh7 badge bg-secondary">v${pack.version}</div>
   </div>
   <div class="_1he3xh4">
     <div class="_1he3xhc">
