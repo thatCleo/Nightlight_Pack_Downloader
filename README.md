@@ -6,8 +6,8 @@ It uses the Pack-page from Nightlight as a base to build upon, which means that 
 - [ ] Textbased search
 - [ ] Filtered search
 - [ ] Shortcuts
-- [ ] Store Pages
-- [ ] Per Page Selection
+- [x] Store Pages
+- [x] Per Page Selection
 - [x] Downloading Packs
 - [ ] Pack Variants
 - [ ] Adding Packs to DBD
