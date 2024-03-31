@@ -36,7 +36,6 @@ function addNavigation() {
     let perPage = document.getElementsByClassName('d-md-inline');
     if(perPage.length == 2) {
         const child = perPage[0].parentElement.childNodes;
-        console.log(child.length + " child nodes");
         perPage = child[1];
 
         const options = `
@@ -50,7 +49,6 @@ function addNavigation() {
     }
 
     const buttons = document.getElementsByClassName("btn-secondary")
-    console.log(buttons.length + " buttons");
 
     for(let i = 0; i < buttons.length; i++) {
         if(i >= 4) {

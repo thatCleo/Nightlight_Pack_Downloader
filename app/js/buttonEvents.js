@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('click', function (event) {
         if (event.target.classList.contains('download-pack')) {
             const value = event.target.value;
-            console.log('Button clicked:', value);
             downloadPack(value, event.target);
         }
 
@@ -48,27 +47,22 @@ document.addEventListener('DOMContentLoaded', function () {
                 disablePageNavButtonsNext();
             }
 
-            console.log(`page ${current_page} of ${total_pages}`);
             createPackTiles(current_page, packs_per_page, 'downloads', '', 'any');
+            scrollToTop();
         }
     });
     document.addEventListener('change', function (event) {
         if (event.target.id == "packs_per_page") {
             const value = event.target.value;
-            console.log('Per page changed:', value);
             packs_per_page = value;
 
             if(current_page > getTotalPageNum(value, total_packs)) {
                 current_page = getTotalPageNum(value, total_packs);
             }
-
-            console.log(`Element: ${event.target.id}`);
-
             createPackTiles(current_page, packs_per_page, 'downloads', '', 'any');
         }
         else if (event.target.id == "input_page_nav") {
             const value = event.target.value;
-            console.log('Page changed:', value);
             current_page = value;
 
             if(current_page <= 1) {
@@ -87,12 +81,12 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             createPackTiles(current_page, packs_per_page, 'downloads', '', 'any');
+            scrollToTop();
         }
     });
 });
 
 document.getElementById("options").addEventListener("click", () => {
-    console.log("Options button clicked");
     const value = document.getElementById("options").value;
     downloadPack(value);
 });
@@ -118,15 +112,11 @@ document.getElementById("options-button").addEventListener("click", () => {
 function disablePageNavButtonsPrev() {
     buttons[0].disabled = true;
     buttons[1].disabled = true;
-
-    console.log("Disabled prev button");
 }
 
 function disablePageNavButtonsNext() {
     buttons[2].disabled = true;
     buttons[3].disabled = true;
-
-    console.log("Disabled next button");
 }
 
 function enablePageNavButtons() {
@@ -134,6 +124,11 @@ function enablePageNavButtons() {
     buttons[1].disabled = false;
     buttons[2].disabled = false;
     buttons[3].disabled = false;
+}
 
-    console.log("Enabled all buttons");
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }

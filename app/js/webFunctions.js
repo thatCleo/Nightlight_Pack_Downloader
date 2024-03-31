@@ -17,7 +17,6 @@ function httpGet(url, callback) {
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
             callback(xmlHttp.responseText);
-            console.log(`Calling function: ${callback.name}`);
         }
     };
 
@@ -27,8 +26,6 @@ function httpGet(url, callback) {
 async function downloadFile(downloadURL, directoryPath, fileName) {
     console.log(`Downloading ${fileName}`);
     try {
-        console.log(`Path: ${directoryPath}`);
-
         const response = await fetch(downloadURL);
         const arrayBuffer = await response.arrayBuffer();
         const uint8Array = new Uint8Array(arrayBuffer);
@@ -53,8 +50,6 @@ async function downloadFile(downloadURL, directoryPath, fileName) {
 async function downloadFileProgress(downloadURL, directoryPath, fileName, button) {
     console.log(`Downloading ${fileName}`);
     try {
-        console.log(`Path: ${directoryPath}`);
-
         const response = await fetch(downloadURL);
         const contentLength = parseInt(response.headers.get('Content-Length'), 10);
         let downloadedBytes = 0;

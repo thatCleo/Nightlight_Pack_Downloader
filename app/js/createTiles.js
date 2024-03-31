@@ -16,8 +16,6 @@ function setPackTiles(json) {
 
   setNavElemets(packData.length, packs_per_page);
 
-  console.log(packData.length);
-
   packData.forEach(pack => {
 
     downloadBanner(pack.id, pack.current_version);
@@ -27,14 +25,13 @@ function setPackTiles(json) {
     pack.creators.forEach(creator => {
       const creatorAvatar = `${directory.currentPath()}/cached_images/placeholder/avatar.png`;
       const creatorName = creator.username;
-      console.log(creator.user);
       if (creator.user != null) {
         console.log('Downloading avatar...');
         downloadAvatar(creator.user.user_id, creator.user.avatar_id, pack.id);
         avatar_elemets += `<span class="d-flex align-items-center"><img id="pack-avatar-${pack.id}-${creator.user.user_id}" src="${creatorAvatar}" alt="${creatorName}" class="avatar">${creatorName}</span>`;
       } else {
-        console.log('No user found');
-        avatar_elemets += `<span class="d-flex align-items-center"><img id="pack-avatar-${pack.id}-null" src="${creatorAvatar}" alt="${creatorName}" class="avatar">${creatorName}</span>`;
+        console.log('No UserID found! Removing avatar...');
+        avatar_elemets += `<span class="d-flex align-items-center"><img id="pack-avatar-${pack.id}-null" class="avatar">${creatorName}</span>`;
       }
     });
     avatar_elemets += '</div>';
