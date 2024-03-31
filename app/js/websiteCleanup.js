@@ -39,7 +39,15 @@ function removeNavigation() {
 }
 
 function addFilters() {
-    let filterSortBy = document.getElementById('P0-1');
+    let filter_apply = document.getElementsByClassName('lh-1');
+    filter_apply[0].id = "button_filter_apply";
+    filter_apply[1].id = "button_filter_reload";
+
+    for(let i = 0; i < filter_apply.length; i++) {
+        console.log(`Button ${i}: ${filter_apply[i].innerText}`);
+    }
+
+    let filter_sort_by = document.getElementById('P0-1');
     const options = `
     <option value="title">Name</option>
     <option value="downloads">Downloads</option>
@@ -49,16 +57,16 @@ function addFilters() {
     <option value="random">Random</option>
     `
 
-    filterSortBy.innerHTML = options;
-    filterSortBy.id = "filter_sort_by";
-    filterSortBy.value = "downloads";
+    filter_sort_by.innerHTML = options;
+    filter_sort_by.id = "filter_sort_by";
+    filter_sort_by.value = "downloads";
 }
 
 function addNavigation() {
-    let perPage = document.getElementsByClassName('d-md-inline');
-    if (perPage.length == 2) {
-        const child = perPage[0].parentElement.childNodes;
-        perPage = child[1];
+    let per_page = document.getElementsByClassName('d-md-inline');
+    if (per_page.length == 2) {
+        const child = per_page[0].parentElement.childNodes;
+        per_page = child[1];
 
         const options = `
         <option value="6">6</option>
@@ -66,9 +74,9 @@ function addNavigation() {
         <option value="18">18</option>
         <option value="24">24</option>`;
 
-        perPage.innerHTML = options;
-        perPage.id += "packs_per_page";
-        perPage.value = 12;
+        per_page.innerHTML = options;
+        per_page.id += "packs_per_page";
+        per_page.value = 12;
     }
 
     const buttons = document.getElementsByClassName("btn-secondary")

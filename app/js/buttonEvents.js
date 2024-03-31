@@ -60,8 +60,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
         else if (event.target.id.includes('button_filter_reset')) {
             disableFilterResetButton();
+            enableFilterApplyButton();
             sort_by = sort_by_default;
             document.getElementById('filter_sort_by').value = sort_by_default;
+        }
+
+        else if (event.target.id.includes('button_filter_apply')) {
+            disableFilterApplyButton();
+            createPackTiles(current_page, packs_per_page, sort_by, '', 'any');
+        }
+
+        else if (event.target.id.includes('button_filter_reload')) {
+            createPackTiles(current_page, packs_per_page, sort_by, '', 'any');
         }
     });
     document.addEventListener('change', function (event) {
@@ -102,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function () {
             enableFilterResetButton();
             const value = event.target.value;
             sort_by = value;
-            createPackTiles(current_page, packs_per_page, sort_by, '', 'any');
+            enableFilterApplyButton();
         }
     });
 });
@@ -124,7 +134,7 @@ document.getElementById("manage-packs").addEventListener("click", () => {
     optionsPage.style.display = "none";
 });
 
-document.getElementById("options-button").addEventListener("click", () => {
+document.getElementById("options").addEventListener("click", () => {
     webviewPage.style.display = "none";
     managePacksPage.style.display = "none";
     optionsPage.style.display = "block";
@@ -147,16 +157,24 @@ function enablePageNavButtons() {
     buttons[3].disabled = false;
 }
 
-function disableFilterResetButton() {
-    console.log('Filter reset button disabled');
+function enableFilterResetButton() {
     const button = document.getElementById('button_filter_reset');
     button.className = button.className.replace("disabled", "");
 }
 
-function enableFilterResetButton() {
-    console.log('Filter reset button enabled');
+function disableFilterResetButton() {
     const button = document.getElementById('button_filter_reset');
-    button.className += "disabled";
+    button.className += " disabled";
+}
+
+function enableFilterApplyButton() {
+    const button = document.getElementById('button_filter_apply');
+    button.className = button.className.replace("disabled", "");
+}
+
+function disableFilterApplyButton() {
+    const button = document.getElementById('button_filter_apply');
+    button.className += " disabled";
 }
 
 function scrollToTop() {
