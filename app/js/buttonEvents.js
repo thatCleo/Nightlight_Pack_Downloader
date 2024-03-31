@@ -4,7 +4,7 @@ const optionsPage = document.getElementById('options-page');
 
 let buttons = document.getElementsByClassName("button_page_nav");
 
-let packs_per_page = 6;
+let packs_per_page = 12;
 let current_page = 1;
 let total_pages = -1;
 let total_packs = -1;

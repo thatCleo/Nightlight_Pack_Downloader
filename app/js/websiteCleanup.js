@@ -24,6 +24,12 @@ function removeNavigation() {
         navPageInfoRedundant[0].remove();
     }
 
+    const filterFavorites = document.getElementsByClassName('col-lg-2');
+    if(filterFavorites.length > 0) {
+        filterFavorites[0].childNodes[0].childNodes[1].remove();
+        filterFavorites[0].childNodes[0].childNodes[0].remove();
+    }
+
     const main = document.getElementById('main');
     if(main != null) {
         main.style.marginLeft = "0px";
@@ -46,6 +52,7 @@ function addNavigation() {
 
         perPage.innerHTML = options;
         perPage.id += "packs_per_page";
+        perPage.value = 12;
     }
 
     const buttons = document.getElementsByClassName("btn-secondary")
