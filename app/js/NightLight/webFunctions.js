@@ -24,6 +24,7 @@ function downloadPack(url, button) {
             /* Copy data from cache to pack path */
             let id;
             let title;
+            let version;
             let current_version;
             let last_updated;
             let dbd_version;
@@ -38,7 +39,8 @@ function downloadPack(url, button) {
                 if (pack.url == url) {
                     id = pack.id;
                     title = pack.title;
-                    current_version = pack.version;
+                    version = pack.version;
+                    current_version = pack.current_version;
                     last_updated = pack.updated_at;
                     dbd_version = pack.dbd_version;
                     has = pack.has;
@@ -85,7 +87,7 @@ function downloadPack(url, button) {
                 id: id,
                 url: url,
                 title: title,
-                current_version: current_version,
+                version: version,
                 downloaded_at: new Date().toISOString().slice(0, 10),
                 last_updated: last_updated,
                 dbd_version: dbd_version,
@@ -99,6 +101,8 @@ function downloadPack(url, button) {
             fs.copyFile(`${cachePath}/banner.png`, `${directory_path}/banner.png`, (err) => {
                 if (err) {
                     console.warn("Error copying file:", err);
+                } else {
+                    console.log(`Copied ${cachePath}/banner.png to ${directory_path}/banner.png`);
                 }
             })
 

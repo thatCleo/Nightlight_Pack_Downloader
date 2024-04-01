@@ -90,3 +90,17 @@ body {
     display: none;
     overflow-y: auto;
 }
+
+.flex-manage-buttons {
+    display: flex;
+}
+
+.manage-buttons {
+    display: flex;
+    margin: 0px 5px;
+}
+
+.manage-delete-button {
+    background-color: #701512;
+    border-color: #6b1411;
+}

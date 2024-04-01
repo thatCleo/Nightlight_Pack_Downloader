@@ -59,7 +59,7 @@ function setPackTiles_Manage(packs) {
     loading="lazy" alt="Pack Banner for ${pack_data.url}" class="_1he3xh1">
   <div class="_1he3xh5">
     <span class="_1he3xh6">${pack_data.title}</span>
-    <div class="_1he3xh7 badge bg-secondary">v${pack_data.current_version}</div>
+    <div class="_1he3xh7 badge bg-secondary">v${pack_data.version}</div>
   </div>
   <div class="_1he3xh4">
     <div class="_1he3xhc">
@@ -86,8 +86,10 @@ function setPackTiles_Manage(packs) {
           d="M58.9 42.1c3-6.1 9.6-9.6 16.3-8.7L320 64 564.8 33.4c6.7-.8 13.3 2.7 16.3 8.7l41.7 83.4c9 17.9-.6 39.6-19.8 45.1L439.6 217.3c-13.9 4-28.8-1.9-36.2-14.3L320 64 236.6 203c-7.4 12.4-22.3 18.3-36.2 14.3L37.1 170.6c-19.3-5.5-28.8-27.2-19.8-45.1L58.9 42.1zM321.1 128l54.9 91.4c14.9 24.8 44.6 36.6 72.5 28.6L576 211.6v167c0 22-15 41.2-36.4 46.6l-204.1 51c-10.2 2.6-20.9 2.6-31 0l-204.1-51C79 419.7 64 400.5 64 378.5v-167L191.6 248c27.8 8 57.6-3.8 72.5-28.6L318.9 128h2.2z">
         </path>
       </svg>${packContent}</div>
-      <button value="${pack_data.url}" class="delete-pack btn btn-sm w-100 d-block">Delete Pack</button>
-  </div>
+      <div class="flex-manage-buttons">
+      <button value="${pack_data.url}" class="manage-buttons manage-delete-button delete-pack btn btn-sm w-100 d-block">Delete Pack</button><button value="${pack_data.url}" class="manage-buttons toggle-pack btn btn-sm w-100 d-block">Activate Pack</button>
+      </div>
+    </div>
 </div>
         `;
 
@@ -99,110 +101,110 @@ function setPackTiles_Manage(packs) {
   });
 }
 
-function formatRelativeTime(dateString) {
-  const date = new Date(dateString);
-  const currentDate = new Date();
-  const diffInMilliseconds = currentDate - date;
-  const diffInDays = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));
+// function formatRelativeTime(dateString) {
+//   const date = new Date(dateString);
+//   const currentDate = new Date();
+//   const diffInMilliseconds = currentDate - date;
+//   const diffInDays = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));
 
-  return diffInDays;
-}
+//   return diffInDays;
+// }
 
-function formatText(input) {
-  input = input.replace('addons', 'add-Ons');
-  const words = input.replace('_', ' ').split(' ');
-  let joinedWords = '';
+// function formatText(input) {
+//   input = input.replace('addons', 'add-Ons');
+//   const words = input.replace('_', ' ').split(' ');
+//   let joinedWords = '';
 
-  for (let i = 0; i < words.length; i++) {
-    const word = words[i];
-    joinedWords += word.charAt(0).toUpperCase() + word.slice(1) + ' ';
-  }
-  return joinedWords.trim();
-}
+//   for (let i = 0; i < words.length; i++) {
+//     const word = words[i];
+//     joinedWords += word.charAt(0).toUpperCase() + word.slice(1) + ' ';
+//   }
+//   return joinedWords.trim();
+// }
 
-function downloadBanner(pack_id, current_version) {
-  const downloadURL = `https://cdn.nightlight.gg/packs/${pack_id}/${current_version}/banner.png`;
-  const directoryPath = `${directory.currentPath()}/cached_images/${pack_id}_${current_version}`;
-  const fileName = `banner.png`;
+// function downloadBanner(pack_id, current_version) {
+//   const downloadURL = `https://cdn.nightlight.gg/packs/${pack_id}/${current_version}/banner.png`;
+//   const directoryPath = `${directory.currentPath()}/cached_images/${pack_id}_${current_version}`;
+//   const fileName = `banner.png`;
 
-  fs.access(`${directoryPath}/${fileName}`, fs.constants.F_OK, (err) => {
-    if (err) {
-      downloadFile(downloadURL, directoryPath, fileName)
-        .then((filePath) => {
-          const banner_div = document.getElementById(`pack-banner-${pack_id}`);
-          if (banner_div) {
-            const banner_img = banner_div.querySelector('img');
-            if (banner_img) {
-              banner_img.src = filePath;
-            }
-          }
-        })
-    } else {
-      filePath = `${directoryPath}/${fileName}`;
-      const banner_div = document.getElementById(`pack-banner-${pack_id}`);
-      if (banner_div) {
-        const banner_img = banner_div.querySelector('img');
-        if (banner_img) {
-          banner_img.src = filePath;
-        }
-      }
-    }
-  });
-}
+//   fs.access(`${directoryPath}/${fileName}`, fs.constants.F_OK, (err) => {
+//     if (err) {
+//       downloadFile(downloadURL, directoryPath, fileName)
+//         .then((filePath) => {
+//           const banner_div = document.getElementById(`pack-banner-${pack_id}`);
+//           if (banner_div) {
+//             const banner_img = banner_div.querySelector('img');
+//             if (banner_img) {
+//               banner_img.src = filePath;
+//             }
+//           }
+//         })
+//     } else {
+//       filePath = `${directoryPath}/${fileName}`;
+//       const banner_div = document.getElementById(`pack-banner-${pack_id}`);
+//       if (banner_div) {
+//         const banner_img = banner_div.querySelector('img');
+//         if (banner_img) {
+//           banner_img.src = filePath;
+//         }
+//       }
+//     }
+//   });
+// }
 
-function downloadAvatar(user_id, avatar_id, pack_id) {
-  const downloadURL = `https://cdn.nightlight.gg/avatars/${user_id}/${avatar_id}/60.png`;
-  const directoryPath = `${directory.currentPath()}/cached_images/${user_id}_${avatar_id}`;
-  const fileName = `avatar.png`;
+// function downloadAvatar(user_id, avatar_id, pack_id) {
+//   const downloadURL = `https://cdn.nightlight.gg/avatars/${user_id}/${avatar_id}/60.png`;
+//   const directoryPath = `${directory.currentPath()}/cached_images/${user_id}_${avatar_id}`;
+//   const fileName = `avatar.png`;
 
-  if (avatar_id == null) {
-    return;
-  }
+//   if (avatar_id == null) {
+//     return;
+//   }
 
-  fs.access(`${directoryPath}/${fileName}`, fs.constants.F_OK, (err) => {
-    if (err) {
-      downloadFile(downloadURL, directoryPath, fileName)
-        .then((filePath) => {
-          const banner_img = document.getElementById(`pack-avatar-${pack_id}-${user_id}`);
-          if (banner_img) {
-            banner_img.src = filePath;
-          }
-        })
-    } else {
-      const banner_img = document.getElementById(`pack-avatar-${pack_id}-${user_id}`);
-      if (banner_img) {
-        banner_img.src = filePath;
-      }
-    }
-  });
-}
+//   fs.access(`${directoryPath}/${fileName}`, fs.constants.F_OK, (err) => {
+//     if (err) {
+//       downloadFile(downloadURL, directoryPath, fileName)
+//         .then((filePath) => {
+//           const banner_img = document.getElementById(`pack-avatar-${pack_id}-${user_id}`);
+//           if (banner_img) {
+//             banner_img.src = filePath;
+//           }
+//         })
+//     } else {
+//       const banner_img = document.getElementById(`pack-avatar-${pack_id}-${user_id}`);
+//       if (banner_img) {
+//         banner_img.src = filePath;
+//       }
+//     }
+//   });
+// }
 
-function setNavElemets(current_visible_packs, packs_per_page) {
-  const navPageInfoArray = document.getElementsByClassName('d-md-inline');
-  if (navPageInfoArray.length == 2) {
-    navPageInfo = navPageInfoArray[1].parentElement;
-    navPageInfo.innerHTML = `<span class="d-none d-md-inline">Showing ${current_visible_packs} of ${total_packs}</span>`;
-  }
+// function setNavElemets(current_visible_packs, packs_per_page) {
+//   const navPageInfoArray = document.getElementsByClassName('d-md-inline');
+//   if (navPageInfoArray.length == 2) {
+//     navPageInfo = navPageInfoArray[1].parentElement;
+//     navPageInfo.innerHTML = `<span class="d-none d-md-inline">Showing ${current_visible_packs} of ${total_packs}</span>`;
+//   }
 
-  let pageNum = document.getElementsByClassName('mx-1');
-  if (pageNum.length == 1) {
-    pageNum = pageNum[0];
+//   let pageNum = document.getElementsByClassName('mx-1');
+//   if (pageNum.length == 1) {
+//     pageNum = pageNum[0];
 
-    const pageNumInput = `<input id="input_page_nav" style="width:3rem;padding:.3rem .5rem;font-size:14px;border-radius:2.5px;" value="${current_page}" min="1" step="1" max="NaN" type="number" pattern="\d*" class="form-control text-center">`;
-    pageNum.innerHTML = pageNumInput;
+//     const pageNumInput = `<input id="input_page_nav" style="width:3rem;padding:.3rem .5rem;font-size:14px;border-radius:2.5px;" value="${current_page}" min="1" step="1" max="NaN" type="number" pattern="\d*" class="form-control text-center">`;
+//     pageNum.innerHTML = pageNumInput;
 
-    const pageOf = document.createElement('span');
-    total_pages = getTotalPageNum(packs_per_page, total_packs);
-    pageOf.innerHTML = `<span class="d-none d-md-inline"> of ${total_pages}</span>`;
+//     const pageOf = document.createElement('span');
+//     total_pages = getTotalPageNum(packs_per_page, total_packs);
+//     pageOf.innerHTML = `<span class="d-none d-md-inline"> of ${total_pages}</span>`;
 
-    pageNum.appendChild(pageOf);
-  }
-}
+//     pageNum.appendChild(pageOf);
+//   }
+// }
 
-function getTotalPageNum(packs_per_age, total_packs) {
-  total_pages = Math.ceil(total_packs / packs_per_age);
-  return total_pages
-}
+// function getTotalPageNum(packs_per_age, total_packs) {
+//   total_pages = Math.ceil(total_packs / packs_per_age);
+//   return total_pages
+// }
 
 /* Pack tile */
 /*
