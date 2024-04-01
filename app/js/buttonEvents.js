@@ -24,6 +24,11 @@ document.addEventListener('DOMContentLoaded', function () {
             downloadPack(value, event.target);
         }
 
+        else if (event.target.classList.contains('delete-pack')) {
+            const value = event.target.value;
+            deletePack(value);
+        }
+
         else if (event.target.id.includes('button_page_nav')) {
             console.log(`Prev Page: ${current_page}`);
             if (event.target.id.includes('button_page_nav_0')) { // First page Button

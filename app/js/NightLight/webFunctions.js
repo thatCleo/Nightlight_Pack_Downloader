@@ -7,7 +7,7 @@ function downloadPack(url, button) {
     downloadFileProgress(download_url, directory_path, file_name, button)
         .then(() => {
 
-            let installed_packs;
+            installed_packs;
             if(fileExists(`${directory.currentPath()}/packfiles/installedPacks.json`)) {
                 installed_packs = JSON.parse(fs.readFileSync(`${directory.currentPath()}/packfiles/installedPacks.json`, 'utf8')).installedPacks;
             } else {
@@ -24,6 +24,9 @@ function downloadPack(url, button) {
             /* Copy data from cache to pack path */
             let id;
             let current_version;
+            let last_updated;
+            let dbd_version;
+            let has;
 
             let username = [];
             let user_id = [];
@@ -33,7 +36,10 @@ function downloadPack(url, button) {
             packData.forEach(pack => {
                 if (pack.url == url) {
                     id = pack.id;
-                    current_version = pack.current_version;
+                    current_version = pack.version;
+                    last_updated = pack.updated_at;
+                    dbd_version = pack.dbd_version;
+                    has = pack.has;
 
                     const creators = pack.creators;
                     creators.forEach(creator => {
@@ -75,7 +81,12 @@ function downloadPack(url, button) {
 
             const jsonData = {
                 id: id,
+                url: url,
                 current_version: current_version,
+                downloaded_at: new Date().toISOString().slice(0, 10),
+                last_updated: last_updated,
+                dbd_version: dbd_version,
+                has: has,
                 user: users
             }
 
@@ -87,6 +98,8 @@ function downloadPack(url, button) {
                     console.warn("Error copying file:", err);
                 }
             })
+
+            createPackTiles_Manage();
 
         });
 }

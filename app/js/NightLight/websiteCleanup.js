@@ -32,7 +32,9 @@ function removeNavigation() {
 
     const filter_form = document.getElementsByClassName('row');
     for(let i = 0; i < filter_form.length; i++) {
-        filter_form[i].id = `row_${i}`;
+        if(i == 1) {
+            filter_form[i].id = `row_${i}`;
+        }
     }
 
     const main = document.getElementById('main');

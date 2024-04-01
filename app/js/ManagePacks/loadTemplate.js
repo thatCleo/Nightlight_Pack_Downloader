@@ -8,9 +8,9 @@ const manage_packs_template = `
         </div>
     </main>
     <div id="alert_bar_container"></div>
-    <div id="manage_packs_main_content"></div>
     <footer class="footer pb-3 nl-footer">
         <div class="container px-4">
+        <div id="manage_packs_main_content" class="row row-cols-1 row-cols-lg-2 row-cols-xxl-3 g-3"></div>
             <div class="row" id="row_3">
                 <div class="col-xs-4 col-md-4">
                     <h3>Night<span class="text-nl">Light</span> <small class="text-muted fs-5">Stats &amp; Icon
