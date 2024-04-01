@@ -3,8 +3,8 @@ This is an electron based application for downloading and managing packs from [N
 It uses the Pack-page from Nightlight as a base to build upon, which means that it is always up to date with the packs uploaded there.
 
 ### Features
-- [ ] Textbased search
-- [ ] Filtered search
+- [x] Textbased search
+- [ ] Filtered search (somewhat done)
 - [ ] Shortcuts
 - [x] Store Pages
 - [x] Per Page Selection
