@@ -23,6 +23,7 @@ function downloadPack(url, button) {
 
             /* Copy data from cache to pack path */
             let id;
+            let title;
             let current_version;
             let last_updated;
             let dbd_version;
@@ -36,6 +37,7 @@ function downloadPack(url, button) {
             packData.forEach(pack => {
                 if (pack.url == url) {
                     id = pack.id;
+                    title = pack.title;
                     current_version = pack.version;
                     last_updated = pack.updated_at;
                     dbd_version = pack.dbd_version;
@@ -82,6 +84,7 @@ function downloadPack(url, button) {
             const jsonData = {
                 id: id,
                 url: url,
+                title: title,
                 current_version: current_version,
                 downloaded_at: new Date().toISOString().slice(0, 10),
                 last_updated: last_updated,

@@ -18,13 +18,14 @@ function setPackTiles_Manage(packs) {
 
   packs.forEach(pack_url => {
 
-    console.log(`Creating Pack Tile: ${pack_url}`);
+    console.log(`Added tile for installed pack ${pack_url}`);
 
     let pack_data;
-    if (fileExists(`${directory.currentPath()}/packfiles/installedPacks.json`)) {
+    if (fileExists(`${directory.currentPath()}/packfiles/${pack_url}/metadata.json`)) {
       pack_data = JSON.parse(fs.readFileSync(`${directory.currentPath()}/packfiles/${pack_url}/metadata.json`, 'utf8'));
     } else {
       pack_data = [];
+      console.warn("No metadata.json found for pack: " + pack_url);
     }
 
     let avatar_elemets = '<div class="_1he3xh8">';
@@ -40,8 +41,6 @@ function setPackTiles_Manage(packs) {
       }
     });
     avatar_elemets += '</div>';
-
-    console.log(pack_data);
 
     let dbdVersionTitle = pack_data.dbd_version; // pack.dbd_version;
     const packLastUpdated = `${formatRelativeTime(pack_data.last_updated)} Days Ago`;; // `${formatRelativeTime(pack.updated_at)} Days Ago`;
@@ -59,7 +58,7 @@ function setPackTiles_Manage(packs) {
 <div id="pack-banner-${pack_data.url}-manage" class="_1he3xh0"><img src="${directory.currentPath()}/packfiles/${pack_data.url}/banner.png"
     loading="lazy" alt="Pack Banner for ${pack_data.url}" class="_1he3xh1">
   <div class="_1he3xh5">
-    <span class="_1he3xh6">${pack_data.url}</span>
+    <span class="_1he3xh6">${pack_data.title}</span>
     <div class="_1he3xh7 badge bg-secondary">v${pack_data.current_version}</div>
   </div>
   <div class="_1he3xh4">

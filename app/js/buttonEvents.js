@@ -20,12 +20,16 @@ let search = '';
 document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('click', function (event) {
         if (event.target.classList.contains('download-pack')) {
+            if(event.target.innerText != 'Download') {
+                return;
+            }
             const value = event.target.value;
             downloadPack(value, event.target);
         }
 
         else if (event.target.classList.contains('delete-pack')) {
             const value = event.target.value;
+            console.log(`Deleting Pack: ${value}`);
             deletePack(value);
         }
 
