@@ -8,25 +8,82 @@ function downloadPack(url, button) {
         .then(() => {
 
             /* Copy data from cache to pack path */
-            let pack_id;
+            let id;
             let current_version;
 
-            for (const pack of packData) {
-                if (pack.url = url) {
-                    pack_id = pack.id;
+            let username = [];
+            let user_id = [];
+            let avatar_id = [];
+            let avatar_path = [];
+
+            packData.forEach(pack => {
+                if (pack.url == url) {
+                    id = pack.id;
                     current_version = pack.current_version;
-                    break;
+
+                    const creators = pack.creators;
+                    creators.forEach(creator => {
+
+                        if (creator.user != null) {
+                            user_id.push(creator.user.user_id);
+                            avatar_id.push(creator.user.avatar_id);
+                            username.push(creator.username);
+
+                            let creatorAvatar = `${directory.currentPath()}/cached_images/placeholder/avatar.png`;
+                            if (fileExists(`${directory.currentPath()}/cached_images/${creator.user.user_id}_${creator.user.avatar_id}/avatar.png`)) {
+                                creatorAvatar = `${directory.currentPath()}/cached_images/${creator.user.user_id}_${creator.user.avatar_id}/avatar.png`;
+                            }
+                            fs.copyFile(`${creatorAvatar}`, `${directoryPath}/${creator.user.user_id}_avatar.png`, (err) => {
+                                console.log(`Copied ${creatorAvatar} to ${directoryPath}/${creator.user.user_id}_avatar.png`);
+                                if (err) {
+                                    console.warn("Error copying file:", err);
+                                }
+                            })
+                            avatar_path.push(creatorAvatar);
+                        }
+                        else {
+                            user_id.push(null);
+                            avatar_id.push(null);
+                            username.push(creator.username);
+                        }
+                    });
                 }
+            });
+
+            const users = [];
+            for (let i = 0; i < user_id.length; i++) {
+                users.push({
+                    user_id: user_id[i],
+                    username: username[i],
+                    avatar_id: avatar_id[i]
+                });
             }
-            const cachePath = `${directory.currentPath()}/cached_images/${pack_id}_${current_version}`;
+
+            const jsonData = {
+                id: id,
+                current_version: current_version,
+                user: users
+            }
+
+            fs.writeFileSync(`${directoryPath}/metadata.json`, JSON.stringify(jsonData));
+
+            const cachePath = `${directory.currentPath()}/cached_images/${id}_${current_version}`;
             fs.copyFile(`${cachePath}/banner.png`, `${directoryPath}/banner.png`, (err) => {
                 if (err) {
                     console.warn("Error copying file:", err);
-
                 }
             })
 
         });
+}
+
+function fileExists(filePath) {
+    try {
+        fs.accessSync(filePath, fs.constants.F_OK);
+        return true;
+    } catch (err) {
+        return false;
+    }
 }
 
 function httpGet(url, callback) {

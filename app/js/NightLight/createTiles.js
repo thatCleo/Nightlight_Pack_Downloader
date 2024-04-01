@@ -151,7 +151,7 @@ function downloadBanner(pack_id, current_version) {
 function downloadAvatar(user_id, avatar_id, pack_id) {
   const downloadURL = `https://cdn.nightlight.gg/avatars/${user_id}/${avatar_id}/60.png`;
   const directoryPath = `${directory.currentPath()}/cached_images/${user_id}_${avatar_id}`;
-  const fileName = `${user_id}_${avatar_id}.png`;
+  const fileName = `avatar.png`;
 
   if (avatar_id == null) {
     return;
