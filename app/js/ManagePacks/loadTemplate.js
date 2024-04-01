@@ -52,3 +52,4 @@ const manage_packs_template = `
 manage_packs_container.innerHTML = manage_packs_template;
 
 removeManageNavigation();
+createPackTiles_Manage();

@@ -1,11 +1,25 @@
 const { Buffer } = window.electron;
 
 function downloadPack(url, button) {
-    const downloadURL = `https://nightlight.gg/packs/${url}/download`;
-    const directoryPath = `${directory.currentPath()}/packfiles/${url}`;
-    const fileName = `${url}.zip`
-    downloadFileProgress(downloadURL, directoryPath, fileName, button)
+    const download_url = `https://nightlight.gg/packs/${url}/download`;
+    const directory_path = `${directory.currentPath()}/packfiles/${url}`;
+    const file_name = `${url}.zip`
+    downloadFileProgress(download_url, directory_path, file_name, button)
         .then(() => {
+
+            let installed_packs;
+            if(fileExists(`${directory.currentPath()}/packfiles/installedPacks.json`)) {
+                installed_packs = JSON.parse(fs.readFileSync(`${directory.currentPath()}/packfiles/installedPacks.json`, 'utf8')).installedPacks;
+            } else {
+                installed_packs = [];
+            }
+            if(!installed_packs.includes(url)) {
+                installed_packs.push(url);
+            }
+            const json_string = {
+                "installedPacks": installed_packs
+            }
+            fs.writeFileSync(`${directory.currentPath()}/packfiles/installedPacks.json`, JSON.stringify(json_string));
 
             /* Copy data from cache to pack path */
             let id;
@@ -33,8 +47,8 @@ function downloadPack(url, button) {
                             if (fileExists(`${directory.currentPath()}/cached_images/${creator.user.user_id}_${creator.user.avatar_id}/avatar.png`)) {
                                 creatorAvatar = `${directory.currentPath()}/cached_images/${creator.user.user_id}_${creator.user.avatar_id}/avatar.png`;
                             }
-                            fs.copyFile(`${creatorAvatar}`, `${directoryPath}/${creator.user.user_id}_avatar.png`, (err) => {
-                                console.log(`Copied ${creatorAvatar} to ${directoryPath}/${creator.user.user_id}_avatar.png`);
+                            fs.copyFile(`${creatorAvatar}`, `${directory_path}/${creator.user.user_id}_avatar.png`, (err) => {
+                                console.log(`Copied ${creatorAvatar} to ${directory_path}/${creator.user.user_id}_avatar.png`);
                                 if (err) {
                                     console.warn("Error copying file:", err);
                                 }
@@ -65,10 +79,10 @@ function downloadPack(url, button) {
                 user: users
             }
 
-            fs.writeFileSync(`${directoryPath}/metadata.json`, JSON.stringify(jsonData));
+            fs.writeFileSync(`${directory_path}/metadata.json`, JSON.stringify(jsonData));
 
             const cachePath = `${directory.currentPath()}/cached_images/${id}_${current_version}`;
-            fs.copyFile(`${cachePath}/banner.png`, `${directoryPath}/banner.png`, (err) => {
+            fs.copyFile(`${cachePath}/banner.png`, `${directory_path}/banner.png`, (err) => {
                 if (err) {
                     console.warn("Error copying file:", err);
                 }

@@ -1,4 +1,8 @@
-function setPackTiles(json) {
+function createPackTiles_Manage() {
+  
+}
+
+function setPackTiles_Manage(json) {
   const packview = document.getElementsByClassName('row-cols-1');
   if (packview.length != 1) {
     document.getElementById('info').innerText = `Error: packview.lenght = ${packview.length}`
