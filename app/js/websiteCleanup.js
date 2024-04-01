@@ -30,6 +30,11 @@ function removeNavigation() {
         filterFavorites[0].childNodes[0].childNodes[0].remove();
     }
 
+    const filter_form = document.getElementsByClassName('row');
+    for(let i = 0; i < filter_form.length; i++) {
+        filter_form[i].id = `row_${i}`;
+    }
+
     const main = document.getElementById('main');
     if (main != null) {
         main.style.marginLeft = "0px";
@@ -39,16 +44,12 @@ function removeNavigation() {
 }
 
 function addFilters() {
-    let filter_apply = document.getElementsByClassName('lh-1');
+    const filter_apply = document.getElementsByClassName('lh-1');
     filter_apply[0].id = "button_filter_apply";
     filter_apply[1].id = "button_filter_reload";
 
-    for(let i = 0; i < filter_apply.length; i++) {
-        console.log(`Button ${i}: ${filter_apply[i].innerText}`);
-    }
-
-    let filter_sort_by = document.getElementById('P0-1');
-    const options = `
+    const filter_sort_by = document.getElementById('P0-1');
+    const options_sort_by = `
     <option value="title">Name</option>
     <option value="downloads">Downloads</option>
     <option value="updated">Last Updated</option>
@@ -57,9 +58,34 @@ function addFilters() {
     <option value="random">Random</option>
     `
 
-    filter_sort_by.innerHTML = options;
+    filter_sort_by.innerHTML = options_sort_by;
     filter_sort_by.id = "filter_sort_by";
     filter_sort_by.value = "downloads";
+
+    httpGet('https://nightlight.gg/api/v1/packs/authors', setFilterAuthors); // Setting authors as options for filtering
+
+    const filter_search = document.getElementById('P0-3');
+    filter_search.id = "filter_search";
+}
+
+function setFilterAuthors(data) {
+    if(data == null || data == '[]') {
+        return;
+    }
+
+    const allData = JSON.parse(data);
+    const authors = allData.data;
+
+    const filter_authors = document.getElementById('P0-2');
+
+    let options_authors = '<option value=""></option>';
+
+    authors.forEach(author => {
+        options_authors += `<option value="${author.id}">${author.name}</option>`
+    });
+
+    filter_authors.innerHTML = options_authors;
+    filter_authors.id = "filter_authors";
 }
 
 function addNavigation() {

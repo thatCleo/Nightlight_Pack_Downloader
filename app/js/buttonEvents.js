@@ -10,8 +10,12 @@ let total_pages = -1;
 let total_packs = -1;
 
 /* Filter varaibles */
-let sort_by_default;
-let sort_by = sort_by_default = 'downloads';
+const sort_by_default = 'downloads';
+let sort_by = 'downloads';
+const author_defualt = '';
+let author = '';
+const search_default = '';
+let search = '';
 
 document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('click', function (event) {
@@ -54,24 +58,28 @@ document.addEventListener('DOMContentLoaded', function () {
 
             console.log(`Page: ${current_page}`);
 
-            createPackTiles(current_page, packs_per_page, 'downloads', '', 'any');
+            loadPackTiles();
             scrollToTop();
         }
 
         else if (event.target.id.includes('button_filter_reset')) {
             disableFilterResetButton();
             enableFilterApplyButton();
+
             sort_by = sort_by_default;
             document.getElementById('filter_sort_by').value = sort_by_default;
+
+            author = author_defualt;
+            document.getElementById('filter_authors').value = author_defualt;
         }
 
         else if (event.target.id.includes('button_filter_apply')) {
             disableFilterApplyButton();
-            createPackTiles(current_page, packs_per_page, sort_by, '', 'any');
+            loadPackTiles();
         }
 
         else if (event.target.id.includes('button_filter_reload')) {
-            createPackTiles(current_page, packs_per_page, sort_by, '', 'any');
+            loadPackTiles();
         }
     });
     document.addEventListener('change', function (event) {
@@ -79,17 +87,17 @@ document.addEventListener('DOMContentLoaded', function () {
             const value = event.target.value;
             packs_per_page = value;
 
-            if(current_page > getTotalPageNum(value, total_packs)) {
+            if (current_page > getTotalPageNum(value, total_packs)) {
                 current_page = getTotalPageNum(value, total_packs);
             }
-            createPackTiles(current_page, packs_per_page, 'downloads', '', 'any');
+            loadPackTiles();
         }
 
         else if (event.target.id == "input_page_nav") {
             const value = event.target.value;
             current_page = value;
 
-            if(current_page <= 1) {
+            if (current_page <= 1) {
                 current_page = 1;
             }
             if (current_page >= total_pages) {
@@ -97,24 +105,41 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             enablePageNavButtons();
-            if(current_page == 1) {
+            if (current_page == 1) {
                 disablePageNavButtonsPrev();
             }
-            if(current_page == total_pages) {
+            if (current_page == total_pages) {
                 disablePageNavButtonsNext();
             }
 
-            createPackTiles(current_page, packs_per_page, sort_by, '', 'any');
+            loadPackTiles();
             scrollToTop();
         }
 
         else if (event.target.id == "filter_sort_by") {
-            enableFilterResetButton();
             const value = event.target.value;
             sort_by = value;
+            enableFilterResetButton();
+            enableFilterApplyButton();
+        }
+
+        else if (event.target.id == "filter_authors") {
+            const value = event.target.value;
+            author = value;
+            enableFilterResetButton();
+            enableFilterApplyButton();
+        }
+
+        else if (event.target.id == "filter_search") {
+            const value = event.target.value;
+            search = value;
+            enableFilterResetButton();
             enableFilterApplyButton();
         }
     });
+    document.addEventListener('submit', function (event) {
+        event.preventDefault(); // no forms needed
+    })
 });
 
 document.getElementById("options").addEventListener("click", () => {

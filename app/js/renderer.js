@@ -13,14 +13,23 @@ function setWebEmbed(string, status) {
     addFilters();
     addNavigation();
 
-    createPackTiles(1, 12, 'downloads', '', 'any');
+    loadPackTiles();
 }
 
+function loadPackTiles() {
+    createPackTiles(current_page, packs_per_page, sort_by, author, search, '', 'any');
+}
 
-
-function createPackTiles(page, per_page, sort_by, includes, include_mode) {
+function createPackTiles(page, per_page, sort_by, author, search, includes, include_mode) {
     console.log("Creating Pack Tiles...")
-    httpGet(`https://nightlight.gg/api/v1/packs?page=${page}&per_page=${per_page}&sort_by=${sort_by}&includes=${includes}&include_mode=${include_mode}`, setPackTiles);
+    if(author != '') {
+        author = `&author=${author}`;
+    }
+    if(search != '') {
+        search = `&search=${search}`;
+    }
+
+    httpGet(`https://nightlight.gg/api/v1/packs?page=${page}&per_page=${per_page}&sort_by=${sort_by}${author}${search}&includes=${includes}&include_mode=${include_mode}`, setPackTiles);
 }
 
 let addedTiles = false;
