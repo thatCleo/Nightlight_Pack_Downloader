@@ -4,7 +4,29 @@ function downloadPack(url, button) {
     const downloadURL = `https://nightlight.gg/packs/${url}/download`;
     const directoryPath = `${directory.currentPath()}/packfiles/${url}`;
     const fileName = `${url}.zip`
-    downloadFileProgress(downloadURL, directoryPath, fileName, button);
+    downloadFileProgress(downloadURL, directoryPath, fileName, button)
+        .then(() => {
+
+            /* Copy data from cache to pack path */
+            let pack_id;
+            let current_version;
+
+            for (const pack of packData) {
+                if (pack.url = url) {
+                    pack_id = pack.id;
+                    current_version = pack.current_version;
+                    break;
+                }
+            }
+            const cachePath = `${directory.currentPath()}/cached_images/${pack_id}_${current_version}`;
+            fs.copyFile(`${cachePath}/banner.png`, `${directoryPath}/banner.png`, (err) => {
+                if (err) {
+                    console.warn("Error copying file:", err);
+
+                }
+            })
+
+        });
 }
 
 function httpGet(url, callback) {
@@ -110,7 +132,7 @@ function concatBuffers(buffers) {
 function updateProgressBar(progress, button) {
     // Update the progress bar element
     button.innerText = `${progress}%`;
-    if(progress === 100) {
+    if (progress === 100) {
         button.innerText = `Done!`;
     }
 }

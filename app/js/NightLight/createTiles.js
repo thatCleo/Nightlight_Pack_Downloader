@@ -1,4 +1,5 @@
 let navPageInfo;
+let packData;
 
 function setPackTiles(json) {
   const packview = document.getElementsByClassName('row-cols-1');
@@ -10,7 +11,7 @@ function setPackTiles(json) {
   packview[0].innerHTML = '';
 
   const allData = JSON.parse(json);
-  const packData = allData.data.packs;
+  packData = allData.data.packs;
 
   total_packs = allData.data.total_packs;
 
