@@ -74,6 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         else if (event.target.id.includes('button_filter_apply')) {
+            current_page = 1;
             disableFilterApplyButton();
             loadPackTiles();
         }
