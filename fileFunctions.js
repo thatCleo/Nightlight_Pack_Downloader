@@ -12,14 +12,29 @@ function fileExists(filePath) {
     }
 }
 
-async function copyFile(sourcePath, destinationPath) {
-    try {
-        fs.cpSync(sourcePath, destinationPath, { recursive: true });
-        console.log(`File "${sourcePath}" copied successfully to "${destinationPath}"`);
-    } catch (err) {
-        console.error('Error copying file:', err);
-    }
+async function deleteFile(path) {
+    return new Promise((resolve, reject) => {
+        fs.rmSync(path, { recursive: true }, (err) => {
+            if (err) {
+                console.error('Error deleting folder:', err);
+            } else {
+                console.log('Folder deleted successfully');
+            }
+        });
+    })
+}
 
+async function copyFile(sourcePath, destinationPath) {
+    return new Promise((resolve, reject) => {
+        try {
+            fs.cpSync(sourcePath, destinationPath, { recursive: true });
+            console.log(`File "${sourcePath}" copied successfully to "${destinationPath}"`);
+        } catch (err) {
+            console.error('Error copying file:', err);
+        } finally {
+            resolve();
+        }
+    })
 }
 
 async function unzipFile(filePath, destination) {
@@ -57,6 +72,7 @@ async function unzipFile(filePath, destination) {
 
 module.exports = {
     fileExists,
+    deleteFile,
     copyFile,
     unzipFile
 }
