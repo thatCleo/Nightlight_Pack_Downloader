@@ -3,6 +3,7 @@ packfiles/
 cached_images/
 temp/
 dbd_game_example/
+out/
 
 # Logs
 logs
