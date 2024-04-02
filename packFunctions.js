@@ -1,9 +1,10 @@
 const { downloadFile } = require('./webFunctions');
 const { fileExists, deleteFile, copyFile, unzipFile } = require('./fileFunctions');
+const { dbd_game_path } = require('./options');
 const fs = require('fs');
+const dialog = require('electron').dialog;
 
-let dbd_game_path = '/home/micki/.var/app/com.valvesoftware.Steam/.local/share/Steam/steamapps/common/Dead by Daylight' + '/DeadByDaylight/Content/UI/Icons/';
-dbd_game_path = __dirname + '/dbd_game_example/';
+const dbd_icon_path = '/DeadByDaylight/Content/UI/Icons/';
 
 async function deletePack(event, pack_url) {
     console.log(`Deleting ${pack_url}`);
@@ -146,11 +147,16 @@ async function activatePack(event, url) {
     const zipPath = `${__dirname}/packfiles/${url}/${url}.zip`;
     const targetPath = `${__dirname}/temp/${url}/`;
 
+    if(!fileExists(dbd_game_path + dbd_icon_path)) {
+        dialog.showErrorBox("Invalid game path", `The path (${dbd_game_path}) set is invalid. Please verify your Dead by Daylight intsallation path in the options.`);
+        return;
+    }
+
     resetAllPacks();
 
     unzipFile(zipPath, targetPath)
         .then(() => {
-            copyFile(targetPath, dbd_game_path)
+            copyFile(targetPath, dbd_game_path + dbd_icon_path)
                 .then(() => {
                     deleteFile(targetPath);
                 })
@@ -163,8 +169,8 @@ function resetAllPacks() {
             .filter(dirent => dirent.isDirectory())
             .map(dirent => dirent.name);
 
-    getDirectories(dbd_game_path).forEach(directory => {
-        deleteFile(`${dbd_game_path}/${directory}`);
+    getDirectories(dbd_game_path + dbd_icon_path).forEach(directory => {
+        deleteFile(`${dbd_game_path + dbd_icon_path}/${directory}`);
     })
 }
 

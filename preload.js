@@ -1,6 +1,6 @@
 const { contextBridge, ipcRenderer } = require('electron');
 const fs = require('fs');
-const { resolve } = require('path');
+let { dbd_game_path } = require('./options');
 
 
 contextBridge.exposeInMainWorld('versions', {
@@ -40,4 +40,10 @@ contextBridge.exposeInMainWorld('packFunctions', {
 
 contextBridge.exposeInMainWorld('directory', {
   currentPath: () =>  __dirname
+})
+
+contextBridge.exposeInMainWorld('options', {
+  setDBDPath: () => ipcRenderer.invoke('options:setDBDPath'),
+  setDBDPath: (value) => ipcRenderer.invoke('options:setDBDPath', value),
+  getDBDPath: () => ipcRenderer.invoke('options:getDBDPath')
 })

@@ -1,5 +1,6 @@
 const fs = require('fs');
 const StreamZip = require('node-stream-zip');
+const { dialog } = require('electron');
 
 function fileExists(filePath) {
     try {
@@ -69,10 +70,21 @@ async function unzipFile(filePath, destination) {
     })
 }
 
+async function getPathFromDialog() {
+    const { canceled, filePaths } = await dialog.showOpenDialog({
+        properties: ['openDirectory']
+    });
+    
+    if (!canceled) {
+        return filePaths[0]
+    }
+}
+
 
 module.exports = {
     fileExists,
     deleteFile,
     copyFile,
-    unzipFile
+    unzipFile,
+    getPathFromDialog
 }

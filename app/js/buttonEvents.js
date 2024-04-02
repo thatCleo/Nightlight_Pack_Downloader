@@ -54,8 +54,14 @@ document.addEventListener('DOMContentLoaded', function () {
         else if(event.target.id.includes('reset-all-packs')) {
             console.log(`Resetting All Packs...`);
             window.packFunctions.resetAllPacks()
+        }
+
+        else if(event.target.classList.contains('set-dbd-path')) {
+            console.log(`Setting DBD Path...`);
+            window.options.setDBDPath()
                 .then(() => {
-                    createPackTiles_Manage();
+                    console.log(`DBD Path set!`);
+                    setOptionValuesToElements();
                 })
         }
 
@@ -172,15 +178,15 @@ document.addEventListener('DOMContentLoaded', function () {
             enableFilterResetButton();
             enableFilterApplyButton();
         }
+
+        else if(event.target.id == "dbd-path") {
+            const value = event.target.value;
+            window.options.setDBDPath(value);
+        }
     });
     document.addEventListener('submit', function (event) {
         event.preventDefault(); // no forms needed
     })
-});
-
-document.getElementById("options").addEventListener("click", () => {
-    const value = document.getElementById("options").value;
-    downloadPack(value);
 });
 
 document.getElementById("nightlight").addEventListener("click", () => {
