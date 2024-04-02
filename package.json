@@ -1,7 +1,7 @@
 {
   "name": "nightlight_pack_downloader",
-  "version": "1.0.0",
-  "description": "App for downloading Packs like Icon or Perk packs for Dead by Daylight from NightLight.gg",
+  "version": "0.1.0",
+  "description": "App for downloading Packs like Icon packs for Dead by Daylight from NightLight.gg",
   "main": "main.js",
   "scripts": {
     "start": "electron-forge start",

@@ -43,7 +43,7 @@ contextBridge.exposeInMainWorld('directory', {
 })
 
 contextBridge.exposeInMainWorld('options', {
-  setDBDPath: () => ipcRenderer.invoke('options:setDBDPath'),
   setDBDPath: (value) => ipcRenderer.invoke('options:setDBDPath', value),
+  setDBDPathFromDialog: () => ipcRenderer.invoke('options:setDBDPathFromDialog'),
   getDBDPath: () => ipcRenderer.invoke('options:getDBDPath')
 })

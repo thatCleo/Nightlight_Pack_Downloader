@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         else if(event.target.classList.contains('set-dbd-path')) {
             console.log(`Setting DBD Path...`);
-            window.options.setDBDPath()
+            window.options.setDBDPathFromDialog()
                 .then(() => {
                     console.log(`DBD Path set!`);
                     setOptionValuesToElements();

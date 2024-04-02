@@ -3,7 +3,7 @@ const path = require('node:path')
 const { httpGet, downloadFile, downloadFileProgress } = require('./webFunctions');
 const { fileExists } = require('./fileFunctions');
 const { deletePack, downloadPack, activatePack, resetAllPacks, getInstalledPacks, getPackMetaData } = require('./packFunctions');
-const { setDBDPath, getDBDPath } = require('./options');
+const { setDBDPath, setDBDPathFromDialog, getDBDPath } = require('./options');
 
 const createWindow = () => {
   const win = new BrowserWindow({
@@ -37,6 +37,7 @@ app.whenReady().then(() => {
   ipcMain.handle('fileFunctions:fileExists', fileExists);
 
   ipcMain.handle('options:setDBDPath', setDBDPath);
+  ipcMain.handle('options:setDBDPathFromDialog', setDBDPathFromDialog);
   ipcMain.handle('options:getDBDPath', getDBDPath);
 
   createWindow()
