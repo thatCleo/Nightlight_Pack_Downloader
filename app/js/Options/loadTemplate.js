@@ -1,7 +1,7 @@
 const options_container = document.getElementById('options-page');
 const options_template = `
 <div style="margin-left: 0px;">
-    <main id="manage_packs_main" class="container px-4">
+    <main id="options_main" class="container px-4">
         <div><strong class="text-muted">Icon Toolbox</strong>
             <h1 class="mb-2">Options</h1>
             <div class="text-muted mb-3">Manage Options like you DBD Path.</div>
@@ -57,4 +57,5 @@ const options_template = `
 </div>`;
 
 options_container.innerHTML = options_template;
+removeManageNavigation();
 setOptionValuesToElements();
