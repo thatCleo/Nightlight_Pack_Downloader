@@ -1,37 +1,30 @@
-let installed_packs = [];
-if (fileExists(`${directory.currentPath()}/packfiles/installedPacks.json`)) {
-  installed_packs = JSON.parse(fs.readFileSync(`${directory.currentPath()}/packfiles/installedPacks.json`, 'utf8')).installedPacks;
-} else {
-  installed_packs = [];
-}
-
 function createPackTiles_Manage() {
-  setPackTiles_Manage(installed_packs);
+  window.packFunctions.getInstalledPacks()
+    .then(data => {
+      let installed_packs = data;
+      console.log("Creating Pack Tiles for Manage Packs...");
+      console.log(installed_packs);
+      setPackTiles_Manage(installed_packs);
+    });
 }
 
 function setPackTiles_Manage(packs) {
 
   const manage_pack_view = document.getElementById('manage_packs_main_content');
-  manage_pack_view.innerHTML = '',
-
-    console.log(`${packs}`);
+  manage_pack_view.innerHTML = '';
 
   packs.forEach(pack_url => {
 
     console.log(`Added tile for installed pack ${pack_url}`);
 
     let pack_data;
-    if (fileExists(`${directory.currentPath()}/packfiles/${pack_url}/metadata.json`)) {
-      pack_data = JSON.parse(fs.readFileSync(`${directory.currentPath()}/packfiles/${pack_url}/metadata.json`, 'utf8'));
-    } else {
-      pack_data = [];
-      console.warn("No metadata.json found for pack: " + pack_url);
-    }
-
-    let avatar_elemets = '<div class="_1he3xh8">';
+    window.packFunctions.getPackMetaData(pack_url)
+    .then(data => {
+      pack_data = data;
+      let avatar_elemets = '<div class="_1he3xh8">';
     pack_data.user.forEach(creator => {
 
-      const creatorAvatar = `${directory.currentPath()}/packfiles/${pack_url}/${creator.user_id}_avatar.png`;
+      const creatorAvatar = `${window.directory.currentPath()}/packfiles/${pack_url}/${creator.user_id}_avatar.png`;
       const creatorName = creator.username;
 
       if (creator.user_id != null) {
@@ -55,7 +48,7 @@ function setPackTiles_Manage(packs) {
 
     const tile =
       `
-<div id="pack-banner-${pack_data.url}-manage" class="_1he3xh0"><img src="${directory.currentPath()}/packfiles/${pack_data.url}/banner.png"
+<div id="pack-banner-${pack_data.url}-manage" class="_1he3xh0"><img src="${window.directory.currentPath()}/packfiles/${pack_data.url}/banner.png"
     loading="lazy" alt="Pack Banner for ${pack_data.url}" class="_1he3xh1">
   <div class="_1he3xh5">
     <span class="_1he3xh6">${pack_data.title}</span>
@@ -98,6 +91,7 @@ function setPackTiles_Manage(packs) {
 
     manage_pack_view.appendChild(packTile);
     console.log(`Added tile for ${pack_data.url}`);
+    });    
   });
 }
 

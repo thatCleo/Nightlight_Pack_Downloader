@@ -1,6 +1,8 @@
 # Dowloaded Packs and cached images
 packfiles/
 cached_images/
+temp/
+dbd_game_example/
 
 # Logs
 logs

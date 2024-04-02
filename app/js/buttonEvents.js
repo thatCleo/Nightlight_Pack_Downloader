@@ -20,17 +20,35 @@ let search = '';
 document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('click', function (event) {
         if (event.target.classList.contains('download-pack')) {
-            if(event.target.innerText != 'Download') {
+            if (event.target.innerText != 'Download') {
                 return;
             }
+            console.log(`Downloading Pack: ${event.target.value}`);
             const value = event.target.value;
-            downloadPack(value, event.target);
+            event.target.innerText = 'Downloading...';
+            window.packFunctions.downloadPack(value, packData)
+                .then(() => {
+                    event.target.innerText = 'Download finished!';
+                    createPackTiles_Manage();
+                })
         }
 
         else if (event.target.classList.contains('delete-pack')) {
             const value = event.target.value;
             console.log(`Deleting Pack: ${value}`);
-            deletePack(value);
+            window.packFunctions.deletePack(value)
+                .then(() => {
+                    createPackTiles_Manage();
+                })
+        }
+
+        else if (event.target.classList.contains('toggle-pack')) {
+            const value = event.target.value;
+            console.log(`Toggling Pack: ${value}`);
+            window.packFunctions.activatePack(value)
+                .then(() => {
+                    createPackTiles_Manage();
+                })
         }
 
         else if (event.target.id.includes('button_page_nav')) {

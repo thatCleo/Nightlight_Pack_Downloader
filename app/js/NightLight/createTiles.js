@@ -24,7 +24,7 @@ function setPackTiles(json) {
 
     let avatar_elemets = '<div class="_1he3xh8">';
     pack.creators.forEach(creator => {
-      const creatorAvatar = `${directory.currentPath()}/cached_images/placeholder/avatar.png`;
+      const creatorAvatar = `${window.directory.currentPath()}/cached_images/placeholder/avatar.png`;
       const creatorName = creator.username;
       if (creator.user != null) {
         downloadAvatar(creator.user.user_id, creator.user.avatar_id, pack.id);
@@ -49,7 +49,7 @@ function setPackTiles(json) {
     // <div class="_1he3xh0"><img src="./cached_images/${pack.id}_${pack.current_version}/banner.png"
     const tile =
       `
-<div id="pack-banner-${pack.id}" class="_1he3xh0"><img src="${directory.currentPath()}/cached_images/placeholder/banner.png"
+<div id="pack-banner-${pack.id}" class="_1he3xh0"><img src="${window.directory.currentPath()}/cached_images/placeholder/banner.png"
     loading="lazy" alt="Pack Banner for ${pack.title}" class="_1he3xh1">
   <div class="_1he3xh5">
     <span class="_1he3xh6">${pack.title}</span>
@@ -118,12 +118,12 @@ function formatText(input) {
 
 function downloadBanner(pack_id, current_version) {
   const downloadURL = `https://cdn.nightlight.gg/packs/${pack_id}/${current_version}/banner.png`;
-  const directoryPath = `${directory.currentPath()}/cached_images/${pack_id}_${current_version}`;
+  const directoryPath = `${window.directory.currentPath()}/cached_images/${pack_id}_${current_version}`;
   const fileName = `banner.png`;
 
   fs.access(`${directoryPath}/${fileName}`, fs.constants.F_OK, (err) => {
     if (err) {
-      downloadFile(downloadURL, directoryPath, fileName)
+      window.webFunctions.downloadFile(downloadURL, directoryPath, fileName)
         .then((filePath) => {
           const banner_div = document.getElementById(`pack-banner-${pack_id}`);
           if (banner_div) {
@@ -148,7 +148,7 @@ function downloadBanner(pack_id, current_version) {
 
 function downloadAvatar(user_id, avatar_id, pack_id) {
   const downloadURL = `https://cdn.nightlight.gg/avatars/${user_id}/${avatar_id}/60.png`;
-  const directoryPath = `${directory.currentPath()}/cached_images/${user_id}_${avatar_id}`;
+  const directoryPath = `${window.directory.currentPath()}/cached_images/${user_id}_${avatar_id}`;
   const fileName = `avatar.png`;
 
   if (avatar_id == null) {
@@ -157,7 +157,7 @@ function downloadAvatar(user_id, avatar_id, pack_id) {
 
   fs.access(`${directoryPath}/${fileName}`, fs.constants.F_OK, (err) => {
     if (err) {
-      downloadFile(downloadURL, directoryPath, fileName)
+      window.webFunctions.downloadFile(downloadURL, directoryPath, fileName)
         .then((filePath) => {
           const banner_img = document.getElementById(`pack-avatar-${pack_id}-${user_id}`);
           if (banner_img) {

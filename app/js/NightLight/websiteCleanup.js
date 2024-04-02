@@ -64,7 +64,10 @@ function addFilters() {
     filter_sort_by.id = "filter_sort_by";
     filter_sort_by.value = "downloads";
 
-    httpGet('https://nightlight.gg/api/v1/packs/authors', setFilterAuthors); // Setting authors as options for filtering
+    window.webFunctions.httpGet('https://nightlight.gg/api/v1/packs/authors') // Setting authors as options for filtering
+    .then((result) => {
+        setFilterAuthors(result);        
+    });
 
     const filter_search = document.getElementById('P0-3');
     filter_search.id = "filter_search";

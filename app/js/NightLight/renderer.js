@@ -1,19 +1,23 @@
 const information = document.getElementById('info');
 information.innerText = `Chrome (v${versions.chrome()})\nNode.js (v${versions.node()})\nElectron (v${versions.electron()})`;
+setWebEmbed();
 
-httpGet('https://nightlight.gg/packs', setWebEmbed);
+function setWebEmbed() {
+    window.webFunctions.httpGet('https://nightlight.gg/packs')
+        .then(data => {
+            if (data == 'null') data = 'Error';
+            console.log("Embedding webpage...");
+            const webview = document.getElementById('webview-container-page');
+            webview.style.display = "block";
+            webview.innerHTML = data;
 
-function setWebEmbed(string, status) {
-    console.log("Embedding webpage...");
-    const webview = document.getElementById('webview-container-page');
-    webview.style.display = "block";
-    webview.innerHTML = string;
+            removeNavigation();
+            addFilters();
+            addNavigation();
 
-    removeNavigation();
-    addFilters();
-    addNavigation();
-
-    loadPackTiles();
+            loadPackTiles();
+        })
+        .catch(error => console.error(error));
 }
 
 function loadPackTiles() {
@@ -22,14 +26,17 @@ function loadPackTiles() {
 
 function createPackTiles(page, per_page, sort_by, author, search, includes, include_mode) {
     console.log("Creating Pack Tiles...")
-    if(author != '') {
+    if (author != '') {
         author = `&author=${author}`;
     }
-    if(search != '') {
+    if (search != '') {
         search = `&search=${search}`;
     }
 
-    httpGet(`https://nightlight.gg/api/v1/packs?page=${page}&per_page=${per_page}&sort_by=${sort_by}${author}${search}&includes=${includes}&include_mode=${include_mode}`, setPackTiles);
+    window.webFunctions.httpGet(`https://nightlight.gg/api/v1/packs?page=${page}&per_page=${per_page}&sort_by=${sort_by}${author}${search}&includes=${includes}&include_mode=${include_mode}`)
+        .then(data => {
+            setPackTiles(data);
+        })
 }
 
 let addedTiles = false;
