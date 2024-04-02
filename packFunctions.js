@@ -146,14 +146,7 @@ async function activatePack(event, url) {
     const zipPath = `${__dirname}/packfiles/${url}/${url}.zip`;
     const targetPath = `${__dirname}/temp/${url}/`;
 
-    const getDirectories = source =>
-        fs.readdirSync(source, { withFileTypes: true })
-            .filter(dirent => dirent.isDirectory())
-            .map(dirent => dirent.name);
-
-    getDirectories(dbd_game_path).forEach(directory => {
-        deleteFile(`${dbd_game_path}/${directory}`);
-    })
+    resetAllPacks();
 
     unzipFile(zipPath, targetPath)
         .then(() => {
@@ -162,6 +155,17 @@ async function activatePack(event, url) {
                     deleteFile(targetPath);
                 })
         });
+}
+
+function resetAllPacks() {
+    const getDirectories = source =>
+        fs.readdirSync(source, { withFileTypes: true })
+            .filter(dirent => dirent.isDirectory())
+            .map(dirent => dirent.name);
+
+    getDirectories(dbd_game_path).forEach(directory => {
+        deleteFile(`${dbd_game_path}/${directory}`);
+    })
 }
 
 function getInstalledPacks() {
@@ -194,6 +198,7 @@ module.exports = {
     deletePack,
     downloadPack,
     activatePack,
+    resetAllPacks,
     getInstalledPacks,
     getPackMetaData
 }

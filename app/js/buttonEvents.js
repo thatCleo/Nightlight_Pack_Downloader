@@ -51,6 +51,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
         }
 
+        else if(event.target.id.includes('reset-all-packs')) {
+            console.log(`Resetting All Packs...`);
+            window.packFunctions.resetAllPacks()
+                .then(() => {
+                    createPackTiles_Manage();
+                })
+        }
+
         else if (event.target.id.includes('button_page_nav')) {
             console.log(`Prev Page: ${current_page}`);
             if (event.target.id.includes('button_page_nav_0')) { // First page Button

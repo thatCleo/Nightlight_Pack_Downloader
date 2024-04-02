@@ -2,7 +2,7 @@ const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('node:path')
 const { httpGet, downloadFile, downloadFileProgress } = require('./webFunctions');
 const { fileExists } = require('./fileFunctions');
-const { deletePack, downloadPack, activatePack, getInstalledPacks, getPackMetaData } = require('./packFunctions');
+const { deletePack, downloadPack, activatePack, resetAllPacks, getInstalledPacks, getPackMetaData } = require('./packFunctions');
 
 const createWindow = () => {
   const win = new BrowserWindow({
@@ -27,6 +27,7 @@ app.whenReady().then(() => {
   ipcMain.handle('packFunctions:downloadPack', downloadPack);
   ipcMain.handle('packFunctions:deletePack', deletePack);
   ipcMain.handle('packFunctions:activatePack', activatePack);
+  ipcMain.handle('packFunctions:resetAllPacks', resetAllPacks);
   ipcMain.handle('packFunctions:getInstalledPacks', getInstalledPacks);
   ipcMain.handle('packFunctions:getPackMetaData', getPackMetaData);
 
