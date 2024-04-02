@@ -4,7 +4,7 @@ It uses the Pack-page from Nightlight as a base to build upon, which means that 
 
 ### Features
 - [x] Textbased search
-- [ ] Filtered search (somewhat done)
+- [ ] Filtered search (able use sort by and filter by author and text)
 - [ ] Shortcuts
 - [x] Store Pages
 - [x] Per Page Selection
@@ -13,4 +13,4 @@ It uses the Pack-page from Nightlight as a base to build upon, which means that 
 - [x] Adding Packs to DBD
 - [x] Reverting Icons to default
 - [ ] Managing Pack Order (which packs have priority over others)
-- [ ] Options (e.g. DBD File path)
+- [x] Options (only DBD File path)
