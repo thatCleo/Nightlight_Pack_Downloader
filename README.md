@@ -10,7 +10,7 @@ It uses the Pack-page from Nightlight as a base to build upon, which means that 
 - [x] Per Page Selection
 - [x] Downloading Packs
 - [ ] Pack Variants
-- [x] Adding Packs to DBD (sort of can't set dbd path yet)
+- [x] Adding Packs to DBD
 - [x] Reverting Icons to default
 - [ ] Managing Pack Order (which packs have priority over others)
 - [ ] Options (e.g. DBD File path)
