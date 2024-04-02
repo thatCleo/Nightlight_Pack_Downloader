@@ -1,13 +1,19 @@
 const { getPathFromDialog, fileExists } = require('./fileFunctions');
 const fs = require('fs');
+const { app } = require('electron');
 
 let dbd_game_path = '';
+
+let currentDirectory = __dirname;
+currentDirectory = currentDirectory.replace('resources/app.asar', '');
+currentDirectory += '/data'
+console.log('Dir: ' + currentDirectory);
 
 loadOptions();
 
 function loadOptions() {
-    if (fileExists(`${__dirname}/options.json`)) {
-        let options = JSON.parse(fs.readFileSync(`${__dirname}/options.json`, 'utf8'));
+    if (fileExists(`${currentDirectory}/options.json`)) {
+        let options = JSON.parse(fs.readFileSync(`${currentDirectory}/options.json`, 'utf8'));
         dbd_game_path = options.dbd_game_path;
     }
 }
@@ -27,7 +33,7 @@ async function setDBDPathFromDialog() {
         const json_string = {
             "dbd_game_path": dbd_game_path
         }
-        fs.writeFileSync(`${__dirname}/options.json`, JSON.stringify(json_string));
+        fs.writeFileSync(`${currentDirectory}/options.json`, JSON.stringify(json_string));
     }
 }
 
@@ -39,7 +45,7 @@ async function setDBDPath(event, value) {
         const json_string = {
             "dbd_game_path": dbd_game_path
         }
-        fs.writeFileSync(`${__dirname}/options.json`, JSON.stringify(json_string));
+        fs.writeFileSync(`${currentDirectory}/options.json`, JSON.stringify(json_string));
     }
 }
 
@@ -47,5 +53,6 @@ module.exports = {
     setDBDPath,
     setDBDPathFromDialog,
     getDBDPath,
-    dbd_game_path
+    dbd_game_path,
+    currentDirectory
 }

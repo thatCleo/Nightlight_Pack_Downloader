@@ -1,8 +1,8 @@
 const { downloadFile } = require('./webFunctions');
 const { fileExists, deleteFile, copyFile, unzipFile } = require('./fileFunctions');
-const { dbd_game_path } = require('./options');
+const { dbd_game_path, currentDirectory } = require('./options');
 const fs = require('fs');
-const dialog = require('electron').dialog;
+const { dialog } = require('electron');
 
 const dbd_icon_path = '/DeadByDaylight/Content/UI/Icons/';
 
@@ -19,14 +19,14 @@ async function deletePack(event, pack_url) {
                 }
             }
 
-            const path = `${__dirname}/packfiles/${pack_url}`;
+            const path = `${currentDirectory}/packfiles/${pack_url}`;
 
             deleteFile(path)
                 .then(() => {
                     const json_string = {
                         "installedPacks": installed_packs
                     }
-                    fs.writeFileSync(`${__dirname}/packfiles/installedPacks.json`, JSON.stringify(json_string));
+                    fs.writeFileSync(`${currentDirectory}/packfiles/installedPacks.json`, JSON.stringify(json_string));
                 })
         })
 }
@@ -36,7 +36,7 @@ async function downloadPack(event, url, packData) {
 
         console.log(`Downloading pack: ${url}`);
         const download_url = `https://nightlight.gg/packs/${url}/download`;
-        const directory_path = `${__dirname}/packfiles/${url}`;
+        const directory_path = `${currentDirectory}/packfiles/${url}`;
         const file_name = `${url}.zip`
         downloadFile(event, download_url, directory_path, file_name)
             .then(() => {
@@ -50,7 +50,7 @@ async function downloadPack(event, url, packData) {
                         const json_string = {
                             "installedPacks": installed_packs
                         }
-                        fs.writeFileSync(`${__dirname}/packfiles/installedPacks.json`, JSON.stringify(json_string));
+                        fs.writeFileSync(`${currentDirectory}/packfiles/installedPacks.json`, JSON.stringify(json_string));
 
                         /* Copy data from cache to pack path */
                         let id;
@@ -84,9 +84,9 @@ async function downloadPack(event, url, packData) {
                                         avatar_id.push(creator.user.avatar_id);
                                         username.push(creator.username);
 
-                                        let creatorAvatar = `${__dirname}/cached_images/placeholder/avatar.png`;
-                                        if (fileExists(`${__dirname}/cached_images/${creator.user.user_id}_${creator.user.avatar_id}/avatar.png`)) {
-                                            creatorAvatar = `${__dirname}/cached_images/${creator.user.user_id}_${creator.user.avatar_id}/avatar.png`;
+                                        let creatorAvatar = `${currentDirectory}/cached_images/placeholder/avatar.png`;
+                                        if (fileExists(`${currentDirectory}/cached_images/${creator.user.user_id}_${creator.user.avatar_id}/avatar.png`)) {
+                                            creatorAvatar = `${currentDirectory}/cached_images/${creator.user.user_id}_${creator.user.avatar_id}/avatar.png`;
                                         }
                                         fs.copyFile(`${creatorAvatar}`, `${directory_path}/${creator.user.user_id}_avatar.png`, (err) => {
                                             console.log(`Copied ${creatorAvatar} to ${directory_path}/${creator.user.user_id}_avatar.png`);
@@ -128,7 +128,7 @@ async function downloadPack(event, url, packData) {
 
                         fs.writeFileSync(`${directory_path}/metadata.json`, JSON.stringify(jsonData));
 
-                        const cachePath = `${__dirname}/cached_images/${id}_${current_version}`;
+                        const cachePath = `${currentDirectory}/cached_images/${id}_${current_version}`;
                         fs.copyFile(`${cachePath}/banner.png`, `${directory_path}/banner.png`, (err) => {
                             if (err) {
                                 console.warn("Error copying file:", err);
@@ -144,10 +144,10 @@ async function downloadPack(event, url, packData) {
 }
 
 async function activatePack(event, url) {
-    const zipPath = `${__dirname}/packfiles/${url}/${url}.zip`;
-    const targetPath = `${__dirname}/temp/${url}/`;
+    const zipPath = `${currentDirectory}/packfiles/${url}/${url}.zip`;
+    const targetPath = `${currentDirectory}/temp/${url}/`;
 
-    if(!fileExists(dbd_game_path + dbd_icon_path)) {
+    if (!fileExists(dbd_game_path + dbd_icon_path)) {
         dialog.showErrorBox("Invalid game path", `The path (${dbd_game_path}) set is invalid. Please verify your Dead by Daylight intsallation path in the options.`);
         return;
     }
@@ -178,8 +178,8 @@ function getInstalledPacks() {
     console.log("Getting installed packs...");
     return new Promise((resolve, reject) => {
         let installed_packs;
-        if (fileExists(`${__dirname}/packfiles/installedPacks.json`)) {
-            installed_packs = JSON.parse(fs.readFileSync(`${__dirname}/packfiles/installedPacks.json`, 'utf8')).installedPacks;
+        if (fileExists(`${currentDirectory}/packfiles/installedPacks.json`)) {
+            installed_packs = JSON.parse(fs.readFileSync(`${currentDirectory}/packfiles/installedPacks.json`, 'utf8')).installedPacks;
         } else {
             installed_packs = [];
         }
@@ -190,8 +190,8 @@ function getInstalledPacks() {
 function getPackMetaData(event, pack_url) {
     return new Promise((resolve, reject) => {
         let pack_data;
-        if (fileExists(`${__dirname}/packfiles/${pack_url}/metadata.json`)) {
-            pack_data = JSON.parse(fs.readFileSync(`${__dirname}/packfiles/${pack_url}/metadata.json`, 'utf8'));
+        if (fileExists(`${currentDirectory}/packfiles/${pack_url}/metadata.json`)) {
+            pack_data = JSON.parse(fs.readFileSync(`${currentDirectory}/packfiles/${pack_url}/metadata.json`, 'utf8'));
         } else {
             pack_data = [];
             console.warn("No metadata.json found for pack: " + pack_url);

@@ -1,7 +1,6 @@
-const { contextBridge, ipcRenderer } = require('electron');
+const { contextBridge, ipcRenderer, app } = require('electron');
 const fs = require('fs');
-let { dbd_game_path } = require('./options');
-
+const { currentDirectory } = require('./options');
 
 contextBridge.exposeInMainWorld('versions', {
   node: () => process.versions.node,
@@ -39,7 +38,7 @@ contextBridge.exposeInMainWorld('packFunctions', {
 })
 
 contextBridge.exposeInMainWorld('directory', {
-  currentPath: () =>  __dirname
+  currentPath: () =>  currentDirectory
 })
 
 contextBridge.exposeInMainWorld('options', {
