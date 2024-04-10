@@ -45,10 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
         else if (event.target.classList.contains('toggle-pack')) {
             const value = event.target.value;
             console.log(`Toggling Pack: ${value}`);
-            window.packFunctions.activatePack(value)
-                .then(() => {
-                    createPackTiles_Manage();
-                })
+            window.packFunctions.activatePack(value);
         }
 
         else if(event.target.id.includes('reset-all-packs')) {
