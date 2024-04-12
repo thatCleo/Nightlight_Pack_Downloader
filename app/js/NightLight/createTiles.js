@@ -16,6 +16,7 @@ function setPackTiles(json) {
   total_packs = allData.data.total_packs;
 
   setNavElemets(packData.length, packs_per_page);
+  console.log(packData.length);
 
   packData.forEach(pack => {
 
@@ -175,7 +176,8 @@ function downloadAvatar(user_id, avatar_id, pack_id) {
 
 function setNavElemets(current_visible_packs, packs_per_page) {
   const navPageInfoArray = document.getElementsByClassName('d-md-inline');
-  if (navPageInfoArray.length == 2) {
+  console.log(navPageInfoArray.length);
+  if (navPageInfoArray.length >= 2) {
     navPageInfo = navPageInfoArray[1].parentElement;
     navPageInfo.innerHTML = `<span class="d-none d-md-inline">Showing ${current_visible_packs} of ${total_packs}</span>`;
   }
