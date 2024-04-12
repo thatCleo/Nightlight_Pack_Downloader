@@ -24,6 +24,10 @@ async function getDBDPath() {
     })
 }
 
+function getDBDPathSync() {
+    return dbd_game_path;
+}
+
 async function setDBDPathFromDialog() {
     console.log(`Setting DBD Path...`);
     const path = await getPathFromDialog();
@@ -53,6 +57,7 @@ module.exports = {
     setDBDPath,
     setDBDPathFromDialog,
     getDBDPath,
+    getDBDPathSync,
     dbd_game_path,
     currentDirectory
 }

@@ -1,6 +1,6 @@
 const { downloadFile } = require('./webFunctions');
 const { fileExists, deleteFile, copyFile, unzipFile } = require('./fileFunctions');
-const { dbd_game_path, currentDirectory } = require('./options');
+const { getDBDPathSync, currentDirectory } = require('./options');
 const fs = require('fs');
 const { dialog } = require('electron');
 
@@ -147,8 +147,8 @@ async function activatePack(event, url) {
     const zipPath = `${currentDirectory}/packfiles/${url}/${url}.zip`;
     const targetPath = `${currentDirectory}/temp/${url}/`;
 
-    if (!fileExists(dbd_game_path + dbd_icon_path)) {
-        dialog.showErrorBox("Invalid game path", `The path (${dbd_game_path}) set is invalid. Please verify your Dead by Daylight intsallation path in the options.`);
+    if (!fileExists(getDBDPathSync() + dbd_icon_path)) {
+        dialog.showErrorBox("Invalid game path", `The path (${getDBDPathSync()}) set is invalid. Please verify your Dead by Daylight intsallation path in the options.`);
         return;
     }
 
@@ -156,7 +156,7 @@ async function activatePack(event, url) {
 
     unzipFile(zipPath, targetPath)
         .then(() => {
-            copyFile(targetPath, dbd_game_path + dbd_icon_path)
+            copyFile(targetPath, getDBDPathSync() + dbd_icon_path)
                 .then(() => {
                     deleteFile(targetPath);
                 })
@@ -169,8 +169,8 @@ function resetAllPacks() {
             .filter(dirent => dirent.isDirectory())
             .map(dirent => dirent.name);
 
-    getDirectories(dbd_game_path + dbd_icon_path).forEach(directory => {
-        deleteFile(`${dbd_game_path + dbd_icon_path}/${directory}`);
+    getDirectories(getDBDPathSync() + dbd_icon_path).forEach(directory => {
+        deleteFile(`${getDBDPathSync() + dbd_icon_path}/${directory}`);
     })
 }
 

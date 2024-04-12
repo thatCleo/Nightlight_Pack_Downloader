@@ -4,6 +4,7 @@ cached_images/
 temp/
 dbd_game_example/
 out/
+data/
 
 # Logs
 logs
