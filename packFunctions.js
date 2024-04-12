@@ -147,7 +147,7 @@ async function activatePack(event, url) {
     const zipPath = `${currentDirectory}/packfiles/${url}/${url}.zip`;
     const targetPath = `${currentDirectory}/temp/${url}/`;
 
-    if (!fileExists(getDBDPathSync() + dbd_icon_path)) {
+    if (!fileExists(getDBDPathSync() + '/DeadByDaylight.exe')) {
         dialog.showErrorBox("Invalid game path", `The path (${getDBDPathSync()}) set is invalid. Please verify your Dead by Daylight intsallation path in the options.`);
         return;
     }
