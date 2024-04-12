@@ -109,6 +109,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
             author = author_defualt;
             document.getElementById('filter_authors').value = author_defualt;
+
+            search = search_default;
+            document.getElementById('filter_search').value = search_default;
         }
 
         else if (event.target.id.includes('button_filter_apply')) {
