@@ -16,7 +16,6 @@ function setPackTiles(json) {
   total_packs = allData.data.total_packs;
 
   setNavElemets(packData.length, packs_per_page);
-  //console.log(packData.length);
 
   packData.forEach(pack => {
 
@@ -30,11 +29,9 @@ function setPackTiles(json) {
 
       if (creator.user != null) {
         console.log(`${pack.id}_${creator.user.user_id}`);
-        avatar_elemets += `<span class="d-flex align-items-center"><img id="pack-avatar-${pack.id}-${creator.user.user_id}" src="${creatorAvatar}" alt="${creatorName}" class="avatar">${creatorName}</span>`;
-        //console.log(`Creator ${creatorName} (${creator.user.user_id}) found.`);
+        avatar_elemets += `<span class="d-flex align-items-center"><img id="pack-avatar-${pack.id}-${creator.user.user_id}" src="${window.directory.currentPath()}/cached_images/${pack.id}_${creator.user.user_id}/avatar.png" alt="${creatorName}" class="avatar">${creatorName}</span>`;
         downloadAvatar(creator.user.user_id, creator.user.avatar_id, pack.id);
       } else {
-        //console.log(`Creator ${creatorName} not found.`);
         avatar_elemets += `<span class="d-flex align-items-center"><img id="pack-avatar-${pack.id}-null" class="avatar">${creatorName}</span>`;
       }
     });
@@ -51,7 +48,6 @@ function setPackTiles(json) {
       else
         packContent += `, ${formatText(pack.has[i])}`
     }
-    // <div class="_1he3xh0"><img src="./cached_images/${pack.id}_${pack.current_version}/banner.png"
     const tile =
       `
 <div id="pack-banner-${pack.id}" class="_1he3xh0"><img src="${window.directory.currentPath()}/cached_images/placeholder/banner.png"
@@ -96,7 +92,7 @@ function setPackTiles(json) {
     packTile.innerHTML = tile;
 
     packview[0].appendChild(packTile);
-    //console.log(`Added tile for ${pack.title}`);
+    console.log(`Added tile for ${pack.title}`);
   });
 }
 
@@ -170,9 +166,9 @@ async function downloadAvatar(user_id, avatar_id, pack_id) {
         await downloadSpecificAvatar(user_id, avatar_id, pack_id);
       }
     } else {
-      const banner_img = document.getElementById(`pack-avatar-${pack_id}-${user_id}`);
-      if (banner_img) {
-        banner_img.src = filePath;
+      const avatar_img = document.getElementById(`pack-avatar-${pack_id}-${user_id}`);
+      if (avatar_img) {
+        avatar_img.src = `${directoryPath}/${fileName}`;
       }
     }
   });
@@ -191,7 +187,6 @@ async function downloadSpecificAvatar(user_id, avatar_id, pack_id) {
         if (avatar_img) {
           avatar_img.src = filePath;
         }
-        // console.log('Avatar downloaded:' + user_id);
       }
     })
 }
@@ -202,20 +197,13 @@ async function downloadDefaultAvatar(user_id, avatar_id, pack_id) {
   const directoryPath = `${window.directory.currentPath()}/cached_images/${user_id}_${avatar_id}`;
   const fileName = `avatar.png`;
 
-  // console.log('Avatar not found. Falling back to default avatar.');
-
   window.webFunctions.downloadFile(downloadURL, directoryPath, fileName)
     .then((filePath) => {
       if (filePath != null) {
         const avatar_img = document.getElementById(`pack-avatar-${pack_id}-${user_id}`);
         if (avatar_img) {
-          //console.log(`Set avatar found for ${pack_id}-${user_id} from ${avatar_img.src} to ${filePath}`);
           avatar_img.src = filePath;
-        }
-        else {
-          //console.log(`No avatar found for ${pack_id}-${user_id}`);
-        }
-      }
+        }}
     })
 }
 
