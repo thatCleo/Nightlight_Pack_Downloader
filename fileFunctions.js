@@ -80,11 +80,17 @@ async function getPathFromDialog() {
     }
 }
 
+const getDirectoriesInPath = source =>
+        fs.readdirSync(source, { withFileTypes: true })
+            .filter(dirent => dirent.isDirectory())
+            .map(dirent => dirent.name);
+
 
 module.exports = {
     fileExists,
     deleteFile,
     copyFile,
     unzipFile,
-    getPathFromDialog
+    getPathFromDialog,
+    getDirectoriesInPath
 }

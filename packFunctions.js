@@ -1,5 +1,5 @@
 const { downloadFile } = require('./webFunctions');
-const { fileExists, deleteFile, copyFile, unzipFile } = require('./fileFunctions');
+const { fileExists, deleteFile, copyFile, unzipFile, getDirectoriesInPath } = require('./fileFunctions');
 const { getDBDPathSync, currentDirectory } = require('./options');
 const fs = require('fs');
 const { dialog } = require('electron');
@@ -161,16 +161,34 @@ async function activatePack(event, url) {
                     deleteFile(targetPath);
                 })
         });
+
+    getDirectoriesInPath(`${currentDirectory}/packfiles`).forEach(directory => {
+        try {
+            deleteFile(`${currentDirectory}/packfiles/${directory}/.active`);
+        }
+        catch (err) {
+            console.log(`Pack '${directory}' is not active. Skipping...`);
+        }
+    })
+
+    const packPath = `${currentDirectory}/packfiles/${url}`;
+    fs.writeFileSync(`${packPath}/.active`, '');
 }
 
 function resetAllPacks() {
-    const getDirectories = source =>
-        fs.readdirSync(source, { withFileTypes: true })
-            .filter(dirent => dirent.isDirectory())
-            .map(dirent => dirent.name);
+    console.log("Resetting all packs...");
 
-    getDirectories(getDBDPathSync() + dbd_icon_path).forEach(directory => {
+    getDirectoriesInPath(getDBDPathSync() + dbd_icon_path).forEach(directory => {
         deleteFile(`${getDBDPathSync() + dbd_icon_path}/${directory}`);
+    })
+
+    getDirectoriesInPath(`${currentDirectory}/packfiles`).forEach(directory => {
+        try {
+            deleteFile(`${currentDirectory}/packfiles/${directory}/.active`);
+        }
+        catch (err) {
+            console.log(`Pack '${directory}' is not active. Skipping...`);
+        }
     })
 }
 
