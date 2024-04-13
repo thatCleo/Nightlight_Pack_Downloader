@@ -205,6 +205,19 @@ function getInstalledPacks() {
     })
 }
 
+function getActivePacks() {
+    console.log("Getting active packs...");
+    return new Promise((resolve, reject) => {
+        let active_packs = [];
+        getDirectoriesInPath(`${currentDirectory}/packfiles`).forEach(directory => {
+            if (fileExists(`${currentDirectory}/packfiles/${directory}/.active`)) {
+                active_packs.push(directory);
+            }
+        })
+        resolve(active_packs);
+    })
+}
+
 function getPackMetaData(event, pack_url) {
     return new Promise((resolve, reject) => {
         let pack_data;
@@ -224,5 +237,6 @@ module.exports = {
     activatePack,
     resetAllPacks,
     getInstalledPacks,
+    getActivePacks,
     getPackMetaData
 }

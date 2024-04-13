@@ -44,13 +44,30 @@ document.addEventListener('DOMContentLoaded', function () {
 
         else if (event.target.classList.contains('toggle-pack')) {
             const value = event.target.value;
-            console.log(`Toggling Pack: ${value}`);
+            console.log(`Activating Pack: ${value}`);
             window.packFunctions.activatePack(value);
+
+            const buttons = document.getElementsByClassName('manage-button-pack-active');
+            for(let i = 0; i < buttons.length; i++) {
+                buttons[i].innerText = 'Activate Pack';
+                buttons[i].classList.remove('manage-button-pack-active');
+            }
+
+            if (!event.target.classList.contains('manage-button-pack-active')) {
+                event.target.classList.add('manage-button-pack-active');
+                event.target.innerText = 'Pack Active';
+            }
         }
 
         else if(event.target.id.includes('reset-all-packs')) {
             console.log(`Resetting All Packs...`);
             window.packFunctions.resetAllPacks()
+
+            const buttons = document.getElementsByClassName('manage-button-pack-active');
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].innerText = 'Activate Pack';
+                buttons[i].classList.remove('manage-button-pack-active');
+            }
         }
 
         else if(event.target.classList.contains('set-dbd-path')) {

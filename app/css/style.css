@@ -100,6 +100,11 @@ body {
     margin: 0px 5px;
 }
 
+.manage-button-pack-active {
+    background-color: #084555;
+    border-color: #073c49;
+}
+
 .manage-delete-button {
     background-color: #701512;
     border-color: #6b1411;

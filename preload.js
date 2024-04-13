@@ -34,6 +34,7 @@ contextBridge.exposeInMainWorld('packFunctions', {
   activatePack: (url) => ipcRenderer.invoke('packFunctions:activatePack', url),
   resetAllPacks: () => ipcRenderer.invoke('packFunctions:resetAllPacks'),
   getInstalledPacks: () => ipcRenderer.invoke('packFunctions:getInstalledPacks'),
+  getActivePacks: () => ipcRenderer.invoke('packFunctions:getActivePacks'),
   getPackMetaData: (url) => ipcRenderer.invoke('packFunctions:getPackMetaData', url)
 })
 
