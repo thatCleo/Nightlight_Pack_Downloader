@@ -4,7 +4,7 @@ const options_template = `
     <main id="options_main" class="container px-4">
         <div><strong class="text-muted">Icon Toolbox</strong>
             <h1 class="mb-2">Options</h1>
-            <div class="text-muted mb-3">Manage Options like you DBD Path.</div>
+            <div class="text-muted mb-3">Manage Options like your DBD Path.</div>
         </div>
     </main>
     <div id="alert_bar_container"></div>
