@@ -88,21 +88,18 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             else if (event.target.id.includes('button_page_nav_1')) { // Previous Page Button
                 current_page--;
+                enablePageNavButtons();
                 if (current_page <= 1) {
                     disablePageNavButtonsPrev();
-                } else {
-                    enablePageNavButtons();
                 }
             }
             else if (event.target.id.includes('button_page_nav_2')) { // Next Page Button
+                enablePageNavButtons();
                 if (current_page < total_pages) {
                     current_page++;
                 }
                 if (current_page >= total_pages) {
                     disablePageNavButtonsNext();
-                }
-                else {
-                    enablePageNavButtons();
                 }
             }
             else if (event.target.id.includes('button_page_nav_3')) { // Last Page Button
