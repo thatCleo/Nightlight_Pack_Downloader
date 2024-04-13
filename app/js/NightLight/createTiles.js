@@ -16,7 +16,7 @@ function setPackTiles(json) {
   total_packs = allData.data.total_packs;
 
   setNavElemets(packData.length, packs_per_page);
-  console.log(packData.length);
+  //console.log(packData.length);
 
   packData.forEach(pack => {
 
@@ -27,10 +27,14 @@ function setPackTiles(json) {
     pack.creators.forEach(creator => {
       const creatorAvatar = `${window.directory.currentPath()}/cached_images/placeholder/avatar.png`;
       const creatorName = creator.username;
+
       if (creator.user != null) {
-        downloadAvatar(creator.user.user_id, creator.user.avatar_id, pack.id);
+        console.log(`${pack.id}_${creator.user.user_id}`);
         avatar_elemets += `<span class="d-flex align-items-center"><img id="pack-avatar-${pack.id}-${creator.user.user_id}" src="${creatorAvatar}" alt="${creatorName}" class="avatar">${creatorName}</span>`;
+        //console.log(`Creator ${creatorName} (${creator.user.user_id}) found.`);
+        downloadAvatar(creator.user.user_id, creator.user.avatar_id, pack.id);
       } else {
+        //console.log(`Creator ${creatorName} not found.`);
         avatar_elemets += `<span class="d-flex align-items-center"><img id="pack-avatar-${pack.id}-null" class="avatar">${creatorName}</span>`;
       }
     });
@@ -92,7 +96,7 @@ function setPackTiles(json) {
     packTile.innerHTML = tile;
 
     packview[0].appendChild(packTile);
-    console.log(`Added tile for ${pack.title}`);
+    //console.log(`Added tile for ${pack.title}`);
   });
 }
 
@@ -147,24 +151,24 @@ function downloadBanner(pack_id, current_version) {
   });
 }
 
-function downloadAvatar(user_id, avatar_id, pack_id) {
-  const downloadURL = `https://cdn.nightlight.gg/avatars/${user_id}/${avatar_id}/60.png`;
+async function downloadAvatar(user_id, avatar_id, pack_id) {
+
+  console.log(`${pack_id}_${user_id}`);
+  let defaultAvatar = false;
+  if (avatar_id == null) {
+    defaultAvatar = true;
+  }
+
   const directoryPath = `${window.directory.currentPath()}/cached_images/${user_id}_${avatar_id}`;
   const fileName = `avatar.png`;
 
-  if (avatar_id == null) {
-    return;
-  }
-
-  fs.access(`${directoryPath}/${fileName}`, fs.constants.F_OK, (err) => {
+  fs.access(`${directoryPath}/${fileName}`, fs.constants.F_OK, async (err) => {
     if (err) {
-      window.webFunctions.downloadFile(downloadURL, directoryPath, fileName)
-        .then((filePath) => {
-          const banner_img = document.getElementById(`pack-avatar-${pack_id}-${user_id}`);
-          if (banner_img) {
-            banner_img.src = filePath;
-          }
-        })
+      if(defaultAvatar) {
+        await downloadDefaultAvatar(user_id, avatar_id, pack_id);
+      } else {
+        await downloadSpecificAvatar(user_id, avatar_id, pack_id);
+      }
     } else {
       const banner_img = document.getElementById(`pack-avatar-${pack_id}-${user_id}`);
       if (banner_img) {
@@ -174,9 +178,50 @@ function downloadAvatar(user_id, avatar_id, pack_id) {
   });
 }
 
+async function downloadSpecificAvatar(user_id, avatar_id, pack_id) {
+
+  const downloadURL = `https://cdn.nightlight.gg/avatars/${user_id}/${avatar_id}/60.png`;
+  const directoryPath = `${window.directory.currentPath()}/cached_images/${user_id}_${avatar_id}`;
+  const fileName = `avatar.png`;
+
+  window.webFunctions.downloadFile(downloadURL, directoryPath, fileName)
+    .then((filePath) => {
+      if (filePath != null) {
+        const avatar_img = document.getElementById(`pack-avatar-${pack_id}-${user_id}`);
+        if (avatar_img) {
+          avatar_img.src = filePath;
+        }
+        // console.log('Avatar downloaded:' + user_id);
+      }
+    })
+}
+
+async function downloadDefaultAvatar(user_id, avatar_id, pack_id) {
+
+  const downloadURL = `https://cdn.nightlight.gg/avatars/default/_.png`;
+  const directoryPath = `${window.directory.currentPath()}/cached_images/${user_id}_${avatar_id}`;
+  const fileName = `avatar.png`;
+
+  // console.log('Avatar not found. Falling back to default avatar.');
+
+  window.webFunctions.downloadFile(downloadURL, directoryPath, fileName)
+    .then((filePath) => {
+      if (filePath != null) {
+        const avatar_img = document.getElementById(`pack-avatar-${pack_id}-${user_id}`);
+        if (avatar_img) {
+          //console.log(`Set avatar found for ${pack_id}-${user_id} from ${avatar_img.src} to ${filePath}`);
+          avatar_img.src = filePath;
+        }
+        else {
+          //console.log(`No avatar found for ${pack_id}-${user_id}`);
+        }
+      }
+    })
+}
+
 function setNavElemets(current_visible_packs, packs_per_page) {
   const navPageInfoArray = document.getElementsByClassName('d-md-inline');
-  console.log(navPageInfoArray.length);
+  //console.log(navPageInfoArray.length);
   if (navPageInfoArray.length >= 2) {
     navPageInfo = navPageInfoArray[1].parentElement;
     navPageInfo.innerHTML = `<span class="d-none d-md-inline">Showing ${current_visible_packs} of ${total_packs}</span>`;

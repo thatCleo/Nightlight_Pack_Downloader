@@ -42,7 +42,7 @@ async function httpGet(event, url) {
 }
 
 async function downloadFile(event, downloadURL, directoryPath, fileName) {
-    console.log(`Downloading ${fileName}`);
+    //console.log(`Downloading ${fileName}`);
     try {
         const response = await fetch(downloadURL);
         const arrayBuffer = await response.arrayBuffer();
@@ -57,10 +57,10 @@ async function downloadFile(event, downloadURL, directoryPath, fileName) {
         const filePath = `${directoryPath}/${fileName}`;
         fs.writeFileSync(filePath, buffer);
 
-        console.log(`File "${fileName}" downloaded successfully into ${directoryPath}`);
+        //console.log(`File "${fileName}" downloaded successfully into ${directoryPath}`);
         return filePath;
     } catch (error) {
-        console.error('Error downloading file:', error);
+        //console.error('Error downloading file:', error);
         return null;
     }
 }
