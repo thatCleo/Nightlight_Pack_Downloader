@@ -15,4 +15,4 @@ It uses the Nightlight API / Website to retrive avalible packs and download cont
 - [ ] Managing Pack Order (which packs have priority over others)
 - [x] Options (only DBD File path)
 
-_since the officion linux port for the nightlight app is going to be released for public testing farly soon, I won't continue developing this replacement for it_
+_since the officion linux port for the nightlight app is going to be released for public testing farly soon, I won't continue actively developing this replacement for it. I might however still do some things here and there_
