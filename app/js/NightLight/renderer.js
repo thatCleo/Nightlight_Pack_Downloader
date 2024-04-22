@@ -8,7 +8,7 @@ function setWebEmbed() {
             if (data == 'null') data = 'Error';
             console.log("Embedding webpage...");
             const webview = document.getElementById('webview-container-page');
-            webview.style.display = "block";
+            // webview.style.display = "block";
             webview.innerHTML = data;
 
             removeNavigation();
