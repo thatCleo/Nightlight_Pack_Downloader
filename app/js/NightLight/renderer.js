@@ -3,21 +3,15 @@ information.innerText = `Chrome (v${versions.chrome()})\nNode.js (v${versions.no
 setWebEmbed();
 
 function setWebEmbed() {
-    window.webFunctions.httpGet('https://nightlight.gg/packs')
-        .then(data => {
-            if (data == 'null') data = 'Error';
-            console.log("Embedding webpage...");
-            const webview = document.getElementById('webview-container-page');
-            webview.style.display = "block";
-            webview.innerHTML = data;
+    webview.style.display = "block";
+    
 
-            removeNavigation();
-            addFilters();
-            addNavigation();
+    fixStyling();
 
-            loadPackTiles();
-        })
-        .catch(error => console.error(error));
+    addFilters();
+    addNavigation();
+
+    loadPackTiles();
 }
 
 function loadPackTiles() {
@@ -38,5 +32,3 @@ function createPackTiles(page, per_page, sort_by, author, search, includes, incl
             setPackTiles(data);
         })
 }
-
-let addedTiles = false;
