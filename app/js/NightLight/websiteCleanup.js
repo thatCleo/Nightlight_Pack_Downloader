@@ -90,8 +90,6 @@ function addNavigation() {
         if (i >= 4) {
             buttons[i].id = `button_page_nav button_page_nav_${i - 4}`;
             buttons[i].className += " button_page_nav";
-            buttons[i].childNodes[0].id += `button_page_nav button_page_nav_${i - 4}`
-            buttons[i].childNodes[0].childNodes[0].id += `button_page_nav button_page_nav_${i - 4}`
         }
     }
 }
