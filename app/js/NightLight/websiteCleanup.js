@@ -20,10 +20,6 @@ function fixStyling() {
 }
 
 function addFilters() {
-    const filter_apply = document.getElementsByClassName('lh-1');
-    filter_apply[0].id = "button_filter_apply";
-    filter_apply[1].id = "button_filter_reload";
-
     const filter_sort_by = document.getElementById('filter_sort_by');
     const options_sort_by = `
     <option value="title">Name</option>

@@ -10,8 +10,8 @@ const nightlight_template = `
                 <div class="col-12">
                     <div class="d-flex align-items-center mb-2 gap-2 flex-wrap">
                         <h5 class="mb-0 py-2">Filters</h5>
-                        <div class="btn btn-sm lh-1 disabled" role="button">Apply</div>
-                        <div class="btn btn-sm lh-1" role="button">Refresh</div>
+                        <div class="btn btn-sm lh-1 disabled" id="button_filter_apply" role="button">Apply</div>
+                        <div class="btn btn-sm lh-1" id="button_filter_reload" role="button">Refresh</div>
                         <div class="btn btn-secondary btn-sm me-auto lh-1 disabled" role="button">Reset</div>
                         <div class="align-items-center d-flex gap-2"><label class="fw-bold d-flex align-items-center">Shortcuts</label>
                             <div class="btn btn-secondary btn-sm lh-1" role="button">Portraits Only</div>
