@@ -4,7 +4,7 @@ const https = require('https');
 const { fileExists } = require('./fileFunctions');
 
 async function httpGet(event, url) {
-    console.log(url)
+    console.log(`[httpGet] Fetching ${url}...`);
     return new Promise((resolve, reject) => {
         https.get(url, { headers: { 'User-Agent': 'Nightlight_Pack_Downloader' } }, (res) => {
             const { statusCode } = res;
@@ -18,7 +18,7 @@ async function httpGet(event, url) {
                     `Status Code: ${statusCode}`);
             }
             if (error) {
-                console.error(error.message);
+                console.error(`[httpGet] Error: ${error.message}`);
                 // Consume response data to free up memory
                 res.resume();
                 return;
@@ -36,13 +36,13 @@ async function httpGet(event, url) {
                 }
             });
         }).on('error', (e) => {
-            console.error(`Got error: ${e.message}`);
+            console.error(`[httpGet] Got error: ${e.message}`);
         });
     })
 }
 
 async function downloadFile(event, downloadURL, directoryPath, fileName) {
-    //console.log(`Downloading ${fileName}`);
+    //console.log(`[downloadFile] Downloading ${fileName}`);
     try {
         const response = await fetch(downloadURL);
         const arrayBuffer = await response.arrayBuffer();
@@ -50,17 +50,17 @@ async function downloadFile(event, downloadURL, directoryPath, fileName) {
         const buffer = Buffer.from(uint8Array);
 
         if (!fs.existsSync(`${directoryPath}/`)) {
-            console.log(`Directory "${directoryPath}" does not exist. Creating...`);
+            console.log(`[downloadFile] Directory "${directoryPath}" does not exist. Creating...`);
             fs.mkdirSync(`${directoryPath}/`, { recursive: true });
         }
 
         const filePath = `${directoryPath}/${fileName}`;
         fs.writeFileSync(filePath, buffer);
 
-        //console.log(`File "${fileName}" downloaded successfully into ${directoryPath}`);
+        //console.log(`[downloadFile] File "${fileName}" downloaded successfully into ${directoryPath}`);
         return filePath;
     } catch (error) {
-        //console.error('Error downloading file:', error);
+        //console.error('[downloadFile] Error downloading file:', error);
         return null;
     }
 }

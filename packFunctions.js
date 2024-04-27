@@ -7,7 +7,7 @@ const { dialog } = require('electron');
 const dbd_icon_path = '/DeadByDaylight/Content/UI/Icons/';
 
 async function deletePack(event, pack_url) {
-    console.log(`Deleting ${pack_url}`);
+    console.log(`[deletePack] Deleting ${pack_url}`);
 
     getInstalledPacks()
         .then(data => {
@@ -25,7 +25,6 @@ async function deletePack(event, pack_url) {
 
             deleteFile(path);
 
-            console.log('');
                     const json_string = {
                         "installedPacks": new_installed_packs,
                     }
@@ -36,7 +35,7 @@ async function deletePack(event, pack_url) {
 async function downloadPack(event, url, packData) {
     return new Promise((resolve, reject) => {
 
-        console.log(`Downloading pack: ${url}`);
+        console.log(`[downloadPack] Downloading pack: ${url}`);
         const download_url = `https://nightlight.gg/packs/${url}/download`;
         const directory_path = `${currentDirectory}/packfiles/${url}`;
         const file_name = `${url}.zip`
@@ -45,7 +44,7 @@ async function downloadPack(event, url, packData) {
 
                 getInstalledPacks()
                     .then((installed_packs) => {
-                        console.log(`Installed packs: ${installed_packs}`);
+                        console.log(`[downloadPack] Installed packs: ${installed_packs}`);
                         if (!installed_packs.includes(url)) {
                             installed_packs.push(url);
                         }
@@ -91,9 +90,9 @@ async function downloadPack(event, url, packData) {
                                             creatorAvatar = `${currentDirectory}/cached_images/${creator.user.user_id}_${creator.user.avatar_id}/avatar.png`;
                                         }
                                         fs.copyFile(`${creatorAvatar}`, `${directory_path}/${creator.user.user_id}_avatar.png`, (err) => {
-                                            console.log(`Copied ${creatorAvatar} to ${directory_path}/${creator.user.user_id}_avatar.png`);
+                                            console.log(`[downloadPack] Copied ${creatorAvatar} to ${directory_path}/${creator.user.user_id}_avatar.png`);
                                             if (err) {
-                                                console.warn("Error copying file:", err);
+                                                console.warn("[downloadPack] Error copying file:", err);
                                             }
                                         })
                                         avatar_path.push(creatorAvatar);
@@ -135,10 +134,10 @@ async function downloadPack(event, url, packData) {
                             if (err) {
                                 console.warn("Error copying file:", err);
                             } else {
-                                console.log(`Copied ${cachePath}/banner.png to ${directory_path}/banner.png`);
+                                console.log(`[downloadPack] Copied ${cachePath}/banner.png to ${directory_path}/banner.png`);
                             }
                         })
-                        console.log(`Pack ${url} downloaded successfully`);
+                        console.log(`[downloadPack] Pack ${url} downloaded successfully`);
                         resolve(url);
                     })
             });
@@ -171,21 +170,12 @@ async function activatePack(event, url) {
                 })
         });
 
-    getDirectoriesInPath(`${currentDirectory}/packfiles`).forEach(directory => {
-        try {
-            deleteFile(`${currentDirectory}/packfiles/${directory}/.active`);
-        }
-        catch (err) {
-            console.log(`Pack '${directory}' is not active. Skipping...`);
-        }
-    })
-
     const packPath = `${currentDirectory}/packfiles/${url}`;
     fs.writeFileSync(`${packPath}/.active`, '');
 }
 
 function resetAllPacks() {
-    console.log("Resetting all packs...");
+    console.log("[resetAllPacks] Resetting all packs...");
 
     getDirectoriesInPath(getDBDPathSync() + dbd_icon_path).forEach(directory => {
         deleteFile(`${getDBDPathSync() + dbd_icon_path}/${directory}`);
@@ -196,13 +186,13 @@ function resetAllPacks() {
             deleteFile(`${currentDirectory}/packfiles/${directory}/.active`);
         }
         catch (err) {
-            console.log(`Pack '${directory}' is not active. Skipping...`);
+            console.log(`[resetAllPacks] Pack '${directory}' is not active. Skipping...`);
         }
     })
 }
 
 function getInstalledPacks() {
-    console.log("Getting installed packs...");
+    console.log("[getInstalledPacks] Getting installed packs...");
     return new Promise((resolve, reject) => {
         let installed_packs;
         if (fileExists(`${currentDirectory}/packfiles/installedPacks.json`)) {
@@ -215,7 +205,7 @@ function getInstalledPacks() {
 }
 
 function getActivePacks() {
-    console.log("Getting active packs...");
+    console.log("[getActivePacks] Getting active packs...");
     return new Promise((resolve, reject) => {
         let active_packs = [];
         getDirectoriesInPath(`${currentDirectory}/packfiles`).forEach(directory => {
@@ -234,7 +224,7 @@ function getPackMetaData(event, pack_url) {
             pack_data = JSON.parse(fs.readFileSync(`${currentDirectory}/packfiles/${pack_url}/metadata.json`, 'utf8'));
         } else {
             pack_data = [];
-            console.warn("No metadata.json found for pack: " + pack_url);
+            console.warn("[getPackMetaData] No metadata.json found for pack: " + pack_url);
         }
         resolve(pack_data);
     })
