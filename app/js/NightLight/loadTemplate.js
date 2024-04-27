@@ -4,7 +4,7 @@ const nightlight_template = `
         <div><strong class="text-muted">Icon Toolbox</strong>
             <h1 class="mb-2">Custom Icon Packs</h1>
             <div class="text-muted mb-3">A library of community made custom Icon Packs for Dead by Daylight to
-                download and install</div>
+                download and install from Nightlight.gg</div>
             <form class="row"><input type="submit" hidden="">
                 <div class="col-12">
                     <div class="d-flex align-items-center mb-2 gap-2 flex-wrap">
@@ -77,40 +77,13 @@ const nightlight_template = `
             </div>
         </div>
     </main>
-    <div id="chartjs-tooltip" class="m8689i6"></div>
-    <div id="alert_bar_container"></div>
     <footer class="footer pb-3 nl-footer">
         <div class="container px-4">
             <div class="row">
                 <div class="col-xs-4 col-md-4">
-                    <h3>Night<span class="text-nl">Light</span> <small class="text-muted fs-5">Stats &amp; Icon
-                            Packs</small></h3>
-                    <p class="text-muted mb-2">Icon Pack Tool &amp; Dead by Daylight Stat Tracker. Stats are based
-                        on the automatic recognition of personal match scoreboards and are aggregated for Community
-                        stats. Built by<!-- --> <a href="https://boop.pro" rel="noreferrer" target="_blank">BritishBoop</a> <!-- -->© 2021-2024</p>
-                    <p class="text-muted"><small>Not affiliated with Behaviour Interactive or Dead by Daylight™ in
-                            any way</small></p>
-                </div>
-                <div class="col-xs-3 col-md-3 align-middle">
-                    <h5 class="mb-1">Explore</h5>
-                    <ul class="ps-3 ps-sm-3">
-                        <li><a href="/packs">Icon Packs</a></li>
-                        <li><a href="/buildchallenge">Build Challenge</a></li>
-                        <li><a href="/perks">Perk &amp; Build Stats</a></li>
-                        <li><a href="/killers">Killer Stats</a></li>
-                        <li><a href="/supporter">Supporters</a></li>
-                    </ul>
-                </div>
-                <div class="col-xs-5 col-md-5 col-lg-4 offset-lg-1 col-xl-4 offset-xl-1 mt-3 mt-sm-0">
-                    <h5 class="mb-1">Useful Links</h5>
-                    <ul class="text-muted ps-3 ps-sm-2">
-                        <li><a href="https://nightlight.gg/discord" rel="nofollow noopener noreferrer" target="_blank">Discord</a> <!-- -->- Help, Requests &amp; Bug Reports</li>
-                        <li><a href="https://docs.nightlight.gg" target="_blank" rel="noreferrer">Docs</a> <!-- -->-
-                            Information &amp; Guides</li>
-                        <li><a href="/privacy">Privacy</a> - Privacy Policy</li>
-                        <li><a href="/about">About</a> - Contact &amp; Project Info</li>
-                        <li><a href="https://ko-fi.com/britishboop" rel="nofollow noopener noreferrer" target="_blank">Ko-fi</a> <!-- -->- Support my work</li>
-                    </ul>
+                    <h3>Night<span class="text-nl">Light</span> <small class="text-muted fs-5">Icon Packs</small></h3>
+                    <p class="text-muted mb-2">Icon Pack Tool. Built on top of Nightlight.gg by BritishBoop</p>
+                    <p class="text-muted"><small>Not affiliated with Behaviour Interactive, Dead by Daylight™ of Nightlight.gg in any way</small></p>
                 </div>
             </div>
         </div>
