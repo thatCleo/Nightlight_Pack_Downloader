@@ -151,6 +151,10 @@ path, svg {
     border-color: #313131;
 }
 
+.button_icons_revert {
+    padding: 7px 12px 8px 12px !important; 
+}
+
 /* changes to nightlight-styles.css */
 
 .container {

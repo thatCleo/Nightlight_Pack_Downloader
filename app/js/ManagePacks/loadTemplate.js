@@ -5,7 +5,7 @@ const manage_packs_template = `
         <div><strong class="text-muted">Icon Toolbox</strong>
             <h1 class="mb-2">Manage Icon Packs</h1>
             <div class="text-muted mb-3">Manage you downloaded packs.</div>
-            <button id="reset-all-packs" class="btn btn-sm w-100 d-block">Revert to default Icons</button>
+            <button id="reset-all-packs" class="button_icons_revert btn btn-sm w-100 d-block">Revert to default Icons</button>
         </div>
     </main>
     <div id="alert_bar_container"></div>
