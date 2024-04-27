@@ -24,7 +24,7 @@ function addFilters() {
     filter_apply[0].id = "button_filter_apply";
     filter_apply[1].id = "button_filter_reload";
 
-    const filter_sort_by = document.getElementById('P0-1');
+    const filter_sort_by = document.getElementById('filter_sort_by');
     const options_sort_by = `
     <option value="title">Name</option>
     <option value="downloads">Downloads</option>
@@ -42,9 +42,6 @@ function addFilters() {
     .then((result) => {
         setFilterAuthors(result);        
     });
-
-    const filter_search = document.getElementById('P0-3');
-    filter_search.id = "filter_search";
 }
 
 function setFilterAuthors(data) {
@@ -55,7 +52,7 @@ function setFilterAuthors(data) {
     const allData = JSON.parse(data);
     const authors = allData.data;
 
-    const filter_authors = document.getElementById('P0-2');
+    const filter_authors = document.getElementById('sort_by_author');
 
     let options_authors = '<option value=""></option>';
 

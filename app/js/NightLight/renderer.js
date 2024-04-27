@@ -12,6 +12,7 @@ function setWebEmbed() {
 }
 
 function loadPackTiles() {
+    console.log("Loading Pack Tiles...");
     createPackTiles(current_page, packs_per_page, sort_by, author, search, '', 'any');
 }
 

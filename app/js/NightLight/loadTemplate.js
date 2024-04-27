@@ -23,13 +23,13 @@ const nightlight_template = `
                         <div class="_1x345eg3">
                             <div class="row g-2" id="row_1">
                                 <div class="col-12 col-md-6 col-lg-3">
-                                    <div class="cell align-items-center d-flex gap-2"><label for=":R6lca9:" class="fw-bold d-flex align-items-center">Sort</label><select class="form-select" aria-label="Sort" id=":R6lca9:" autocomplete="off"></select></div>
+                                    <div class="cell align-items-center d-flex gap-2"><label for=":R6lca9:" class="fw-bold d-flex align-items-center">Sort</label><select class="form-select" aria-label="Sort" id="filter_sort_by" autocomplete="off"></select></div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-4">
-                                    <div class="cell align-items-center d-flex gap-2"><label for=":Ralca9:" class="fw-bold d-flex align-items-center">Author</label><select class="form-select" aria-label="Author" id=":Ralca9:" autocomplete="off"></select></div>
+                                    <div class="cell align-items-center d-flex gap-2"><label for=":Ralca9:" class="fw-bold d-flex align-items-center">Author</label><select class="form-select" aria-label="Author" id="sort_by_author" autocomplete="off"></select></div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-5">
-                                    <div class="cell align-items-center d-flex gap-2"><label for=":Relca9:" class="fw-bold d-flex align-items-center">Search</label><input type="text" class="form-control" id=":Relca9:" name="search" autocomplete="off" maxlength="50" placeholder="Title, URL, or description..." style="padding:.3rem 1rem .3rem .5rem;font-size:14px;border-radius:2.5px" value=""></div>
+                                    <div class="cell align-items-center d-flex gap-2"><label for=":Relca9:" class="fw-bold d-flex align-items-center">Search</label><input type="text" class="form-control" id="filter_search" name="search" autocomplete="off" maxlength="50" placeholder="Title, URL, or description..." style="padding:.3rem 1rem .3rem .5rem;font-size:14px;border-radius:2.5px" value=""></div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-2 col-xl-2">
                                     <div class="cell d-flex gap-2 h-100 align-items-center"></div>
