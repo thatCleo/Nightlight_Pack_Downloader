@@ -25,10 +25,10 @@ async function deletePack(event, pack_url) {
 
             deleteFile(path);
 
-                    const json_string = {
-                        "installedPacks": new_installed_packs,
-                    }
-                    fs.writeFileSync(`${currentDirectory}/packfiles/installedPacks.json`, JSON.stringify(json_string));
+            const json_string = {
+                "installedPacks": new_installed_packs,
+            }
+            fs.writeFileSync(`${currentDirectory}/packfiles/installedPacks.json`, JSON.stringify(json_string));
         })
 }
 
@@ -148,17 +148,7 @@ async function activatePack(event, url) {
     const zipPath = `${currentDirectory}/packfiles/${url}/${url}.zip`;
     const targetPath = `${currentDirectory}/temp/${url}/`;
 
-    if (!fileExists(getDBDPathSync() + '/DeadByDaylight.exe')) {
-        const path = getDBDPathSync();
-
-        if(path == '') {
-            dialog.showErrorBox("No game path", `Please set your Dead by Daylight installation path in the options.`);
-            return;
-        }
-
-        dialog.showErrorBox("Invalid game path", `The path (${path}) set is invalid. Please verify your Dead by Daylight installation path in the options.`);
-        return;
-    }
+    if(!checkForValidDDPath()) return;
 
     resetAllPacks();
 
@@ -177,9 +167,15 @@ async function activatePack(event, url) {
 function resetAllPacks() {
     console.log("[resetAllPacks] Resetting all packs...");
 
-    getDirectoriesInPath(getDBDPathSync() + dbd_icon_path).forEach(directory => {
-        deleteFile(`${getDBDPathSync() + dbd_icon_path}/${directory}`);
-    })
+    if(!checkForValidDDPath()) return;
+
+    try {
+        getDirectoriesInPath(getDBDPathSync() + dbd_icon_path).forEach(directory => {
+            deleteFile(`${getDBDPathSync() + dbd_icon_path}/${directory}`);
+        })
+    } catch (err) {
+        console.log("[resetAllPacks] Error deleting files: " + err);
+    }
 
     getDirectoriesInPath(`${currentDirectory}/packfiles`).forEach(directory => {
         try {
@@ -228,6 +224,21 @@ function getPackMetaData(event, pack_url) {
         }
         resolve(pack_data);
     })
+}
+
+function checkForValidDDPath() {
+    if (!fileExists(getDBDPathSync() + '/DeadByDaylight.exe')) {
+        const path = getDBDPathSync();
+
+        if (path == '') {
+            dialog.showErrorBox("No game path", `Please set your Dead by Daylight installation path in the options.`);
+            return false;
+        }
+
+        dialog.showErrorBox("Invalid game path", `The path (${path}) set is invalid. Please verify your Dead by Daylight installation path in the options.`);
+        return false;
+    }
+    return true;
 }
 
 module.exports = {
