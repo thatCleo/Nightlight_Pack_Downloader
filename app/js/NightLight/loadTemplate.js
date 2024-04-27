@@ -31,10 +31,10 @@ const nightlight_template = `
                                     <div class="cell align-items-center d-flex gap-2"><label for=":Relca9:" class="fw-bold d-flex align-items-center">Search</label><input type="text" class="form-control" id="filter_search" name="search" autocomplete="off" maxlength="50" placeholder="Title, URL, or description..." style="padding:.3rem 1rem .3rem .5rem;font-size:14px;border-radius:2.5px" value=""></div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-2 col-xl-2">
-                                    <div class="cell d-flex gap-2 h-100 align-items-center"></div>
+                                    <div class="cell d-flex gap-2 h-100 align-items-center hidden"></div>
                                 </div>
                                 <div class="col-12 col-md-6">
-                                    <div class="cell d-flex gap-1 justify-content-between align-items-center">
+                                    <div class="cell d-flex gap-1 justify-content-between align-items-center hidden">
                                         <strong class="d-flex flex-column align-items-center">Includes <div class="d-flex">
                                                 <div role="button" class="_15ryw141 _15ryw140 _15ryw144"></div>
                                                 <strong class="_1gc8fw10 _1gc8fw12"></strong>
@@ -43,7 +43,7 @@ const nightlight_template = `
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-4">
-                                    <div class="cell align-items-center d-flex gap-2 h-100"><label for=":Rqlca9:" class="fw-bold d-flex align-items-center">Version</label><select class="form-select" aria-label="Version" id=":Rqlca9:" autocomplete="off"></select></div>
+                                    <div class="cell align-items-center d-flex gap-2 h-100 hidden"><label for=":Rqlca9:" class="fw-bold d-flex align-items-center">Version</label><select class="form-select" aria-label="Version" id=":Rqlca9:" autocomplete="off"></select></div>
                                 </div>
                             </div>
                         </div>
