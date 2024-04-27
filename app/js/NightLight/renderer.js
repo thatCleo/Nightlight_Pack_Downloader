@@ -3,9 +3,6 @@ information.innerText = `Chrome (v${versions.chrome()})\nNode.js (v${versions.no
 setWebEmbed();
 
 function setWebEmbed() {
-    webview.style.display = "block";
-    
-
     fixStyling();
 
     addFilters();
