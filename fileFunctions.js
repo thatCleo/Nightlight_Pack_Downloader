@@ -18,8 +18,10 @@ async function deleteFile(path) {
         fs.rmSync(path, { recursive: true }, (err) => {
             if (err) {
                 console.error('Error deleting folder:', err);
+                reject(err);
             } else {
                 console.log('Folder deleted successfully');
+                resolve();
             }
         });
     })

@@ -12,22 +12,24 @@ async function deletePack(event, pack_url) {
     getInstalledPacks()
         .then(data => {
             let installed_packs = data;
+            let new_installed_packs = [];
+
             for (let i = 0; i < installed_packs.length; i++) {
-                if (installed_packs[i] == pack_url) {
-                    installed_packs.splice(i, 1);
+                if (installed_packs[i].toString() !== pack_url) {
+                    new_installed_packs.push(installed_packs[i]);
                     break;
                 }
             }
 
             const path = `${currentDirectory}/packfiles/${pack_url}`;
 
-            deleteFile(path)
-                .then(() => {
+            deleteFile(path);
+
+            console.log('');
                     const json_string = {
-                        "installedPacks": installed_packs
+                        "installedPacks": new_installed_packs,
                     }
                     fs.writeFileSync(`${currentDirectory}/packfiles/installedPacks.json`, JSON.stringify(json_string));
-                })
         })
 }
 
