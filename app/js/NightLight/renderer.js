@@ -13,7 +13,7 @@ function setWebEmbed() {
 
 function loadPackTiles() {
     console.log("Loading Pack Tiles...");
-    createPackTiles(current_page, packs_per_page, sort_by, author, search, '', 'any');
+    createPackTiles(current_page, packs_per_page, sort_by, author, search, includes, 'any');
 }
 
 function createPackTiles(page, per_page, sort_by, author, search, includes, include_mode) {

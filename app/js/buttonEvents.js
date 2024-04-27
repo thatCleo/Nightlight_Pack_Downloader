@@ -12,9 +12,9 @@ let total_packs = -1;
 /* Filter varaibles */
 const sort_by_default = 'downloads';
 let sort_by = 'downloads';
-const author_defualt = '';
+
 let author = '';
-const search_default = '';
+let includes = '';
 let search = '';
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -116,16 +116,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
         else if (event.target.id.includes('button_filter_reset')) {
             disableFilterResetButton();
-            enableFilterApplyButton();
+            disableFilterApplyButton();
 
             sort_by = sort_by_default;
             document.getElementById('filter_sort_by').value = sort_by_default;
 
-            author = author_defualt;
-            document.getElementById('filter_authors').value = author_defualt;
+            author = '';
+            document.getElementById('filter_authors').value = '';
 
-            search = search_default;
-            document.getElementById('filter_search').value = search_default;
+            search = '';
+            document.getElementById('filter_search').value = '';
+
+            includes = '';
+            clearFilterShortcuts();
+
+            loadPackTiles();
         }
 
         else if (event.target.id.includes('button_filter_apply')) {
@@ -137,7 +142,38 @@ document.addEventListener('DOMContentLoaded', function () {
         else if (event.target.id.includes('button_filter_reload')) {
             loadPackTiles();
         }
+
+        else if(event.target.id.includes('button_filter_shortcut_portraits')) {
+            clearFilterShortcuts();
+            enableFilterApplyButton();
+
+            includes = 'portraits';
+            event.target.classList.add('filter_shortcut_active');
+
+            enableFilterResetButton();
+        }
+
+        else if(event.target.id.includes('button_filter_shortcut_perks')) {
+            clearFilterShortcuts();
+            enableFilterApplyButton();
+
+            includes = 'perks';
+            event.target.classList.add('filter_shortcut_active');
+
+            enableFilterResetButton();
+        }
+
+        else if(event.target.id.includes('button_filter_shortcut_equippable')) {
+            clearFilterShortcuts();
+            enableFilterApplyButton();
+
+            includes = 'perks,portraits,items,offerings,powers,addons';
+            event.target.classList.add('filter_shortcut_active');
+
+            enableFilterResetButton();
+        }
     });
+
     document.addEventListener('change', function (event) {
         if (event.target.id == "packs_per_page") {
             const value = event.target.value;
@@ -257,6 +293,12 @@ function enableFilterApplyButton() {
 function disableFilterApplyButton() {
     const button = document.getElementById('button_filter_apply');
     button.className += " disabled";
+}
+
+function clearFilterShortcuts() {
+    document.getElementById('button_filter_shortcut_portraits').classList.remove('filter_shortcut_active');
+    document.getElementById('button_filter_shortcut_perks').classList.remove('filter_shortcut_active');
+    document.getElementById('button_filter_shortcut_equippable').classList.remove('filter_shortcut_active');
 }
 
 function scrollToTop() {

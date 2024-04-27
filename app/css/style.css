@@ -145,3 +145,14 @@ path, svg {
     background-color: #282828;
     border-color: #282828;
 }
+
+.filter_shortcut_active {
+    background-color: #3a3a3a;
+    border-color: #313131;
+}
+
+/* changes to nightlight-styles.css */
+
+.container {
+    max-width:100vw;
+}

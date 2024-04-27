@@ -13,9 +13,9 @@ const nightlight_template = `
                         <div class="btn btn-sm lh-1" id="button_filter_reload" role="button">Refresh</div>
                         <div class="btn btn-secondary btn-sm me-auto lh-1 disabled" role="button">Reset</div>
                         <div class="align-items-center d-flex gap-2"><label class="fw-bold d-flex align-items-center">Shortcuts</label>
-                            <div class="btn btn-secondary btn-sm lh-1" role="button">Portraits Only</div>
-                            <div class="btn btn-secondary btn-sm lh-1" role="button">Perks Only</div>
-                            <div class="btn btn-secondary btn-sm lh-1" role="button">All Equippable</div>
+                            <div class="btn btn-secondary btn-sm lh-1" id="button_filter_shortcut_portraits" role="button">Portraits Only</div>
+                            <div class="btn btn-secondary btn-sm lh-1" id="button_filter_shortcut_perks" role="button">Perks Only</div>
+                            <div class="btn btn-secondary btn-sm lh-1" id="button_filter_shortcut_equippable" role="button">All Equippable</div>
                         </div>
                     </div>
                     <div class="_1x345eg0">
