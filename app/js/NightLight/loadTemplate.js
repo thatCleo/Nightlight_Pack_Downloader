@@ -83,7 +83,7 @@ const nightlight_template = `
                 <div class="col-xs-4 col-md-4">
                     <h3>Night<span class="text-nl">Light</span> <small class="text-muted fs-5">Icon Packs</small></h3>
                     <p class="text-muted mb-2">Icon Pack Tool. Built on top of Nightlight.gg by BritishBoop</p>
-                    <p class="text-muted"><small>Not affiliated with Behaviour Interactive, Dead by Daylight™ of Nightlight.gg in any way</small></p>
+                    <p class="text-muted"><small>Not affiliated with Behaviour Interactive, Dead by Daylight™ or Nightlight.gg in any way</small></p>
                 </div>
             </div>
         </div>
