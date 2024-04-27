@@ -5,7 +5,7 @@ It uses the Nightlight API / Website to retrive avalible packs and download cont
 ### Features
 - [x] Textbased search
 - [ ] Filtered search (able use sort by and filter by author and text)
-- [ ] Shortcuts
+- [x] Shortcuts
 - [x] Store Pages
 - [x] Per Page Selection
 - [x] Downloading Packs
