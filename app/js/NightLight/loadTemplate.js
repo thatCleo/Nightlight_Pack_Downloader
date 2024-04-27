@@ -5,7 +5,6 @@ const nightlight_template = `
             <h1 class="mb-2">Custom Icon Packs</h1>
             <div class="text-muted mb-3">A library of community made custom Icon Packs for Dead by Daylight to
                 download and install</div>
-            <div class="_1jvrarb3 _1jvrarb1" role="alert">To install packs automatically, download <a href="/desktop">NightLight Desktop</a> - a replacement for the original Icon Toolbox.</div>
             <form class="row"><input type="submit" hidden="">
                 <div class="col-12">
                     <div class="d-flex align-items-center mb-2 gap-2 flex-wrap">
