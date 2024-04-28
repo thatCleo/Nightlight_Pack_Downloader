@@ -1,6 +1,6 @@
 const nightlight_template = `
-<div class="main" style="margin-left: 0px;">
-    <main class="container px-4" id="main" style="margin-left: 0px; margin-right: 20px; margin-top: 20px;">
+<div class="main">
+    <main class="container px-4" id="main">
         <div><strong class="text-muted">Icon Toolbox</strong>
             <h1 class="mb-2">Custom Icon Packs</h1>
             <div class="text-muted mb-3">A library of community made custom Icon Packs for Dead by Daylight to
@@ -28,7 +28,7 @@ const nightlight_template = `
                                     <div class="cell align-items-center d-flex gap-2"><label for=":Ralca9:" class="fw-bold d-flex align-items-center">Author</label><select class="form-select" aria-label="Author" id="sort_by_author" autocomplete="off"></select></div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-5">
-                                    <div class="cell align-items-center d-flex gap-2"><label for=":Relca9:" class="fw-bold d-flex align-items-center">Search</label><input type="text" class="form-control" id="filter_search" name="search" autocomplete="off" maxlength="50" placeholder="Title, URL, or description..." style="padding:.3rem 1rem .3rem .5rem;font-size:14px;border-radius:2.5px" value=""></div>
+                                    <div class="cell align-items-center d-flex gap-2"><label for=":Relca9:" class="fw-bold d-flex align-items-center">Search</label><input type="text" class="form-control" id="filter_search" name="search" autocomplete="off" maxlength="50" placeholder="Title, URL, or description..." value=""></div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-2 col-xl-2">
                                     <div class="cell d-flex gap-2 h-100 align-items-center hidden"></div>
@@ -58,17 +58,17 @@ const nightlight_template = `
                                 Page:</span><select class="form-select " autocomplete="off"></select></div>
                         <span><span class="d-none d-md-inline">Showing </span>NaN</span>
                     </div>
-                    <div class="d-flex align-items-center gap-2"><button disabled="" class="btn btn-sm btn-secondary d-none d-sm-inline" style="background-color:#2d2d2d;border-color:#2d2d2d"><svg focusable="false" data-prefix="far" data-icon="angles-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-angles-left">
+                    <div class="d-flex align-items-center gap-2"><button disabled="" class="btn btn-sm btn-secondary d-none d-sm-inline"><svg focusable="false" data-prefix="far" data-icon="angles-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-angles-left">
                                 <path fill="currentColor" d="M47 239c-9.4 9.4-9.4 24.6 0 33.9L207 433c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9L97.9 256 241 113c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L47 239zM399 79L239 239c-9.4 9.4-9.4 24.6 0 33.9L399 433c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-143-143L433 113c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0z">
                                 </path>
-                            </svg></button><button disabled="" class="btn btn-sm btn-secondary" style="background-color:#2d2d2d;border-color:#2d2d2d"><svg focusable="false" data-prefix="far" data-icon="angle-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="svg-inline--fa fa-angle-left">
+                            </svg></button><button disabled="" class="btn btn-sm btn-secondary"><svg focusable="false" data-prefix="far" data-icon="angle-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="svg-inline--fa fa-angle-left">
                                 <path fill="currentColor" d="M47 239c-9.4 9.4-9.4 24.6 0 33.9L207 433c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9L97.9 256 241 113c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L47 239z">
                                 </path>
                             </svg></button>
-                        <div class="d-flex mx-1 align-items-center gap-1 text-nowrap"><input class="form-control text-center" style="width:4rem;padding:.3rem .5rem;font-size:14px;border-radius:2.5px" min="1" step="1" max="NaN" type="number" pattern="\d*" value="1">of <!-- -->NaN</div><button class="btn btn-sm btn-secondary" style="background-color:#2d2d2d;border-color:#2d2d2d"><svg focusable="false" data-prefix="far" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="svg-inline--fa fa-angle-right">
+                        <div class="d-flex mx-1 align-items-center gap-1 text-nowrap"><input class="form-control text-center"min="1" step="1" max="NaN" type="number" pattern="\d*" value="1">of <!-- -->NaN</div><button class="btn btn-sm btn-secondary"><svg focusable="false" data-prefix="far" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="svg-inline--fa fa-angle-right">
                                 <path fill="currentColor" d="M273 239c9.4 9.4 9.4 24.6 0 33.9L113 433c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l143-143L79 113c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0L273 239z">
                                 </path>
-                            </svg></button><button class="btn btn-sm btn-secondary d-none d-sm-inline" style="background-color:#2d2d2d;border-color:#2d2d2d"><svg focusable="false" data-prefix="far" data-icon="angles-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-angles-right">
+                            </svg></button><button class="btn btn-sm btn-secondary d-none d-sm-inline"><svg focusable="false" data-prefix="far" data-icon="angles-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-angles-right">
                                 <path fill="currentColor" d="M113 433L273 273c9.4-9.4 9.4-24.6 0-33.9L113 79c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l143 143L79 399c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0zm192 0L465 273c9.4-9.4 9.4-24.6 0-33.9L305 79c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l143 143L271 399c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0z">
                                 </path>
                             </svg></button>

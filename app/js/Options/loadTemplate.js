@@ -1,6 +1,6 @@
 const options_container = document.getElementById('options-page');
 const options_template = `
-<div style="margin-left: 0px;">
+<div>
     <main id="options_main" class="container px-4">
         <div><strong class="text-muted">Icon Toolbox</strong>
             <h1 class="mb-2">Options</h1>

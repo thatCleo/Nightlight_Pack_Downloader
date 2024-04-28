@@ -273,12 +273,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             banner_element.src = `${window.directory.currentPath()}/cached_images/${id}_${current_version}/banner.png`;
 
-            console.log(stats);
-
-            // stats[0].innerHTML = game_version;
-            // stats[1].innerHTML = last_update;
-            // stats[2].innerHTML = downloads;
-
             last_update = `${formatRelativeTime(last_update)} Days Ago`;
             
             stats.getElementsByClassName('dbd_version')[0].innerHTML = game_version;

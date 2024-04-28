@@ -1,6 +1,6 @@
 const manage_packs_container = document.getElementById('manage-packs-page');
 const manage_packs_template = `
-<div style="margin-left: 0px;">
+<div>
     <main id="manage_packs_main" class="container px-4">
         <div><strong class="text-muted">Icon Toolbox</strong>
             <h1 class="mb-2">Manage Icon Packs</h1>
