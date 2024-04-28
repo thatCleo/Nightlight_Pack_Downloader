@@ -13,7 +13,13 @@ function setWebEmbed() {
 
 function loadPackTiles() {
     console.log("Loading Pack Tiles...");
-    createPackTiles(current_page, packs_per_page, sort_by, author, search, includes, 'any');
+    
+    let include_mode = 'any';
+    if(includes != '') {
+        include_mode = 'only';
+    }
+
+    createPackTiles(current_page, packs_per_page, sort_by, author, search, includes, include_mode);
 }
 
 function createPackTiles(page, per_page, sort_by, author, search, includes, include_mode) {
