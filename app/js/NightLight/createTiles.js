@@ -23,6 +23,8 @@ function setPackTiles(json) {
 
   variants_data.forEach(variant => {
 
+    downloadBanner(variant.id, variant.current_version);
+
     let pack_index = -1;
 
     for (let i = 0; i < packs_with_variants.length; i++) {
