@@ -48,6 +48,7 @@ function setPackTiles(json) {
 
     let variants = [];
     let pack_index = -1;
+    let variants_template = '';
 
     for (let i = 0; i < packs_with_variants.length; i++) {
       if (packs_with_variants[i].indexOf(pack.id) != -1) {
@@ -64,20 +65,38 @@ function setPackTiles(json) {
       }
     }
 
-    const default_variant_index = (variants.length / 2) - ((variants.length / 2) % 2);
+    const default_variant_index = Number((variants.length / 2).toString().split('.')[0]);
 
     const default_variant = document.createElement('div');
     default_variant.innerHTML = '<p id="variant-default" class="description_variant">Default</p>';
     variants.splice(default_variant_index, 0, default_variant);
 
+    if (variants.length >= 2) {
+      variants_template =
+      `<div class="button_variant button_variant_prev">
+        <svg focusable="false" data-prefix="far" data-icon="angle-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="svg-inline--fa fa-angle-left">
+          <path fill="currentColor" d="M47 239c-9.4 9.4-9.4 24.6 0 33.9L207 433c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9L97.9 256 241 113c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L47 239z">
+          </path>
+        </svg>
+      </div>
+      <div class="variants-${pack.id} container_varaiants ${default_variant_index}"></div>
+      <div class="button_variant button_variant_next">
+        <svg focusable="false" data-prefix="far" data-icon="angle-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="svg-inline--fa fa-angle-left">
+          <path fill="currentColor" d="M47 239c-9.4 9.4-9.4 24.6 0 33.9L207 433c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9L97.9 256 241 113c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L47 239z">
+          </path>
+        </svg>
+      </div>`;
 
-    if(variants.length >= 2) {
-      variants[default_variant_index].getElementsByClassName('description_variant')[0].classList.toggle('description_variant_active');
-      variants[default_variant_index].getElementsByClassName('description_variant')[0].classList.toggle('description_variant_visible');
-      variants[default_variant_index + 1].getElementsByClassName('description_variant')[0].classList.toggle('description_variant_visible');
+      variants[default_variant_index].childNodes[0].classList.add('description_variant_active');
+      variants[default_variant_index].childNodes[0].classList.add('description_variant_visible');
+
+      variants[default_variant_index + 1].childNodes[0].classList.add('description_variant_visible');
     }
+
     if (variants.length >= 3) {
-      variants[default_variant_index - 1].getElementsByClassName('description_variant')[0].classList.toggle('description_variant_visible');
+      console.log(default_variant_index);
+      console.log(variants.length);
+      variants[(default_variant_index - 1)].childNodes[0].classList.add('description_variant_visible');
     }
 
     let avatar_elemets = '<div class="_1he3xh8">';
@@ -115,19 +134,7 @@ function setPackTiles(json) {
   </div>
   <div class="_1he3xh4">
     <div class="_1he3xhc">
-      <div class="button_variant button_variant_prev">
-        <svg focusable="false" data-prefix="far" data-icon="angle-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="svg-inline--fa fa-angle-left">
-          <path fill="currentColor" d="M47 239c-9.4 9.4-9.4 24.6 0 33.9L207 433c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9L97.9 256 241 113c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L47 239z">
-          </path>
-        </svg>
-      </div>
-      <div class="variants-${pack.id} container_varaiants ${default_variant_index}"></div>
-      <div class="button_variant button_variant_next">
-        <svg focusable="false" data-prefix="far" data-icon="angle-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="svg-inline--fa fa-angle-left">
-          <path fill="currentColor" d="M47 239c-9.4 9.4-9.4 24.6 0 33.9L207 433c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9L97.9 256 241 113c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L47 239z">
-          </path>
-        </svg>
-      </div>
+      ${variants_template}
     </div>
     ${avatar_elemets}
     <div class="_1he3xha"><span><svg focusable="false" data-prefix="fas" data-icon="code-branch" role="img"
@@ -160,17 +167,14 @@ function setPackTiles(json) {
     packTile.innerHTML = tile;
     packTile.id = pack.id;
 
-    const variant_container = packTile.getElementsByClassName(`variants-${pack.id}`)[0];
-    variant_container.innerHTML = '';
+    if (variants_template != '') {
+      const variant_container = packTile.getElementsByClassName(`variants-${pack.id}`)[0];
+      variant_container.innerHTML = '';
 
-    for (const variant of variants) {
-      console.log(variant);
-      console.log(variant_container);
-
-      variant_container.appendChild(variant);
+      for (const variant of variants) {
+        variant_container.appendChild(variant);
+      }
     }
-
-    console.log(packTile);
 
     packview[0].appendChild(packTile);
     console.log(`Added tile for ${pack.title}`);
