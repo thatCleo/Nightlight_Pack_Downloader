@@ -9,7 +9,7 @@ It uses the Nightlight API / Website to retrive avalible packs and download cont
 - [x] Store Pages
 - [x] Per Page Selection
 - [x] Downloading Packs
-- [ ] Pack Variants
+- [x] Pack Variants
 - [x] Adding Packs to DBD
 - [x] Reverting Icons to default
 - [ ] Managing Pack Order (which packs have priority over others)
