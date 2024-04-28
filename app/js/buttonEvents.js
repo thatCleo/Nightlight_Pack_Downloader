@@ -244,8 +244,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const url = variant_titles[index].childNodes[0].id.replace('variant-', '');
 
-            console.log(url);
-
             variants_data.forEach(variant => {
                 if(variant.url == url) {
                     id = variant.id;

@@ -38,9 +38,6 @@ function setPackTiles(json) {
       packs_with_variants.push([variant.primary_variant, new Array()]);
       pack_index = packs_with_variants.length - 1;
     }
-
-    console.log(packs_with_variants);
-    console.log(pack_index);
     packs_with_variants[pack_index][1].push([variant.url, variant.variant_nickname]);
   })
 
@@ -97,8 +94,6 @@ function setPackTiles(json) {
     }
 
     if (variants.length >= 3) {
-      console.log(default_variant_index);
-      console.log(variants.length);
       variants[(default_variant_index - 1)].childNodes[0].classList.add('description_variant_visible');
     }
 
