@@ -114,6 +114,10 @@ path, svg {
     border-color: #6b1411;
 }
 
+.manage_pack_tile {
+    margin-bottom: 1.5rem;
+}
+
 .flex-options {
     display: flex;
     flex-wrap: wrap;
