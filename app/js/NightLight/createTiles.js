@@ -58,7 +58,7 @@ function setPackTiles(json) {
 
     if (pack_index != -1) {
       for (let i = 0; i < packs_with_variants[pack_index][1].length; i++) {
-        variants += ` ${packs_with_variants[pack_index][1][i]}`;
+        variants += `<p id="variant-${packs_with_variants[pack_index][1][i]}">${packs_with_variants[pack_index][1][i]}</p>`;
       }
     }
 
@@ -130,6 +130,7 @@ function setPackTiles(json) {
 </div>
         `;
     packTile.innerHTML = tile;
+    packTile.id = pack.id;
 
     packview[0].appendChild(packTile);
     console.log(`Added tile for ${pack.title}`);
