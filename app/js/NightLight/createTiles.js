@@ -130,7 +130,7 @@ function setPackTiles(json) {
     const tile =
       `
 <div id="pack-banner-${pack.id}" class="_1he3xh0"><img src="${window.directory.currentPath()}/cached_images/placeholder/banner.png"
-    loading="lazy" alt="Pack Banner for ${pack.title}" class="_1he3xh1">
+    loading="lazy" alt="Pack Banner for ${pack.title}" class="_1he3xh1 pack_banner">
   <div class="_1he3xh5">
     <span class="_1he3xh6">${pack.title}</span>
     <div class="_1he3xh7 badge bg-secondary">v${pack.version}</div>

@@ -190,8 +190,6 @@ document.addEventListener('DOMContentLoaded', function () {
             let index = variant_display.classList[2];
             const lenght = variant_display.children.length;
 
-            console.log(index);
-            console.log(lenght);
 
             if(button.classList.contains('button_variant_next')) {
                 if(index >= (lenght-1)) return;
@@ -239,7 +237,32 @@ document.addEventListener('DOMContentLoaded', function () {
                 variant_display.classList.remove(`${index+1}`);
                 variant_display.classList.add(`${index}`);
             }
-        
+
+            const banner_element = variant_display.parentNode.parentNode.parentNode.childNodes[0];
+            let id = '';
+            let current_version = '';
+
+            const url = variant_titles[index].childNodes[0].id.replace('variant-', '');
+
+            console.log(url);
+
+            variants_data.forEach(variant => {
+                if(variant.url == url) {
+                    id = variant.id;
+                    current_version = variant.current_version;
+                }
+            });
+
+            if(id == '') {
+                packData.forEach(pack => {
+                    if(pack.url == url) {
+                        id = pack.id;
+                        current_version = pack.current_version;
+                    }
+                });
+            }
+
+            banner_element.src = `${window.directory.currentPath()}/cached_images/${id}_${current_version}/banner.png`;
         }
     });
 

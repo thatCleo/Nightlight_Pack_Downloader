@@ -213,6 +213,10 @@ path, svg {
     background-color: #073c49;
 }
 
+.pack_banner {
+    transition: 180ms;
+}
+
 .hidden {
     display: none !important;
 }
