@@ -135,23 +135,23 @@ function setPackTiles(json) {
       ${variants_template}
     </div>
     ${avatar_elemets}
-    <div class="_1he3xha"><span><svg focusable="false" data-prefix="fas" data-icon="code-branch" role="img"
+    <div class="_1he3xha pack_stats"><span><svg focusable="false" data-prefix="fas" data-icon="code-branch" role="img"
           xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-code-branch">
           <path fill="currentColor"
             d="M80 104c13.3 0 24-10.7 24-24s-10.7-24-24-24S56 66.7 56 80s10.7 24 24 24zm80-24c0 32.8-19.7 61-48 73.3v87.8c18.8-10.9 40.7-17.1 64-17.1h96c35.3 0 64-28.7 64-64v-6.7C307.7 141 288 112.8 288 80c0-44.2 35.8-80 80-80s80 35.8 80 80c0 32.8-19.7 61-48 73.3V160c0 70.7-57.3 128-128 128H176c-35.3 0-64 28.7-64 64v6.7c28.3 12.3 48 40.5 48 73.3c0 44.2-35.8 80-80 80s-80-35.8-80-80c0-32.8 19.7-61 48-73.3V352 153.3C19.7 141 0 112.8 0 80C0 35.8 35.8 0 80 0s80 35.8 80 80zm232 0c0-13.3-10.7-24-24-24s-24 10.7-24 24s10.7 24 24 24s24-10.7 24-24zM80 456c13.3 0 24-10.7 24-24s-10.7-24-24-24s-24 10.7-24 24s10.7 24 24 24z">
           </path>
-        </svg> ${dbdVersionTitle}</span><span><svg focusable="false" data-prefix="fas" data-icon="upload"
+        </svg><label class="dbd_version">${dbdVersionTitle}</label></span><span><svg focusable="false" data-prefix="fas" data-icon="upload"
           role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-upload">
           <path fill="currentColor"
             d="M288 109.3V352c0 17.7-14.3 32-32 32s-32-14.3-32-32V109.3l-73.4 73.4c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l128-128c12.5-12.5 32.8-12.5 45.3 0l128 128c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L288 109.3zM64 352H192c0 35.3 28.7 64 64 64s64-28.7 64-64H448c35.3 0 64 28.7 64 64v32c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V416c0-35.3 28.7-64 64-64zM432 456c13.3 0 24-10.7 24-24s-10.7-24-24-24s-24 10.7-24 24s10.7 24 24 24z">
           </path>
-        </svg>${packLastUpdated}</span><span><svg focusable="false" data-prefix="fas" data-icon="cloud-arrow-down"
+        </svg><label class="last_updated">${packLastUpdated}</label></span><span><svg focusable="false" data-prefix="fas" data-icon="cloud-arrow-down"
           role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"
           class="svg-inline--fa fa-cloud-arrow-down">
           <path fill="currentColor"
             d="M144 480C64.5 480 0 415.5 0 336c0-62.8 40.2-116.2 96.2-135.9c-.1-2.7-.2-5.4-.2-8.1c0-88.4 71.6-160 160-160c59.3 0 111 32.2 138.7 80.2C409.9 102 428.3 96 448 96c53 0 96 43 96 96c0 12.2-2.3 23.8-6.4 34.6C596 238.4 640 290.1 640 352c0 70.7-57.3 128-128 128H144zm79-167l80 80c9.4 9.4 24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-39 39V184c0-13.3-10.7-24-24-24s-24 10.7-24 24V318.1l-39-39c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9z">
           </path>
-        </svg>${pack.downloads}</span></div>
+        </svg><label class="downloads">${pack.downloads}</label></span></div>
     <div title="${packContent}" class="_1he3xhb"><svg focusable="false" data-prefix="fas" data-icon="box-open" role="img"
         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="svg-inline--fa fa-box-open">
         <path fill="currentColor"

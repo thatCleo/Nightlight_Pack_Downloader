@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log(`Downloading Pack: ${value}`);
 
             let data = packData;
-            if(event.target.value != value) {
+            if (event.target.value != value) {
                 data = variants_data
             }
 
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
             window.packFunctions.activatePack(value);
 
             const buttons = document.getElementsByClassName('manage-button-pack-active');
-            for(let i = 0; i < buttons.length; i++) {
+            for (let i = 0; i < buttons.length; i++) {
                 buttons[i].innerText = 'Activate Pack';
                 buttons[i].classList.remove('manage-button-pack-active');
             }
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-        else if(event.target.id.includes('reset-all-packs')) {
+        else if (event.target.id.includes('reset-all-packs')) {
             console.log(`Resetting All Packs...`);
             window.packFunctions.resetAllPacks()
 
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-        else if(event.target.classList.contains('set-dbd-path')) {
+        else if (event.target.classList.contains('set-dbd-path')) {
             console.log(`Setting DBD Path...`);
             window.options.setDBDPathFromDialog()
                 .then(() => {
@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function () {
             loadPackTiles();
         }
 
-        else if(event.target.id.includes('button_filter_shortcut_portraits')) {
+        else if (event.target.id.includes('button_filter_shortcut_portraits')) {
             clearFilterShortcuts();
             enableFilterApplyButton();
 
@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function () {
             enableFilterResetButton();
         }
 
-        else if(event.target.id.includes('button_filter_shortcut_perks')) {
+        else if (event.target.id.includes('button_filter_shortcut_perks')) {
             clearFilterShortcuts();
             enableFilterApplyButton();
 
@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function () {
             enableFilterResetButton();
         }
 
-        else if(event.target.id.includes('button_filter_shortcut_equippable')) {
+        else if (event.target.id.includes('button_filter_shortcut_equippable')) {
             clearFilterShortcuts();
             enableFilterApplyButton();
 
@@ -182,8 +182,9 @@ document.addEventListener('DOMContentLoaded', function () {
             enableFilterResetButton();
         }
 
-        else if(event.target.classList.contains('button_variant')) {
+        else if (event.target.classList.contains('button_variant')) {
             const button = event.target;
+            const stats = event.target.parentNode.parentNode.getElementsByClassName('pack_stats')[0];
             const variant_display = button.parentNode.getElementsByClassName('container_varaiants')[0];
             const variant_titles = variant_display.children;
 
@@ -191,8 +192,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const lenght = variant_display.children.length;
 
 
-            if(button.classList.contains('button_variant_next')) {
-                if(index >= (lenght-1)) return;
+            if (button.classList.contains('button_variant_next')) {
+                if (index >= (lenght - 1)) return;
 
                 index++;
 
@@ -201,21 +202,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 variant_titles[index].childNodes[0].classList.add('description_variant_active');
                 variant_titles[index - 1].childNodes[0].classList.remove('description_variant_active');
-                
 
-                if(index >= 2) {
+
+                if (index >= 2) {
                     variant_titles[index - 2].childNodes[0].classList.remove('description_variant_visible');
                 }
 
-                if(index < lenght - 1) {
+                if (index < lenght - 1) {
                     variant_titles[index + 1].childNodes[0].classList.add('description_variant_visible');
                 }
 
-                variant_display.classList.remove(`${index-1}`);
+                variant_display.classList.remove(`${index - 1}`);
                 variant_display.classList.add(`${index}`);
             }
             else {
-                if(index <= 0) return;
+                if (index <= 0) return;
 
                 index--;
 
@@ -224,17 +225,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 variant_titles[index].childNodes[0].classList.add('description_variant_active');
                 variant_titles[index + 1].childNodes[0].classList.remove('description_variant_active');
-                
 
-                if(index < lenght - 2) {
+
+                if (index < lenght - 2) {
                     variant_titles[index + 2].childNodes[0].classList.remove('description_variant_visible');
                 }
 
-                if(index > 0) {
+                if (index > 0) {
                     variant_titles[index - 1].childNodes[0].classList.add('description_variant_visible');
                 }
 
-                variant_display.classList.remove(`${index+1}`);
+                variant_display.classList.remove(`${index + 1}`);
                 variant_display.classList.add(`${index}`);
             }
 
@@ -242,25 +243,47 @@ document.addEventListener('DOMContentLoaded', function () {
             let id = '';
             let current_version = '';
 
+            let game_version = '';
+            let last_update = '';
+            let downloads = '';
+
             const url = variant_titles[index].childNodes[0].id.replace('variant-', '');
 
             variants_data.forEach(variant => {
-                if(variant.url == url) {
+                if (variant.url == url) {
                     id = variant.id;
                     current_version = variant.current_version;
+                    game_version = variant.dbd_version;
+                    last_update = variant.updated_at;
+                    downloads = variant.downloads;
                 }
             });
 
-            if(id == '') {
+            if (id == '') {
                 packData.forEach(pack => {
-                    if(pack.url == url) {
+                    if (pack.url == url) {
                         id = pack.id;
                         current_version = pack.current_version;
+                        game_version = pack.dbd_version;
+                        last_update = pack.updated_at;
+                        downloads = pack.downloads;
                     }
                 });
             }
 
             banner_element.src = `${window.directory.currentPath()}/cached_images/${id}_${current_version}/banner.png`;
+
+            console.log(stats);
+
+            // stats[0].innerHTML = game_version;
+            // stats[1].innerHTML = last_update;
+            // stats[2].innerHTML = downloads;
+
+            last_update = `${formatRelativeTime(last_update)} Days Ago`;
+            
+            stats.getElementsByClassName('dbd_version')[0].innerHTML = game_version;
+            stats.getElementsByClassName('last_updated')[0].innerHTML = last_update;
+            stats.getElementsByClassName('downloads')[0].innerHTML = downloads;
         }
     });
 
@@ -312,7 +335,7 @@ document.addEventListener('DOMContentLoaded', function () {
             enableFilterApplyButton();
         }
 
-        else if(event.target.id == "dbd-path") {
+        else if (event.target.id == "dbd-path") {
             const value = event.target.value;
             window.options.setDBDPath(value);
         }
