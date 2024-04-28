@@ -1,6 +1,7 @@
 const { contextBridge, ipcRenderer, app } = require('electron');
 const fs = require('fs');
 const { currentDirectory } = require('./options');
+const { openLink } = require('./webFunctions');
 
 contextBridge.exposeInMainWorld('versions', {
   node: () => process.versions.node,
@@ -25,7 +26,8 @@ contextBridge.exposeInMainWorld('fs', fs);
 contextBridge.exposeInMainWorld('webFunctions', {
   httpGet: (url) => ipcRenderer.invoke('webFunctions:httpGet', url),
   downloadFile: (url, directoryPath, fileName) => ipcRenderer.invoke('webFunctions:dowloadFile', url, directoryPath, fileName),
-  downloadFileProgress: (url, directoryPath, fileName, element) => ipcRenderer.invoke('webFunctions:downloadFileProgress', url, directoryPath, fileName, element)
+  downloadFileProgress: (url, directoryPath, fileName, element) => ipcRenderer.invoke('webFunctions:downloadFileProgress', url, directoryPath, fileName, element),
+  openLink: (url) => ipcRenderer.invoke('webFunctions:openLink', url)
 })
 
 contextBridge.exposeInMainWorld('packFunctions', {

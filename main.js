@@ -1,6 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('node:path')
-const { httpGet, downloadFile, downloadFileProgress } = require('./webFunctions');
+const { httpGet, downloadFile, downloadFileProgress, openLink } = require('./webFunctions');
 const { fileExists } = require('./fileFunctions');
 const { deletePack, downloadPack, activatePack, resetAllPacks, getInstalledPacks, getActivePacks, getPackMetaData } = require('./packFunctions');
 const { setDBDPath, setDBDPathFromDialog, getDBDPath } = require('./options');
@@ -26,6 +26,7 @@ app.whenReady().then(() => {
   ipcMain.handle('webFunctions:httpGet', httpGet);
   ipcMain.handle('webFunctions:dowloadFile', downloadFile);
   ipcMain.handle('webFunctions:downloadFileProgress', downloadFileProgress);
+  ipcMain.handle('webFunctions:openLink', openLink);
 
   ipcMain.handle('packFunctions:downloadPack', downloadPack);
   ipcMain.handle('packFunctions:deletePack', deletePack);

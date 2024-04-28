@@ -19,7 +19,11 @@ let search = '';
 
 document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('click', function (event) {
-        if (event.target.classList.contains('download-pack')) {
+        if(event.target.classList.contains('open_link')) {
+            console.log(`Opening Link: ${event.target.value}`);
+            window.webFunctions.openLink(event.target.value);
+        }
+        else if (event.target.classList.contains('download-pack')) {
             if (event.target.innerText != 'Download') {
                 return;
             }

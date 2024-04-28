@@ -126,6 +126,12 @@ function concatBuffers(buffers) {
     return concatenatedBuffer;
 }
 
+async function openLink(event, url) {
+    console.log(`Opening Link: ${url}`);
+    const { shell } = require('electron');
+    shell.openExternal(url);
+}
+
 function updateProgressBar(progress, element) {
     // Update the progress bar element
     element.innerText = `${progress}%`;
@@ -137,5 +143,6 @@ function updateProgressBar(progress, element) {
 module.exports = {
     httpGet,
     downloadFile,
-    downloadFileProgress
+    downloadFileProgress,
+    openLink
 }
