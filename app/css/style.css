@@ -221,10 +221,6 @@ path, svg {
     display: none !important;
 }
 
-.position_relative {
-    position: relative !important;
-}
-
 /* changes to nightlight-styles.css */
 
 .container {

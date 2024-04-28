@@ -114,7 +114,7 @@ function setPackTiles(json) {
     <div class="_1he3xh7 badge bg-secondary">v${pack.version}</div>
   </div>
   <div class="_1he3xh4">
-    <div class="_1he3xhc position_relative">
+    <div class="_1he3xhc">
       <div class="button_variant button_variant_prev">
         <svg focusable="false" data-prefix="far" data-icon="angle-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="svg-inline--fa fa-angle-left">
           <path fill="currentColor" d="M47 239c-9.4 9.4-9.4 24.6 0 33.9L207 433c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9L97.9 256 241 113c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L47 239z">
