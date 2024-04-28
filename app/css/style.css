@@ -160,16 +160,20 @@ path, svg {
     justify-content: center;
     align-content: center;
 
+    max-height: 27.5px;
+
     width: 100%;
 }
 
 .button_variant {
+    user-select: none;
     position: absolute;
 
     color:#f2f2f2;
     cursor: pointer;
 
     margin: 2px;
+    padding: 4px;
 }
 
 .button_variant:hover {
@@ -178,6 +182,7 @@ path, svg {
 
 .button_variant_next {
     right: 0px;
+    rotate: 180deg;
 }
 
 .button_variant_prev {
@@ -186,11 +191,12 @@ path, svg {
 
 .description_variant {
     font-size: 0px;
-    font-weight: normal;
 
     cursor: default;
 
     width: 0px;
+
+    transition: 80ms;
 }
 
 .description_variant_visible {
@@ -208,11 +214,15 @@ path, svg {
 }
 
 .description_variant_active {
-    font-weight: bold;
+    background-color: #073c49;
 }
 
 .hidden {
     display: none !important;
+}
+
+.position_relative {
+    position: relative !important;
 }
 
 /* changes to nightlight-styles.css */
