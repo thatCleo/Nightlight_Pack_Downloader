@@ -65,7 +65,6 @@ function setPackTiles(json) {
 
     let avatar_elemets = '<div class="_1he3xh8">';
     pack.creators.forEach(creator => {
-      const creatorAvatar = `${window.directory.currentPath()}/cached_images/placeholder/avatar.png`;
       const creatorName = creator.username;
 
       if (creator.user != null) {
