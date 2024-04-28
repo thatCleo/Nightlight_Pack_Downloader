@@ -39,14 +39,14 @@ function setPackTiles(json) {
 
     console.log(packs_with_variants);
     console.log(pack_index);
-    packs_with_variants[pack_index][1].push(variant.id);
+    packs_with_variants[pack_index][1].push([variant.id, variant.variant_nickname]);
   })
 
   packData.forEach(pack => {
 
     downloadBanner(pack.id, pack.current_version);
 
-    let variants = '';
+    let variants = [];
     let pack_index = -1;
 
     for (let i = 0; i < packs_with_variants.length; i++) {
@@ -58,10 +58,27 @@ function setPackTiles(json) {
 
     if (pack_index != -1) {
       for (let i = 0; i < packs_with_variants[pack_index][1].length; i++) {
-        variants += `<p id="variant-${packs_with_variants[pack_index][1][i]}">${packs_with_variants[pack_index][1][i]}</p>`;
+        const variant = document.createElement('div');
+        variant.innerHTML = `<p id="variant-${packs_with_variants[pack_index][1][i][0]}" class="description_variant">${packs_with_variants[pack_index][1][i][1]}</p>`;
+        variants.push(variant);
       }
     }
 
+    const default_variant_index = (variants.length / 2) - ((variants.length / 2) % 2);
+
+    const default_variant = document.createElement('div');
+    default_variant.innerHTML = '<p id="variant-default" class="description_variant">Default</p>';
+    variants.splice(default_variant_index, 0, default_variant);
+
+
+    if(variants.length >= 2) {
+      variants[default_variant_index].getElementsByClassName('description_variant')[0].classList.toggle('description_variant_active');
+      variants[default_variant_index].getElementsByClassName('description_variant')[0].classList.toggle('description_variant_visible');
+      variants[default_variant_index + 1].getElementsByClassName('description_variant')[0].classList.toggle('description_variant_visible');
+    }
+    if (variants.length >= 3) {
+      variants[default_variant_index - 1].getElementsByClassName('description_variant')[0].classList.toggle('description_variant_visible');
+    }
 
     let avatar_elemets = '<div class="_1he3xh8">';
     pack.creators.forEach(creator => {
@@ -98,8 +115,9 @@ function setPackTiles(json) {
   </div>
   <div class="_1he3xh4">
     <div class="_1he3xhc">
-    ${variants}
-      <div class="_15ryw142 _15ryw140 end-0 position-absolute"></div>
+      <div class="button_variant button_variant_prev"><p><</p></div>
+      <div class="variants-${pack.id} container_varaiants ${default_variant_index}"></div>
+      <div class="button_variant button_variant_next"><p>></p></div>
     </div>
     ${avatar_elemets}
     <div class="_1he3xha"><span><svg focusable="false" data-prefix="fas" data-icon="code-branch" role="img"
@@ -131,6 +149,18 @@ function setPackTiles(json) {
         `;
     packTile.innerHTML = tile;
     packTile.id = pack.id;
+
+    const variant_container = packTile.getElementsByClassName(`variants-${pack.id}`)[0];
+    variant_container.innerHTML = '';
+
+    for (const variant of variants) {
+      console.log(variant);
+      console.log(variant_container);
+
+      variant_container.appendChild(variant);
+    }
+
+    console.log(packTile);
 
     packview[0].appendChild(packTile);
     console.log(`Added tile for ${pack.title}`);

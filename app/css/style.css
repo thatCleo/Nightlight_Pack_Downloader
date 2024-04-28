@@ -155,9 +155,66 @@ path, svg {
     padding: 7px 12px 8px 12px !important; 
 }
 
+.container_varaiants {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+
+    width: 100%;
+}
+
+.button_variant {
+    position: absolute;
+
+    color:#f2f2f2;
+    cursor: pointer;
+
+    margin: 2px;
+}
+
+.button_variant:hover {
+    color:#c2c2c2;
+}
+
+.button_variant_next {
+    right: 0px;
+}
+
+.button_variant_prev {
+    left: 0px;
+}
+
+.description_variant {
+    font-size: 0px;
+    font-weight: normal;
+
+    cursor: default;
+
+    width: 0px;
+}
+
+.description_variant_visible {
+    background-color: #3c3c3c;
+
+    width: auto;
+
+    font-size: small;
+
+    border-radius: 3px;
+    border-style: none;
+
+    margin: 2px 4px;
+    padding: 2px 4px;
+}
+
+.description_variant_active {
+    font-weight: bold;
+}
+
 .hidden {
     display: none !important;
 }
+
 /* changes to nightlight-styles.css */
 
 .container {

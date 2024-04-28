@@ -172,6 +172,60 @@ document.addEventListener('DOMContentLoaded', function () {
 
             enableFilterResetButton();
         }
+
+        else if(event.target.classList.contains('button_variant')) {
+            const button = event.target;
+            const variant_display = button.parentNode.getElementsByClassName('container_varaiants')[0];
+            const variant_titles = variant_display.children;
+
+            let index = variant_display.classList[2];
+            const lenght = variant_display.children.length;
+
+            console.log(index);
+            console.log(lenght);
+
+            if(button.classList.contains('button_variant_next')) {
+                if(index >= (lenght-1)) return;
+
+                index++;
+
+                variant_titles[index].getElementsByClassName('description_variant')[0].classList.add('description_variant_active');
+                variant_titles[index - 1].getElementsByClassName('description_variant')[0].classList.remove('description_variant_active');
+                
+
+                if(index >= 2) {
+                    variant_titles[index - 2].getElementsByClassName('description_variant')[0].classList.remove('description_variant_visible');
+                }
+
+                if(index < lenght - 1) {
+                    variant_titles[index + 1].getElementsByClassName('description_variant')[0].classList.add('description_variant_visible');
+                }
+
+                variant_display.classList.remove(`${index-1}`);
+                variant_display.classList.add(`${index}`);
+            }
+            else {
+                if(index <= 0) return;
+
+                index--;
+
+                variant_titles[index].getElementsByClassName('description_variant')[0].classList.add('description_variant_active');
+                variant_titles[index + 1].getElementsByClassName('description_variant')[0].classList.remove('description_variant_active');
+                
+
+                if(index < lenght - 2) {
+                    variant_titles[index + 2].getElementsByClassName('description_variant')[0].classList.remove('description_variant_visible');
+                }
+
+                if(index > 0) {
+                    variant_titles[index - 1].getElementsByClassName('description_variant')[0].classList.add('description_variant_visible');
+                }
+
+                variant_display.classList.remove(`${index+1}`);
+                variant_display.classList.add(`${index}`);
+            }
+        
+        }
     });
 
     document.addEventListener('change', function (event) {
