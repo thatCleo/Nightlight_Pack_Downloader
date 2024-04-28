@@ -217,6 +217,10 @@ path, svg {
     background-color: #073c49;
 }
 
+.pack_tile {
+    height: 100%;
+}
+
 .pack_banner {
     transition: 180ms;
 }
