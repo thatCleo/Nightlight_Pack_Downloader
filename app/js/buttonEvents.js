@@ -23,10 +23,19 @@ document.addEventListener('DOMContentLoaded', function () {
             if (event.target.innerText != 'Download') {
                 return;
             }
-            console.log(`Downloading Pack: ${event.target.value}`);
-            const value = event.target.value;
+
+            const variant_container = event.target.parentNode.getElementsByClassName('variants')[0].getElementsByClassName('container_varaiants')[0].getElementsByClassName('active')[0];
+            const value = variant_container.childNodes[0].id.replace('variant-', '');
+
+            console.log(`Downloading Pack: ${value}`);
+
+            let data = packData;
+            if(event.target.value != value) {
+                data = variants_data
+            }
+
             event.target.innerText = 'Downloading...';
-            window.packFunctions.downloadPack(value, packData)
+            window.packFunctions.downloadPack(value, data)
                 .then(() => {
                     event.target.innerText = 'Download finished!';
                     createPackTiles_Manage();
@@ -189,6 +198,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 index++;
 
+                variant_titles[index].classList.add('active');
+                variant_titles[index - 1].classList.remove('active');
+
                 variant_titles[index].childNodes[0].classList.add('description_variant_active');
                 variant_titles[index - 1].childNodes[0].classList.remove('description_variant_active');
                 
@@ -208,6 +220,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 if(index <= 0) return;
 
                 index--;
+
+                variant_titles[index].classList.add('active');
+                variant_titles[index + 1].classList.remove('active');
 
                 variant_titles[index].childNodes[0].classList.add('description_variant_active');
                 variant_titles[index + 1].childNodes[0].classList.remove('description_variant_active');

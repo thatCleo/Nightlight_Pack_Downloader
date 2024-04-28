@@ -39,7 +39,7 @@ function setPackTiles(json) {
 
     console.log(packs_with_variants);
     console.log(pack_index);
-    packs_with_variants[pack_index][1].push([variant.id, variant.variant_nickname]);
+    packs_with_variants[pack_index][1].push([variant.url, variant.variant_nickname]);
   })
 
   packData.forEach(pack => {
@@ -68,7 +68,7 @@ function setPackTiles(json) {
     const default_variant_index = Number((variants.length / 2).toString().split('.')[0]);
 
     const default_variant = document.createElement('div');
-    default_variant.innerHTML = '<p id="variant-default" class="description_variant">Default</p>';
+    default_variant.innerHTML = `<p id="variant-${pack.url}" class="description_variant">Default</p>`;
     variants.splice(default_variant_index, 0, default_variant);
 
     if (variants.length >= 2) {
@@ -89,6 +89,7 @@ function setPackTiles(json) {
 
       variants[default_variant_index].childNodes[0].classList.add('description_variant_active');
       variants[default_variant_index].childNodes[0].classList.add('description_variant_visible');
+      variants[default_variant_index].classList.add('active');
 
       variants[default_variant_index + 1].childNodes[0].classList.add('description_variant_visible');
     }
@@ -133,7 +134,7 @@ function setPackTiles(json) {
     <div class="_1he3xh7 badge bg-secondary">v${pack.version}</div>
   </div>
   <div class="_1he3xh4">
-    <div class="_1he3xhc">
+    <div class="_1he3xhc variants">
       ${variants_template}
     </div>
     ${avatar_elemets}
