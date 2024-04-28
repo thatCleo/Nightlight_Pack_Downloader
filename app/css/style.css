@@ -194,16 +194,12 @@ path, svg {
 
     cursor: default;
 
-    width: 0px;
+    background-color: #3c3c3c;
 
-    transition: 80ms;
+    transition: 120ms ease-in-out;
 }
 
 .description_variant_visible {
-    background-color: #3c3c3c;
-
-    width: auto;
-
     font-size: small;
 
     border-radius: 3px;

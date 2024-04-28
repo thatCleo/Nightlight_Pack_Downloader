@@ -189,16 +189,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 index++;
 
-                variant_titles[index].getElementsByClassName('description_variant')[0].classList.add('description_variant_active');
-                variant_titles[index - 1].getElementsByClassName('description_variant')[0].classList.remove('description_variant_active');
+                variant_titles[index].childNodes[0].classList.add('description_variant_active');
+                variant_titles[index - 1].childNodes[0].classList.remove('description_variant_active');
                 
 
                 if(index >= 2) {
-                    variant_titles[index - 2].getElementsByClassName('description_variant')[0].classList.remove('description_variant_visible');
+                    variant_titles[index - 2].childNodes[0].classList.remove('description_variant_visible');
                 }
 
                 if(index < lenght - 1) {
-                    variant_titles[index + 1].getElementsByClassName('description_variant')[0].classList.add('description_variant_visible');
+                    variant_titles[index + 1].childNodes[0].classList.add('description_variant_visible');
                 }
 
                 variant_display.classList.remove(`${index-1}`);
@@ -209,16 +209,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 index--;
 
-                variant_titles[index].getElementsByClassName('description_variant')[0].classList.add('description_variant_active');
-                variant_titles[index + 1].getElementsByClassName('description_variant')[0].classList.remove('description_variant_active');
+                variant_titles[index].childNodes[0].classList.add('description_variant_active');
+                variant_titles[index + 1].childNodes[0].classList.remove('description_variant_active');
                 
 
                 if(index < lenght - 2) {
-                    variant_titles[index + 2].getElementsByClassName('description_variant')[0].classList.remove('description_variant_visible');
+                    variant_titles[index + 2].childNodes[0].classList.remove('description_variant_visible');
                 }
 
                 if(index > 0) {
-                    variant_titles[index - 1].getElementsByClassName('description_variant')[0].classList.add('description_variant_visible');
+                    variant_titles[index - 1].childNodes[0].classList.add('description_variant_visible');
                 }
 
                 variant_display.classList.remove(`${index+1}`);
