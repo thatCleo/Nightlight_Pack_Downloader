@@ -20,8 +20,18 @@ let search = '';
 document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('click', function (event) {
         if(event.target.classList.contains('open_link')) {
-            console.log(`Opening Link: ${event.target.value}`);
-            window.webFunctions.openLink(event.target.value);
+            let url = event.target.value;
+            if(url == null){
+                if(event.target.innerText.toLowerCase().includes('nightlight')){
+                    url = 'https://nightlight.gg';
+                }
+                else if(event.target.innerText.toLowerCase().includes('boop')){
+                    url = 'https://boop.pro';
+                }
+            }
+
+            console.log(`Opening Link: ${url}`);
+            window.webFunctions.openLink(url);
         }
         else if (event.target.classList.contains('download-pack')) {
             if (event.target.innerText != 'Download') {
