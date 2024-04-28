@@ -1,5 +1,6 @@
 let navPageInfo;
 let packData;
+let variants_data;
 
 function setPackTiles(json) {
   const packview = document.getElementsByClassName('row-cols-1');
@@ -12,14 +13,54 @@ function setPackTiles(json) {
 
   const allData = JSON.parse(json);
   packData = allData.data.packs;
+  variants_data = allData.data.variants;
 
   total_packs = allData.data.total_packs;
 
   setNavElemets(packData.length, packs_per_page);
 
+  const packs_with_variants = [];
+
+  variants_data.forEach(variant => {
+
+    let pack_index = -1;
+
+    for (let i = 0; i < packs_with_variants.length; i++) {
+      if (packs_with_variants[i].indexOf(variant.primary_variant) != -1) {
+        pack_index = i;
+        break;
+      }
+    }
+
+    if (pack_index == -1) {
+      packs_with_variants.push([variant.primary_variant, new Array()]);
+      pack_index = packs_with_variants.length - 1;
+    }
+
+    console.log(packs_with_variants);
+    console.log(pack_index);
+    packs_with_variants[pack_index][1].push(variant.id);
+  })
+
   packData.forEach(pack => {
 
     downloadBanner(pack.id, pack.current_version);
+
+    let variants = '';
+    let pack_index = -1;
+
+    for (let i = 0; i < packs_with_variants.length; i++) {
+      if (packs_with_variants[i].indexOf(pack.id) != -1) {
+        pack_index = i;
+        break;
+      }
+    }
+
+    if (pack_index != -1) {
+      for (let i = 0; i < packs_with_variants[pack_index][1].length; i++) {
+        variants += ` ${packs_with_variants[pack_index][1][i]}`;
+      }
+    }
 
 
     let avatar_elemets = '<div class="_1he3xh8">';
@@ -58,7 +99,7 @@ function setPackTiles(json) {
   </div>
   <div class="_1he3xh4">
     <div class="_1he3xhc">
-      Variants coming soon...
+    ${variants}
       <div class="_15ryw142 _15ryw140 end-0 position-absolute"></div>
     </div>
     ${avatar_elemets}
@@ -160,7 +201,7 @@ async function downloadAvatar(user_id, avatar_id, pack_id) {
 
   fs.access(`${directoryPath}/${fileName}`, fs.constants.F_OK, async (err) => {
     if (err) {
-      if(defaultAvatar) {
+      if (defaultAvatar) {
         await downloadDefaultAvatar(user_id, avatar_id, pack_id);
       } else {
         await downloadSpecificAvatar(user_id, avatar_id, pack_id);
@@ -203,7 +244,8 @@ async function downloadDefaultAvatar(user_id, avatar_id, pack_id) {
         const avatar_img = document.getElementById(`pack-avatar-${pack_id}-${user_id}`);
         if (avatar_img) {
           avatar_img.src = filePath;
-        }}
+        }
+      }
     })
 }
 
