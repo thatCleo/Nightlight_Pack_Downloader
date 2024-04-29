@@ -39,9 +39,10 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             const variant_container_top = event.target.parentNode.getElementsByClassName('variants')[0];
-            console.log(variant_container_top);
             const variant_container = variant_container_top.getElementsByClassName('container_varaiants')[0].getElementsByClassName('active')[0];
             const value = variant_container.childNodes[0].id.replace('variant-', '');
+
+            variant_container.childNodes[0].classList.add('downloading');
 
             console.log(`Downloading Pack: ${value}`);
 
@@ -53,7 +54,16 @@ document.addEventListener('DOMContentLoaded', function () {
             event.target.innerText = 'Downloading...';
             window.packFunctions.downloadPack(value, data)
                 .then(() => {
-                    event.target.innerText = 'Download finished!';
+                    console.log(`Download finished: ${value}`);
+
+                    if (variant_container == variant_container_top.getElementsByClassName('container_varaiants')[0].getElementsByClassName('active')[0]) {
+                        event.target.innerText = 'Download finished!';
+                    } else {
+                        variant_container.childNodes[0].classList.add('downloaded');
+                    }
+
+                    variant_container.childNodes[0].classList.remove('downloading');
+
                     createPackTiles_Manage();
                 })
         }
@@ -207,7 +217,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const variant_display = button.parentNode.getElementsByClassName('container_varaiants')[0];
             const variant_titles = variant_display.children;
 
-            console.log(event.target.parentNode.parentNode.parentNode);
+            const pack_download_button = event.target.parentNode.parentNode.getElementsByClassName('download-pack')[0];
+            pack_download_button.innerText = 'Download';
 
             let index = variant_display.classList[2];
             const lenght = variant_display.children.length;
@@ -258,6 +269,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 variant_display.classList.remove(`${index + 1}`);
                 variant_display.classList.add(`${index}`);
+            }
+
+            if(variant_titles[index].childNodes[0].classList.contains('downloading')) {
+                pack_download_button.innerText = 'Downloading...';
+            } else if (variant_titles[index].childNodes[0].classList.contains('downloaded')) {
+                pack_download_button.innerText = 'Download Finished!';
+                variant_titles[index].childNodes[0].classList.remove('downloaded')
             }
 
             const banner_element = variant_display.parentNode.parentNode.parentNode.childNodes[0];
