@@ -2,6 +2,42 @@ let navPageInfo;
 let packData;
 let variants_data;
 
+const dbd_version_title = [
+  ["7.6.0", "All Things Wicked"],
+  ["7.5.0", "Alan Wake"],
+  ["7.4.0", "Chucky"],
+  ["7.2.0", "Alien"],
+  ["7.1.0", "Nicolas Cage"],
+  ["6.6.0", "Tools of Torment"],
+  ["6.2.0", "Resident Evil: Project W"],
+  ["6.0.0", "Roots of Dread"],
+  ["5.6.0", "Sadako Rising"],
+  ["5.4.0", "Portrait of a Murder"],
+  ["5.3.0", "Hour of the Witch"],
+  ["5.2.0", "Hellraiser"],
+  ["5.0.0", "Resident Evil"],
+  ["4.6.0", "All-Kill"],
+  ["4.4.0", "A Binding of Kin"],
+  ["4.2.0", "Descend Beyond"],
+  ["4.0.0", "Silent Hill"],
+  ["3.6.0", "Chains of Hate"],
+  ["3.4.0", "Cursed Legacy"],
+  ["3.0.0", "Ghost Face"],
+  ["2.6.3", "Ash vs. Evil Dead"],
+  ["2.6.0", "Demise of The Faithful"],
+  ["2.4.0", "Darkness Among Us"],
+  ["2.2.0", "Shattered Bloodline"],
+  ["2.0.0", "Curtain Call"],
+  ["1.9.0", "Saw"],
+  ["1.8.0", "A Nightmare on Elm Street"],
+  ["1.7.0", "Leatherface"],
+  ["1.6.0", "A Lullaby for the Dark"],
+  ["1.5.1", "Spark of Madness"],
+  ["1.3.1", "Of Flesh and Mud"],
+  ["1.2.1", "Halloween"],
+  ["1.1.0", "The Last Breath"]
+]
+
 function setPackTiles(json) {
   const packview = document.getElementsByClassName('row-cols-1');
   if (packview.length == 0) {
@@ -117,7 +153,16 @@ function setPackTiles(json) {
     avatar_elemets += '</div>';
 
     const packTile = document.createElement('div');
+
     let dbdVersionTitle = pack.dbd_version;
+
+    for (let i = 0; i < dbd_version_title.length; i++) {
+      if (dbd_version_title[i][0] == dbdVersionTitle) {
+        dbdVersionTitle = dbd_version_title[i][1];
+        break;
+      }
+    }
+
     let packLastUpdated = '';
     const count_days = formatRelativeTime(pack.updated_at);
 
@@ -142,24 +187,24 @@ function setPackTiles(json) {
     loading="lazy" alt="Pack Banner for ${pack.title}" class="_1he3xh1 pack_banner">
   <div class="_1he3xh5">
     <span class="_1he3xh6 pack_title">${pack.title}</span>
-    <div class="_1he3xh7 badge bg-secondary pack_version">v${pack.version}</div>
+    <div class="_1he3xh7 badge bg-secondary pack_version ">v${pack.version}</div>
   </div>
   <div class="_1he3xh4">
     <div class="_1he3xhc variants">
       ${variants_template}
     </div>
     ${avatar_elemets}
-    <div class="_1he3xha pack_stats"><span><svg focusable="false" data-prefix="fas" data-icon="code-branch" role="img"
+    <div class="_1he3xha pack_stats"><span title="Dead by Daylight Version"><svg focusable="false" data-prefix="fas" data-icon="code-branch" role="img"
           xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-code-branch">
           <path fill="currentColor"
             d="M80 104c13.3 0 24-10.7 24-24s-10.7-24-24-24S56 66.7 56 80s10.7 24 24 24zm80-24c0 32.8-19.7 61-48 73.3v87.8c18.8-10.9 40.7-17.1 64-17.1h96c35.3 0 64-28.7 64-64v-6.7C307.7 141 288 112.8 288 80c0-44.2 35.8-80 80-80s80 35.8 80 80c0 32.8-19.7 61-48 73.3V160c0 70.7-57.3 128-128 128H176c-35.3 0-64 28.7-64 64v6.7c28.3 12.3 48 40.5 48 73.3c0 44.2-35.8 80-80 80s-80-35.8-80-80c0-32.8 19.7-61 48-73.3V352 153.3C19.7 141 0 112.8 0 80C0 35.8 35.8 0 80 0s80 35.8 80 80zm232 0c0-13.3-10.7-24-24-24s-24 10.7-24 24s10.7 24 24 24s24-10.7 24-24zM80 456c13.3 0 24-10.7 24-24s-10.7-24-24-24s-24 10.7-24 24s10.7 24 24 24z">
           </path>
-        </svg><label class="dbd_version">${dbdVersionTitle}</label></span><span><svg focusable="false" data-prefix="fas" data-icon="upload"
+        </svg>${dbdVersionTitle}</span><span title="Last Updated"><svg focusable="false" data-prefix="fas" data-icon="upload"
           role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-upload">
           <path fill="currentColor"
             d="M288 109.3V352c0 17.7-14.3 32-32 32s-32-14.3-32-32V109.3l-73.4 73.4c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l128-128c12.5-12.5 32.8-12.5 45.3 0l128 128c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L288 109.3zM64 352H192c0 35.3 28.7 64 64 64s64-28.7 64-64H448c35.3 0 64 28.7 64 64v32c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V416c0-35.3 28.7-64 64-64zM432 456c13.3 0 24-10.7 24-24s-10.7-24-24-24s-24 10.7-24 24s10.7 24 24 24z">
           </path>
-        </svg><label class="last_updated">${packLastUpdated}</label></span><span><svg focusable="false" data-prefix="fas" data-icon="cloud-arrow-down"
+        </svg><label class="last_updated">${packLastUpdated}</label></span><span title="Total Downloads"><svg focusable="false" data-prefix="fas" data-icon="cloud-arrow-down"
           role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"
           class="svg-inline--fa fa-cloud-arrow-down">
           <path fill="currentColor"

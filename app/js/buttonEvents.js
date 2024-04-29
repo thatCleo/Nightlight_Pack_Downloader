@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const stats = event.target.parentNode.parentNode.getElementsByClassName('pack_stats')[0];
             const pack_title_display = event.target.parentNode.parentNode.parentNode.getElementsByClassName('pack_title')[0];
             const pack_content_display = event.target.parentNode.parentNode.getElementsByClassName('pack_content')[0];
-            const pack_version_display = event.target.parentNode.parentNode.parentNode.getElementsByClassName('pack_version')[0];
+
             const variant_display = button.parentNode.getElementsByClassName('container_varaiants')[0];
             const variant_titles = variant_display.children;
 
@@ -343,16 +343,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 last_update = 'Yesterday';
             }
 
+            for (let i = 0; i < dbd_version_title.length; i++) {
+                if (dbd_version_title[i][0] == game_version) {
+                    game_version = dbd_version_title[i][1];
+                  break;
+                }
+              }
 
-
-            stats.getElementsByClassName('dbd_version')[0].innerHTML = game_version;
+            stats.childNodes[0].childNodes[1].textContent = game_version;
             stats.getElementsByClassName('last_updated')[0].innerHTML = last_update;
             stats.getElementsByClassName('downloads')[0].innerHTML = downloads;
 
             pack_title_display.innerText = title;
             pack_content_display.innerText = has;
             pack_content_display.parentNode.title = has;
-            pack_version_display.innerText = `v${pack_version}`
         }
     });
 

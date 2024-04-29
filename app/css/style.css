@@ -238,6 +238,18 @@ svg {
     vertical-align: middle;
 }
 
+.pack_stats {
+    position: relative;
+}
+
+.dbd_version {
+    text-overflow: ellipsis;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
 .hidden {
     display: none !important;
 }
