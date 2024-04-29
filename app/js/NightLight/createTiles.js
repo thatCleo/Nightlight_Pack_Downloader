@@ -141,7 +141,7 @@ function setPackTiles(json) {
 <div id="pack-banner-${pack.id}" class="_1he3xh0 pack_tile"><img src="${window.directory.currentPath()}/cached_images/placeholder/banner.png"
     loading="lazy" alt="Pack Banner for ${pack.title}" class="_1he3xh1 pack_banner">
   <div class="_1he3xh5">
-    <span class="_1he3xh6">${pack.title}</span>
+    <span class="_1he3xh6 pack_title">${pack.title}</span>
     <div class="_1he3xh7 badge bg-secondary pack_version">v${pack.version}</div>
   </div>
   <div class="_1he3xh4">

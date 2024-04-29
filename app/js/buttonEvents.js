@@ -201,10 +201,13 @@ document.addEventListener('DOMContentLoaded', function () {
         else if (event.target.classList.contains('button_variant')) {
             const button = event.target;
             const stats = event.target.parentNode.parentNode.getElementsByClassName('pack_stats')[0];
+            const pack_title_display = event.target.parentNode.parentNode.parentNode.getElementsByClassName('pack_title')[0];
             const pack_content_display = event.target.parentNode.parentNode.getElementsByClassName('pack_content')[0];
             const pack_version_display = event.target.parentNode.parentNode.parentNode.getElementsByClassName('pack_version')[0];
             const variant_display = button.parentNode.getElementsByClassName('container_varaiants')[0];
             const variant_titles = variant_display.children;
+
+            console.log(event.target.parentNode.parentNode.parentNode);
 
             let index = variant_display.classList[2];
             const lenght = variant_display.children.length;
@@ -259,6 +262,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const banner_element = variant_display.parentNode.parentNode.parentNode.childNodes[0];
             let id = '';
+            let title = '';
             let current_version = '';
 
             let game_version = '';
@@ -272,6 +276,7 @@ document.addEventListener('DOMContentLoaded', function () {
             variants_data.forEach(variant => {
                 if (variant.url == url) {
                     id = variant.id;
+                    title = variant.title;
                     current_version = variant.current_version;
                     pack_version = variant.version;
                     game_version = variant.dbd_version;
@@ -291,6 +296,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 packData.forEach(pack => {
                     if (pack.url == url) {
                         id = pack.id;
+                        title = pack.title;
                         current_version = pack.current_version;
                         pack_version = pack.version;
                         game_version = pack.dbd_version;
@@ -309,6 +315,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             banner_element.src = `${window.directory.currentPath()}/cached_images/${id}_${current_version}/banner.png`;
 
+            const count_days = formatRelativeTime(last_update);
+
             if (count_days > 0) {
                 last_update = `${count_days} Days Ago`;
             } else if (count_days <= 1) {
@@ -323,6 +331,7 @@ document.addEventListener('DOMContentLoaded', function () {
             stats.getElementsByClassName('last_updated')[0].innerHTML = last_update;
             stats.getElementsByClassName('downloads')[0].innerHTML = downloads;
 
+            pack_title_display.innerText = title;
             pack_content_display.innerText = has;
             pack_content_display.parentNode.title = has;
             pack_version_display.innerText = `v${pack_version}`
