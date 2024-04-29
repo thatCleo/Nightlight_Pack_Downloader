@@ -271,7 +271,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 variant_display.classList.add(`${index}`);
             }
 
-            if(variant_titles[index].childNodes[0].classList.contains('downloading')) {
+            if (variant_titles[index].childNodes[0].classList.contains('downloading')) {
                 pack_download_button.innerText = 'Downloading...';
             } else if (variant_titles[index].childNodes[0].classList.contains('downloaded')) {
                 pack_download_button.innerText = 'Download Finished!';
@@ -346,9 +346,9 @@ document.addEventListener('DOMContentLoaded', function () {
             for (let i = 0; i < dbd_version_title.length; i++) {
                 if (dbd_version_title[i][0] == game_version) {
                     game_version = dbd_version_title[i][1];
-                  break;
+                    break;
                 }
-              }
+            }
 
             stats.childNodes[0].childNodes[1].textContent = game_version;
             stats.getElementsByClassName('last_updated')[0].innerHTML = last_update;
