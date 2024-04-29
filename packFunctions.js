@@ -17,7 +17,6 @@ async function deletePack(event, pack_url) {
             for (let i = 0; i < installed_packs.length; i++) {
                 if (installed_packs[i].toString() !== pack_url) {
                     new_installed_packs.push(installed_packs[i]);
-                    break;
                 }
             }
 
