@@ -133,7 +133,7 @@ function setPackTiles(json) {
     loading="lazy" alt="Pack Banner for ${pack.title}" class="_1he3xh1 pack_banner">
   <div class="_1he3xh5">
     <span class="_1he3xh6">${pack.title}</span>
-    <div class="_1he3xh7 badge bg-secondary">v${pack.version}</div>
+    <div class="_1he3xh7 badge bg-secondary pack_version">v${pack.version}</div>
   </div>
   <div class="_1he3xh4">
     <div class="_1he3xhc variants">

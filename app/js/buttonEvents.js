@@ -202,10 +202,9 @@ document.addEventListener('DOMContentLoaded', function () {
             const button = event.target;
             const stats = event.target.parentNode.parentNode.getElementsByClassName('pack_stats')[0];
             const pack_content_display = event.target.parentNode.parentNode.getElementsByClassName('pack_content')[0];
+            const pack_version_display = event.target.parentNode.parentNode.parentNode.getElementsByClassName('pack_version')[0];
             const variant_display = button.parentNode.getElementsByClassName('container_varaiants')[0];
             const variant_titles = variant_display.children;
-
-            console.log(pack_content_display);
 
             let index = variant_display.classList[2];
             const lenght = variant_display.children.length;
@@ -263,6 +262,7 @@ document.addEventListener('DOMContentLoaded', function () {
             let current_version = '';
 
             let game_version = '';
+            let pack_version = '';
             let last_update = 'Today';
             let downloads = '';
             let has = '';
@@ -273,6 +273,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (variant.url == url) {
                     id = variant.id;
                     current_version = variant.current_version;
+                    pack_version = variant.version;
                     game_version = variant.dbd_version;
                     last_update = variant.updated_at;
                     downloads = variant.downloads;
@@ -291,6 +292,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (pack.url == url) {
                         id = pack.id;
                         current_version = pack.current_version;
+                        pack_version = pack.version;
                         game_version = pack.dbd_version;
                         last_update = pack.updated_at;
                         downloads = pack.downloads;
@@ -320,6 +322,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             pack_content_display.innerText = has;
             pack_content_display.parentNode.title = has;
+            pack_version_display.innerText = `v${pack_version}`
         }
     });
 
