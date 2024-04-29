@@ -381,6 +381,15 @@ document.addEventListener('DOMContentLoaded', function () {
             const value = event.target.value;
             window.options.setDBDPath(value);
         }
+
+        else if (event.target.id == "filter_search") {
+            const value = event.target.value;
+            search = value;
+            disableFilterApplyButton();
+
+            loadPackTiles();
+            scrollToTop();
+        }
     });
     document.addEventListener('input', function (event) {
         if (event.target.id == "filter_search") {
