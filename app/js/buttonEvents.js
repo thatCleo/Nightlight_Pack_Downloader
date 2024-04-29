@@ -263,7 +263,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             let game_version = '';
             let pack_version = '';
-            let last_update = 'Today';
+            let last_update = '';
             let downloads = '';
             let has = '';
 
@@ -309,9 +309,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
             banner_element.src = `${window.directory.currentPath()}/cached_images/${id}_${current_version}/banner.png`;
 
-            const count_days = formatRelativeTime(last_update);
             if (count_days > 0) {
                 last_update = `${count_days} Days Ago`;
+            } else if (count_days <= 1) {
+                last_update = 'Today';
+            } else if (count_days <= 2) {
+                last_update = 'Yesterday';
             }
 
 

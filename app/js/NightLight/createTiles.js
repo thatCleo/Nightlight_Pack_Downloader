@@ -118,7 +118,16 @@ function setPackTiles(json) {
 
     const packTile = document.createElement('div');
     let dbdVersionTitle = pack.dbd_version;
-    const packLastUpdated = `${formatRelativeTime(pack.updated_at)} Days Ago`;
+    let packLastUpdated = '';
+    const count_days = formatRelativeTime(pack.updated_at);
+
+    if (count_days > 0) {
+      packLastUpdated = `${count_days} Days Ago`;
+    } else if (count_days <= 1) {
+      packLastUpdated = 'Today';
+    } else if (count_days <= 2) {
+      packLastUpdated = 'Yesterday';
+    }
 
     let packContent = "";
     for (let i = 0; i < pack.has.length; i++) {
