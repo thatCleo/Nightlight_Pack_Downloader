@@ -19,13 +19,13 @@ let search = '';
 
 document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('click', function (event) {
-        if(event.target.classList.contains('open_link')) {
+        if (event.target.classList.contains('open_link')) {
             let url = event.target.value;
-            if(url == null){
-                if(event.target.innerText.toLowerCase().includes('nightlight')){
+            if (url == null) {
+                if (event.target.innerText.toLowerCase().includes('nightlight')) {
                     url = 'https://nightlight.gg';
                 }
-                else if(event.target.innerText.toLowerCase().includes('boop')){
+                else if (event.target.innerText.toLowerCase().includes('boop')) {
                     url = 'https://boop.pro';
                 }
             }
@@ -201,8 +201,11 @@ document.addEventListener('DOMContentLoaded', function () {
         else if (event.target.classList.contains('button_variant')) {
             const button = event.target;
             const stats = event.target.parentNode.parentNode.getElementsByClassName('pack_stats')[0];
+            const pack_content_display = event.target.parentNode.parentNode.getElementsByClassName('pack_content')[0];
             const variant_display = button.parentNode.getElementsByClassName('container_varaiants')[0];
             const variant_titles = variant_display.children;
+
+            console.log(pack_content_display);
 
             let index = variant_display.classList[2];
             const lenght = variant_display.children.length;
@@ -260,8 +263,9 @@ document.addEventListener('DOMContentLoaded', function () {
             let current_version = '';
 
             let game_version = '';
-            let last_update = '';
+            let last_update = 'Today';
             let downloads = '';
+            let has = '';
 
             const url = variant_titles[index].childNodes[0].id.replace('variant-', '');
 
@@ -272,6 +276,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     game_version = variant.dbd_version;
                     last_update = variant.updated_at;
                     downloads = variant.downloads;
+
+                    for (let i = 0; i < variant.has.length; i++) {
+                        if (has == "")
+                            has += `${formatText(variant.has[i])}`;
+                        else
+                            has += `, ${formatText(variant.has[i])}`
+                    }
                 }
             });
 
@@ -283,17 +294,32 @@ document.addEventListener('DOMContentLoaded', function () {
                         game_version = pack.dbd_version;
                         last_update = pack.updated_at;
                         downloads = pack.downloads;
+
+                        for (let i = 0; i < pack.has.length; i++) {
+                            if (has == "")
+                                has += `${formatText(pack.has[i])}`;
+                            else
+                                has += `, ${formatText(pack.has[i])}`
+                        }
                     }
                 });
             }
 
             banner_element.src = `${window.directory.currentPath()}/cached_images/${id}_${current_version}/banner.png`;
 
-            last_update = `${formatRelativeTime(last_update)} Days Ago`;
-            
+            const count_days = formatRelativeTime(last_update);
+            if (count_days > 0) {
+                last_update = `${count_days} Days Ago`;
+            }
+
+
+
             stats.getElementsByClassName('dbd_version')[0].innerHTML = game_version;
             stats.getElementsByClassName('last_updated')[0].innerHTML = last_update;
             stats.getElementsByClassName('downloads')[0].innerHTML = downloads;
+
+            pack_content_display.innerText = has;
+            pack_content_display.parentNode.title = has;
         }
     });
 
