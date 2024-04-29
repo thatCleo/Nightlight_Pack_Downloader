@@ -230,7 +230,7 @@ svg {
 }
 
 .pack_content {
-    width: 90%;
+    max-width: 90%;
     text-overflow: ellipsis;
     display: inline-block;
     overflow: hidden;
