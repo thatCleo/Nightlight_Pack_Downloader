@@ -70,9 +70,14 @@ function setPackTiles(json) {
     default_variant.innerHTML = `<p id="variant-${pack.url}" class="description_variant">Default</p>`;
     variants.splice(default_variant_index, 0, default_variant);
 
+    if (variants.length <= 1) {
+      variants_template = `<div class="variants-${pack.id} container_varaiants ${default_variant_index}"></div>`;
+      variants[default_variant_index].classList.add('active');
+    }
+
     if (variants.length >= 2) {
       variants_template =
-      `<div class="button_variant button_variant_prev">
+        `<div class="button_variant button_variant_prev">
         <svg focusable="false" data-prefix="far" data-icon="angle-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="svg-inline--fa fa-angle-left">
           <path fill="currentColor" d="M47 239c-9.4 9.4-9.4 24.6 0 33.9L207 433c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9L97.9 256 241 113c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L47 239z">
           </path>

@@ -38,7 +38,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            const variant_container = event.target.parentNode.getElementsByClassName('variants')[0].getElementsByClassName('container_varaiants')[0].getElementsByClassName('active')[0];
+            const variant_container_top = event.target.parentNode.getElementsByClassName('variants')[0];
+            console.log(variant_container_top);
+            const variant_container = variant_container_top.getElementsByClassName('container_varaiants')[0].getElementsByClassName('active')[0];
             const value = variant_container.childNodes[0].id.replace('variant-', '');
 
             console.log(`Downloading Pack: ${value}`);
