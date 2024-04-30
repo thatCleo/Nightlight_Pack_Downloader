@@ -155,7 +155,7 @@ svg {
 }
 
 .container_options_clear_cache {
-    margin-top: 5px;
+    margin-top: 25px;
 }
 
 .button_options_clear_cache {
@@ -181,6 +181,15 @@ svg {
 .button_options_clear_cache:hover {
     background-color: #282828;
     border-color: #282828;
+}
+
+.button_options_clear_cache:active {
+    background-color: #1e1e1e;
+    border-color: #1e1e1e;
+}
+
+.label_options_cache_size {
+    color: #3c3c3c;
 }
 
 .filter_shortcut_active {

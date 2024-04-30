@@ -1,6 +1,8 @@
 const fs = require('fs');
+const path = require('path');
 const StreamZip = require('node-stream-zip');
 const { dialog } = require('electron');
+const { log } = require('console');
 
 function fileExists(filePath) {
     try {
@@ -14,16 +16,23 @@ function fileExists(filePath) {
 }
 
 async function deleteFile(path) {
+    console.log('[deleteFile] deleting ' + path);
     return new Promise((resolve, reject) => {
-        fs.rmSync(path, { recursive: true }, (err) => {
-            if (err) {
-                console.error('[deleteFile] Error deleting folder:', err);
-                reject(err);
-            } else {
-                console.log('[deleteFile] Folder deleted successfully');
-                resolve();
-            }
-        });
+        try {
+            fs.rmSync(path, { recursive: true }, (err) => {
+                if (err) {
+                    console.error('[deleteFile] Error deleting folder:', err);
+                    reject(err);
+                } else {
+                    console.log('[deleteFile] Folder deleted successfully');
+                    resolve();
+                }
+
+            });
+        } catch (err) {
+            console.log('[deleteFile] Error: ' + err);
+            reject(err);
+        }
     })
 }
 
@@ -82,16 +91,83 @@ async function getPathFromDialog() {
     }
 }
 
+function getDirectorySize(directoryPath, callback) {
+    let totalSize = 0;
+
+    fs.readdir(directoryPath, (err, files) => {
+        if (err) {
+            callback(err);
+            return;
+        }
+
+        let pending = files.length;
+
+        if (!pending) {
+            // If directory is empty, return 0 size
+            callback(null, 0);
+            return;
+        }
+
+        files.forEach(file => {
+            const filePath = path.join(directoryPath, file);
+
+            fs.stat(filePath, (err, stats) => {
+                if (err) {
+                    callback(err);
+                    return;
+                }
+
+                if (stats.isDirectory()) {
+                    getDirectorySize(filePath, (err, size) => {
+                        if (err) {
+                            callback(err);
+                            return;
+                        }
+                        totalSize += size;
+                        if (!--pending) callback(null, totalSize);
+                    });
+                } else {
+                    totalSize += stats.size;
+                    if (!--pending) callback(null, totalSize);
+                }
+            });
+        });
+    });
+}
+
+function getCacheSize() {
+    let path = __dirname;
+    path = path.replace('resources/app.asar', '');
+    path += '/data/cached_images';
+
+    return new Promise((resolve, reject) => {
+        if (!fileExists(path)) {
+            resolve(0);
+            return;
+        }
+        getDirectorySize(path, (err, size) => {
+            if (err) {
+                console.error('Error:', err);
+                return;
+            }
+            resolve(String(size / 1000).split('.')[0]);
+        });
+    })
+}
+
 async function clearCache() {
     let path = __dirname;
     path = path.replace('resources/app.asar', '');
     path += '/data/cached_images';
 
-    console.log('[clearCache] Clearing Cache...');
-
     return new Promise((resolve, reject) => {
+
+        if (!fileExists(path)) return;
+
+        console.log('[clearCache] Clearing Cache...');
+
         deleteFile(path);
-        resolve(true);        
+        resolve(true);
     });
 }
 
@@ -108,5 +184,6 @@ module.exports = {
     unzipFile,
     getPathFromDialog,
     getDirectoriesInPath,
-    clearCache
+    clearCache,
+    getCacheSize
 }

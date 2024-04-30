@@ -211,9 +211,16 @@ document.addEventListener('DOMContentLoaded', function () {
         else if (event.target.id.includes('options_clear_cache')) {
             console.log('Clearing Cache...');
             window.fileFunctions.clearCache()
-            .then(() => {
-                loadPackTiles();
-            });
+                .then(() => {
+                    loadPackTiles();
+
+                    console.log('Loaded');
+
+                    window.fileFunctions.getCacheSize()
+                        .then(size => {
+                            document.getElementsByClassName('label_options_cache_size')[0].innerText = `${size} KB`;
+                        });
+                });
         }
 
         else if (event.target.classList.contains('button_variant')) {
@@ -485,6 +492,11 @@ document.getElementById("options").addEventListener("click", () => {
     webviewPage.style.display = "none";
     managePacksPage.style.display = "none";
     optionsPage.style.display = "block";
+
+    window.fileFunctions.getCacheSize()
+        .then(size => {
+            document.getElementsByClassName('label_options_cache_size')[0].innerText = `${size} KB`;
+        });
 });
 
 function disablePageNavButtonsPrev() {

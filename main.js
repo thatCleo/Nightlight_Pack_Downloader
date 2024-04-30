@@ -1,7 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('node:path')
 const { httpGet, downloadFile, downloadFileProgress, openLink } = require('./webFunctions');
-const { fileExists, clearCache } = require('./fileFunctions');
+const { fileExists, clearCache, getCacheSize } = require('./fileFunctions');
 const { deletePack, downloadPack, activatePack, resetAllPacks, getInstalledPacks, getActivePacks, getPackMetaData } = require('./packFunctions');
 const { setDBDPath, setDBDPathFromDialog, getDBDPath } = require('./options');
 
@@ -38,6 +38,7 @@ app.whenReady().then(() => {
 
   ipcMain.handle('fileFunctions:fileExists', fileExists);
   ipcMain.handle('fileFunctions:clearCache', clearCache);
+  ipcMain.handle('fileFunctions:getCacheSize', getCacheSize);
 
   ipcMain.handle('options:setDBDPath', setDBDPath);
   ipcMain.handle('options:setDBDPathFromDialog', setDBDPathFromDialog);

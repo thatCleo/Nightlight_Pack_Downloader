@@ -1,6 +1,7 @@
 const { contextBridge, ipcRenderer, app } = require('electron');
 const fs = require('fs');
 const { currentDirectory } = require('./options');
+const { getCacheSize } = require('./fileFunctions');
 
 contextBridge.exposeInMainWorld('versions', {
   node: () => process.versions.node,
@@ -40,7 +41,8 @@ contextBridge.exposeInMainWorld('packFunctions', {
 })
 
 contextBridge.exposeInMainWorld('fileFunctions', {
-  clearCache: () => ipcRenderer.invoke('fileFunctions:clearCache')
+  clearCache: () => ipcRenderer.invoke('fileFunctions:clearCache'),
+  getCacheSize: () => ipcRenderer.invoke('fileFunctions:getCacheSize')
 })
 
 contextBridge.exposeInMainWorld('directory', {

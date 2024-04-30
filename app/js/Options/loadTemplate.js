@@ -17,6 +17,7 @@ const options_template = `
     </div>
     <div class="container_options_clear_cache">
         <button id="options_clear_cache" class="button_options_clear_cache">Clear Cache</button>
+        <label class="label_options_cache_size">0000 KB</label>
     </div>
     </div>
     <footer class="footer pb-3 nl-footer">
