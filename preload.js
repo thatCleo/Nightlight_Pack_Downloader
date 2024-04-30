@@ -1,7 +1,6 @@
 const { contextBridge, ipcRenderer, app } = require('electron');
 const fs = require('fs');
 const { currentDirectory } = require('./options');
-const { openLink } = require('./webFunctions');
 
 contextBridge.exposeInMainWorld('versions', {
   node: () => process.versions.node,
@@ -38,6 +37,10 @@ contextBridge.exposeInMainWorld('packFunctions', {
   getInstalledPacks: () => ipcRenderer.invoke('packFunctions:getInstalledPacks'),
   getActivePacks: () => ipcRenderer.invoke('packFunctions:getActivePacks'),
   getPackMetaData: (url) => ipcRenderer.invoke('packFunctions:getPackMetaData', url)
+})
+
+contextBridge.exposeInMainWorld('fileFunctions', {
+  clearCache: () => ipcRenderer.invoke('fileFunctions:clearCache')
 })
 
 contextBridge.exposeInMainWorld('directory', {

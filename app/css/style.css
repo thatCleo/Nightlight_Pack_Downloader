@@ -154,6 +154,35 @@ svg {
     border-color: #282828;
 }
 
+.container_options_clear_cache {
+    margin-top: 5px;
+}
+
+.button_options_clear_cache {
+    color: #f2f2f2;
+    background-color: #2b2b2b;
+
+    font-size: medium;
+
+    height: 38px;
+
+    margin-right: 5px;
+
+    padding: 3px 8px !important;
+
+    border: solid 1px #2b2b2b;
+    border-radius: 5px;
+
+    padding: 3px;
+
+    transition: 150ms;
+}
+
+.button_options_clear_cache:hover {
+    background-color: #282828;
+    border-color: #282828;
+}
+
 .filter_shortcut_active {
     background-color: #3a3a3a;
     border-color: #313131;

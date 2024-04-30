@@ -208,6 +208,14 @@ document.addEventListener('DOMContentLoaded', function () {
             enableFilterResetButton();
         }
 
+        else if (event.target.id.includes('options_clear_cache')) {
+            console.log('Clearing Cache...');
+            window.fileFunctions.clearCache()
+            .then(() => {
+                loadPackTiles();
+            });
+        }
+
         else if (event.target.classList.contains('button_variant')) {
             const button = event.target;
             const pack_creator_avatars_display = event.target.parentNode.parentNode.parentNode.getElementsByClassName('pack_creator_avatars')[0];

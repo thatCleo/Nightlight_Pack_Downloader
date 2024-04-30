@@ -76,16 +76,29 @@ async function getPathFromDialog() {
     const { canceled, filePaths } = await dialog.showOpenDialog({
         properties: ['openDirectory']
     });
-    
+
     if (!canceled) {
         return filePaths[0]
     }
 }
 
+async function clearCache() {
+    let path = __dirname;
+    path = path.replace('resources/app.asar', '');
+    path += '/data/cached_images';
+
+    console.log('[clearCache] Clearing Cache...');
+
+    return new Promise((resolve, reject) => {
+        deleteFile(path);
+        resolve(true);        
+    });
+}
+
 const getDirectoriesInPath = source =>
-        fs.readdirSync(source, { withFileTypes: true })
-            .filter(dirent => dirent.isDirectory())
-            .map(dirent => dirent.name);
+    fs.readdirSync(source, { withFileTypes: true })
+        .filter(dirent => dirent.isDirectory())
+        .map(dirent => dirent.name);
 
 
 module.exports = {
@@ -94,5 +107,6 @@ module.exports = {
     copyFile,
     unzipFile,
     getPathFromDialog,
-    getDirectoriesInPath
+    getDirectoriesInPath,
+    clearCache
 }
