@@ -210,6 +210,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         else if (event.target.classList.contains('button_variant')) {
             const button = event.target;
+            const pack_creator_avatars_display = event.target.parentNode.parentNode.parentNode.getElementsByClassName('pack_creator_avatars')[0];
             const stats = event.target.parentNode.parentNode.getElementsByClassName('pack_stats')[0];
             const pack_title_display = event.target.parentNode.parentNode.parentNode.getElementsByClassName('pack_title')[0];
             const pack_content_display = event.target.parentNode.parentNode.getElementsByClassName('pack_content')[0];
@@ -222,7 +223,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             let index = variant_display.classList[2];
             const lenght = variant_display.children.length;
-
 
             if (button.classList.contains('button_variant_next')) {
                 if (index >= (lenght - 1)) return;
@@ -283,6 +283,8 @@ document.addEventListener('DOMContentLoaded', function () {
             let title = '';
             let current_version = '';
 
+            let creator_avatars = '';
+
             let game_version = '';
             let pack_version = '';
             let last_update = '';
@@ -300,6 +302,17 @@ document.addEventListener('DOMContentLoaded', function () {
                     game_version = variant.dbd_version;
                     last_update = variant.updated_at;
                     downloads = variant.downloads;
+
+                    variant.creators.forEach(creator => {
+                        const creatorName = creator.username;
+
+                        if (creator.user != null) {
+                            creator_avatars += `<span class="d-flex align-items-center"><img id="pack-avatar-${variant.id}-${creator.user.user_id}" src="${window.directory.currentPath()}/cached_images/${creator.user.user_id}_${creator.user.avatar_id}/avatar.png" alt="${creator.username}" class="avatar">${creator.username}</span>`;
+                            downloadAvatar(creator.user.user_id, creator.user.avatar_id, variant.id);
+                        } else {
+                            creator_avatars += `<span class="d-flex align-items-center"><img id="pack-avatar-${variant.id}-null" class="avatar">${creatorName}</span>`;
+                        }
+                    });
 
                     for (let i = 0; i < variant.has.length; i++) {
                         if (has == "")
@@ -321,6 +334,17 @@ document.addEventListener('DOMContentLoaded', function () {
                         last_update = pack.updated_at;
                         downloads = pack.downloads;
 
+                        pack.creators.forEach(creator => {
+                            const creatorName = creator.username;
+
+                            if (creator.user != null) {
+                                creator_avatars += `<span class="d-flex align-items-center"><img id="pack-avatar-${pack.id}-${creator.user.user_id}" src="${window.directory.currentPath()}/cached_images/${creator.user.user_id}_${creator.user.avatar_id}/avatar.png" alt="${creator.username}" class="avatar">${creator.username}</span>`;
+                                downloadAvatar(creator.user.user_id, creator.user.avatar_id, pack.id);
+                            } else {
+                                creator_avatars += `<span class="d-flex align-items-center"><img id="pack-avatar-${pack.id}-null" class="avatar">${creatorName}</span>`;
+                            }
+                        });
+
                         for (let i = 0; i < pack.has.length; i++) {
                             if (has == "")
                                 has += `${formatText(pack.has[i])}`;
@@ -333,14 +357,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
             banner_element.src = `${window.directory.currentPath()}/cached_images/${id}_${current_version}/banner.png`;
 
+            pack_creator_avatars_display.innerHTML = creator_avatars;
+
             const count_days = formatRelativeTime(last_update);
 
             if (count_days > 1) {
-                packLastUpdated = `${count_days} Days Ago`;
+                last_update = `${count_days} Days Ago`;
             } else if (count_days == 0) {
-                packLastUpdated = 'Today';
+                last_update = 'Today';
             } else if (count_days == 1) {
-                packLastUpdated = 'Yesterday';
+                last_update = 'Yesterday';
             }
 
             for (let i = 0; i < dbd_version_title.length; i++) {

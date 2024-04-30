@@ -138,13 +138,13 @@ function setPackTiles(json) {
       variants[(default_variant_index - 1)].childNodes[0].classList.add('description_variant_visible');
     }
 
-    let avatar_elemets = '<div class="_1he3xh8">';
+    let avatar_elemets = '<div class="_1he3xh8 pack_creator_avatars">';
     pack.creators.forEach(creator => {
       const creatorName = creator.username;
 
       if (creator.user != null) {
         console.log(`${pack.id}_${creator.user.user_id}`);
-        avatar_elemets += `<span class="d-flex align-items-center"><img id="pack-avatar-${pack.id}-${creator.user.user_id}" src="${window.directory.currentPath()}/cached_images/${pack.id}_${creator.user.user_id}/avatar.png" alt="${creatorName}" class="avatar">${creatorName}</span>`;
+        avatar_elemets += `<span class="d-flex align-items-center"><img id="pack-avatar-${pack.id}-${creator.user.user_id}" src="${window.directory.currentPath()}/cached_images/${creator.user.user_id}_${creator.user.avatar_id}/avatar.png" alt="${creatorName}" class="avatar">${creatorName}</span>`;
         downloadAvatar(creator.user.user_id, creator.user.avatar_id, pack.id);
       } else {
         avatar_elemets += `<span class="d-flex align-items-center"><img id="pack-avatar-${pack.id}-null" class="avatar">${creatorName}</span>`;
@@ -291,7 +291,6 @@ function downloadBanner(pack_id, current_version) {
 
 async function downloadAvatar(user_id, avatar_id, pack_id) {
 
-  console.log(`${pack_id}_${user_id}`);
   let defaultAvatar = false;
   if (avatar_id == null) {
     defaultAvatar = true;
