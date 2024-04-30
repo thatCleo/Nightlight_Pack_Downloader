@@ -335,12 +335,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const count_days = formatRelativeTime(last_update);
 
-            if (count_days > 0) {
-                last_update = `${count_days} Days Ago`;
-            } else if (count_days <= 1) {
-                last_update = 'Today';
-            } else if (count_days <= 2) {
-                last_update = 'Yesterday';
+            if (count_days > 1) {
+                packLastUpdated = `${count_days} Days Ago`;
+            } else if (count_days == 0) {
+                packLastUpdated = 'Today';
+            } else if (count_days == 1) {
+                packLastUpdated = 'Yesterday';
             }
 
             for (let i = 0; i < dbd_version_title.length; i++) {

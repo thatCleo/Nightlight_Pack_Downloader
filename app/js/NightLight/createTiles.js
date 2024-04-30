@@ -166,11 +166,11 @@ function setPackTiles(json) {
     let packLastUpdated = '';
     const count_days = formatRelativeTime(pack.updated_at);
 
-    if (count_days > 0) {
+    if (count_days > 1) {
       packLastUpdated = `${count_days} Days Ago`;
-    } else if (count_days <= 1) {
+    } else if (count_days == 0) {
       packLastUpdated = 'Today';
-    } else if (count_days <= 2) {
+    } else if (count_days == 1) {
       packLastUpdated = 'Yesterday';
     }
 
