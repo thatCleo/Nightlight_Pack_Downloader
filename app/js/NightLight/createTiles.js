@@ -183,7 +183,7 @@ function setPackTiles(json) {
     }
     const tile =
       `
-<div id="pack-banner-${pack.id}" class="_1he3xh0 pack_tile"><img src="${window.directory.currentPath()}/cached_images/placeholder/banner.png"
+<div id="pack-banner-${pack.id}" class="_1he3xh0 pack_tile"><img src="${window.directory.currentPath()}/cached_images/${pack.id}_${pack.current_version}/banner.png"
     loading="lazy" alt="Pack Banner for ${pack.title}" class="_1he3xh1 pack_banner">
   <div class="_1he3xh5">
     <span class="_1he3xh6 pack_title">${pack.title}</span>
@@ -361,7 +361,7 @@ function setNavElemets(current_visible_packs, packs_per_page) {
   if (pageNum.length == 1) {
     pageNum = pageNum[0];
 
-    const pageNumInput = `<input id="input_page_nav" style="width:3rem;padding:.3rem .5rem;font-size:14px;border-radius:2.5px;" value="${current_page}" min="1" step="1" max="NaN" type="number" pattern="\d*" class="form-control text-center">`;
+    const pageNumInput = `<input id="input_page_nav" value="${current_page}" min="1" step="1" max="NaN" type="number" pattern="\d*" class="form-control text-center">`;
     pageNum.innerHTML = pageNumInput;
 
     const pageOf = document.createElement('span');
