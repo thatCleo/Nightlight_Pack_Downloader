@@ -122,6 +122,106 @@ svg {
     margin-bottom: 1.5rem;
 }
 
+.pack-order-container-outer {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+}
+
+.pack-order-container {
+    width: 100%;
+    height: 110px;
+    padding: 15px 35px;
+}
+
+.pack-order {
+    display: flex;
+    flex-direction: row;    
+    justify-content: start;
+    align-content: center;
+    
+    position: relative;
+
+    background-color: #1e1e1e;
+    border-radius: 3px;
+}
+
+.pack-order-grab {
+    fill: #f2f2f2;
+
+    align-self: center;
+
+    margin: 0px 20px;
+
+    cursor: grab;
+}
+
+.pack-order-image-container {
+    padding: 5px;
+    margin: 5px;
+}
+
+.pack-order-image {
+    height: 100%;
+    width: 100%;
+    max-width: 300px;
+    max-height: 120px;
+
+    object-fit: contain;
+}
+
+.pack-order-info {
+    color: #f2f2f2;
+    margin: 5px 10px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+
+.pack-order-info-content {
+    color: #5c5c5c;
+    display: flex;
+
+    flex-direction: row;
+    align-content: center;
+}
+
+.pack-order-info-content-icon {
+    align-self: center;
+}
+
+.pack-order-info-content-label {
+    max-width: 90%;
+
+    margin-left: 5px;
+
+    text-overflow: ellipsis;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+.pack-order-dropdown-container {
+    position: absolute;
+    right: 0;
+    align-self: center;
+
+    margin: 0px 15px;
+}
+
+.pack-order-dropdown {
+    background-color: #1e1e1e;
+    color: #f2f2f2;
+    
+    border: none;
+    border-radius: 3px;
+
+    padding: 5px;
+}
+
 .flex-options {
     display: flex;
     flex-wrap: wrap;
