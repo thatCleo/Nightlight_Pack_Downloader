@@ -31,13 +31,22 @@ function addFilters() {
     `
 
     filter_sort_by.innerHTML = options_sort_by;
-    filter_sort_by.id = "filter_sort_by";
     filter_sort_by.value = "downloads";
 
     window.webFunctions.httpGet('https://nightlight.gg/api/v1/packs/authors') // Setting authors as options for filtering
     .then((result) => {
         setFilterAuthors(result);        
     });
+
+    const filter_dbd_version = document.getElementById('filter_dbd_version');
+    let options_dbd_version = '<option value=""></option>';
+
+    dbd_version_title.forEach(version => {
+        options_dbd_version += `<option value="${version[0]}">${version[0]} ${version[1]}</option>`;
+    });
+
+    filter_dbd_version.innerHTML = options_dbd_version;
+    filter_dbd_version.value = '';
 }
 
 function setFilterAuthors(data) {

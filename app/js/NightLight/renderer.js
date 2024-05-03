@@ -19,10 +19,10 @@ function loadPackTiles() {
         include_mode = 'only';
     }
 
-    createPackTiles(current_page, packs_per_page, sort_by, author, search, includes, include_mode);
+    createPackTiles(current_page, packs_per_page, sort_by, search, author, dbd_version, includes, include_mode);
 }
 
-function createPackTiles(page, per_page, sort_by, author, search, includes, include_mode) {
+function createPackTiles(page, per_page, sort_by, search, author, dbd_version, includes, include_mode) {
     console.log("Creating Pack Tiles...")
     if (author != '') {
         author = `&author=${author}`;
@@ -30,8 +30,11 @@ function createPackTiles(page, per_page, sort_by, author, search, includes, incl
     if (search != '') {
         search = `&search=${search}`;
     }
+    if (dbd_version != '') {
+        dbd_version = `&version=${dbd_version}`
+    }
 
-    window.webFunctions.httpGet(`https://nightlight.gg/api/v1/packs?page=${page}&per_page=${per_page}&sort_by=${sort_by}${author}${search}&includes=${includes}&include_mode=${include_mode}`)
+    window.webFunctions.httpGet(`https://nightlight.gg/api/v1/packs?page=${page}&per_page=${per_page}&sort_by=${sort_by}${author}${search}${dbd_version}&includes=${includes}&include_mode=${include_mode}`)
         .then(data => {
             setPackTiles(data);
         })

@@ -43,7 +43,7 @@ const nightlight_template = `
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-4">
-                                    <div class="cell align-items-center d-flex gap-2 h-100 hidden"><label for=":Rqlca9:" class="fw-bold d-flex align-items-center">Version</label><select class="form-select" aria-label="Version" id=":Rqlca9:" autocomplete="off"></select></div>
+                                    <div class="cell align-items-center d-flex gap-2 h-100"><label for="filter_dbd_version" class="fw-bold d-flex align-items-center">Version</label><select class="form-select" aria-label="Version" id="filter_dbd_version" autocomplete="off"></select></div>
                                 </div>
                             </div>
                         </div>

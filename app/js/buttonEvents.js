@@ -16,6 +16,7 @@ let sort_by = 'downloads';
 let author = '';
 let includes = '';
 let search = '';
+let dbd_version = '';
 
 document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('click', function (event) {
@@ -161,6 +162,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
             search = '';
             document.getElementById('filter_search').value = '';
+
+            dbd_version = '';
+            document.getElementById('filter_dbd_version').value = '';
 
             includes = '';
             clearFilterShortcuts();
@@ -447,6 +451,13 @@ document.addEventListener('DOMContentLoaded', function () {
             author = value;
             enableFilterResetButton();
             enableFilterApplyButton();
+        }
+
+        else if (event.target.id = 'filter_dbd_version') {
+            const value = event.target.value;
+            dbd_version = value;
+            enableFilterResetButton();
+            enableFilterApplyButton()
         }
 
         else if (event.target.id == "dbd-path") {
