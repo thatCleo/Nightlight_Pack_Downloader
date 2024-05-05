@@ -17,6 +17,12 @@ let author = '';
 let includes = '';
 let search = '';
 
+/* Variables for drag & drop */
+let draggedElement = null;
+let previewElement = null;
+let insertBefore = null;
+let insertedBefore = null;
+
 document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('click', function (event) {
         if (event.target.classList.contains('open_link')) {
@@ -79,25 +85,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
         else if (event.target.classList.contains('toggle-pack')) {
             const value = event.target.value;
-            
+
             if (!event.target.classList.contains('manage-button-pack-active')) {
-                window.packFunctions.activatePack(value);
+                // window.packFunctions.activatePack(value);
                 console.log(`Activating Pack: ${value}`);
                 event.target.classList.add('manage-button-pack-active');
-                event.target.innerText = 'Activate Pack';
+                event.target.innerText = 'Pack Active';
                 addPackOrderTile_Manage(value);
             } else {
-                window.packFunctions.deactivatePack(value);
+                // window.packFunctions.deactivatePack(value);
                 console.log(`Deactivating Pack: ${value}`);
                 event.target.classList.remove('manage-button-pack-active');
-                event.target.innerText = 'Pack Active';
+                event.target.innerText = 'Activate Pack';
                 removePackOrderTile_Manage(value);
             }
         }
 
         else if (event.target.id.includes('reset-all-packs')) {
             console.log(`Resetting All Packs...`);
-            window.packFunctions.resetAllPacks()
+            window.packFunctions.resetAllPacks();
 
             const buttons = document.getElementsByClassName('manage-button-pack-active');
             const length = buttons.length;
@@ -106,6 +112,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 buttons[0].innerText = 'Activate Pack';
                 buttons[0].classList.remove('manage-button-pack-active');
             }
+
+            const pack_order_contianer = document.getElementById('pack-order-container-outer');
+            pack_order_contianer.innerHTML = '';
         }
 
         else if (event.target.classList.contains('set-dbd-path')) {
@@ -513,11 +522,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const draggebleElements = document.querySelectorAll('.pack-order');
 
-    let draggedElement = null;
-    let previewElement = null;
-    let insertBefore = null;
-    let insertedBefore = null;
-
     document.addEventListener('dragstart', (event) => {
         event.target.classList.add('pack-order-dragged');
 
@@ -533,19 +537,14 @@ document.addEventListener('DOMContentLoaded', function () {
         draggedElement = null;
         previewElement = null;
 
-        const sortedElements = event.target.parentNode.getElementsByClassName('pack-order');
-        console.log(sortedElements);
-
-        for (let i = 0; i < sortedElements.length; i++) {
-            const dropdown = sortedElements[i].getElementsByClassName('pack-order-dropdown')[0];
-            dropdown.value = i;
-        }
+        setOrderTileDropdown();
+        activatePacksInOrder();
     })
 
     for (let i = 0; i < draggebleElements.length; i++) {
         draggebleElements[i].addEventListener('dragover', (event) => {
             const referenceElement = event.target.parentNode;
-            if(!referenceElement.classList.contains('pack-order-container')) {
+            if (!referenceElement.classList.contains('pack-order-container')) {
                 return;
             }
 
@@ -575,7 +574,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     insertedBefore = false;
                 }
             }
-        })
+        });
     }
 });
 

@@ -147,39 +147,29 @@ async function activatePack(event, url) {
     const zipPath = `${currentDirectory}/packfiles/${url}/${url}.zip`;
     const targetPath = `${currentDirectory}/temp/${url}/`;
 
-    if (!checkForValidDDPath()) return;
+    console.log(`[activatePack] activating ${url}`);
 
-    // resetAllPacks();
+    if (!checkForValidDDPath()) return;
 
     if (!fileExists(zipPath)) {
         dialog.showErrorBox("Files not found", `The Icon files for the Pack you were about to activate are missing.\nPlease download the Pack from the store to use it in Dead by Daylight.`);
         return;
     }
 
-    unzipFile(zipPath, targetPath)
-        .then(() => {
-            copyFile(targetPath, getDBDPathSync() + dbd_icon_path)
-                .then(() => {
-                    deleteFile(targetPath);
-                })
-        });
-
     const packPath = `${currentDirectory}/packfiles/${url}`;
     fs.writeFileSync(`${packPath}/.active`, '');
-}
 
-function deactivatePack(event, url) {
-    const active_packs = getActivePacksSync();
-    console.log(active_packs);
-    for (let i = 0; i < active_packs.length; i++) {
-        if(url !== active_packs[i]) {
-            console.log(active_packs[i]);
-            activatePack(null, active_packs[i]);
-        }
-    }
-
-    const packPath = `${currentDirectory}/packfiles/${url}`;
-    deleteFile(`${packPath}/.active`, '');
+    return new Promise((resolve, reject) => {
+        unzipFile(zipPath, targetPath)
+            .then(() => {
+                copyFile(targetPath, getDBDPathSync() + dbd_icon_path)
+                    .then(() => {
+                        deleteFile(targetPath);
+                        console.log(`[activatePack] Done unzipping ${url}`);
+                        resolve();
+                    })
+            });
+    });
 }
 
 function resetAllPacks() {
@@ -196,12 +186,14 @@ function resetAllPacks() {
     }
 
     getDirectoriesInPath(`${currentDirectory}/packfiles`).forEach(directory => {
-        try {
+
+        if (fileExists(`${currentDirectory}/packfiles/${directory}/.active`)) {
             deleteFile(`${currentDirectory}/packfiles/${directory}/.active`);
         }
-        catch (err) {
+        else {
             console.log(`[resetAllPacks] Pack '${directory}' is not active. Skipping...`);
         }
+
     })
 }
 
@@ -268,7 +260,6 @@ module.exports = {
     deletePack,
     downloadPack,
     activatePack,
-    deactivatePack,
     resetAllPacks,
     getInstalledPacks,
     getActivePacks,

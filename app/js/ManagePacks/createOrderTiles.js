@@ -12,15 +12,16 @@ function createPackOrderTiles_Manage() {
         });
 }
 
-function addPackOrderTile_Manage(url) {
-    setPackOrderTiles_Manage(url);
+async function addPackOrderTile_Manage(url) {
+    console.log('adding ordering tile');
+    await setPackOrderTiles_Manage(url);
+    console.log('activating packs in order');
+    activatePacksInOrder();
 }
 
 function removePackOrderTile_Manage(url) {
     const manage_pack_order_view = document.getElementById('pack-order-container-outer');
     const pack_order_tiles = manage_pack_order_view.childNodes;
-
-    console.log(pack_order_tiles);
 
     for (let i = 0; i < pack_order_tiles.length; i++) {
         if (pack_order_tiles[i].id === `order-tile-${url}`) {
@@ -30,13 +31,14 @@ function removePackOrderTile_Manage(url) {
     }
 
     setOrderTileDropdown();
+    activatePacksInOrder();
 }
 
-function setPackOrderTiles_Manage(url) {
+async function setPackOrderTiles_Manage(url) {
     const manage_pack_order_view = document.getElementById('pack-order-container-outer');
 
     let pack_data;
-    window.packFunctions.getPackMetaData(url)
+    await window.packFunctions.getPackMetaData(url)
         .then(data => {
             pack_data = data;
 
@@ -87,11 +89,47 @@ function setPackOrderTiles_Manage(url) {
             packTile.id = `order-tile-${url}`;
             packTile.draggable = true;
 
+            packTile.addEventListener('dragover', (event) => {
+                const referenceElement = event.target.parentNode;
+                if (!referenceElement.classList.contains('pack-order-container')) {
+                    return;
+                }
+
+                if (referenceElement === draggedElement) {
+                    return;
+                }
+
+                const rect = event.target.getBoundingClientRect();
+                const centerY = rect.top + rect.height / 2;
+                const mouseY = event.clientY - centerY;
+
+                insertBefore = mouseY < 0;
+
+                if (insertBefore != insertedBefore) {
+                    previewElement.remove();
+                }
+
+                if (insertBefore) {
+                    if (!insertedBefore || insertedBefore === null) {
+                        referenceElement.parentNode.insertBefore(previewElement, referenceElement);
+                        insertedBefore = true;
+                    }
+                }
+                else if (!insertBefore) {
+                    if (insertedBefore || insertedBefore === null) {
+                        referenceElement.parentNode.insertBefore(previewElement, referenceElement.nextSibling);
+                        insertedBefore = false;
+                    }
+                }
+            })
+
             manage_pack_order_view.appendChild(packTile);
             console.log(`Added ordering tile for ${pack_data.url}`);
 
             setOrderTileDropdown();
         });
+
+        console.log('done adding tiles');
 }
 
 function setOrderTileDropdown() {
@@ -106,5 +144,19 @@ function setOrderTileDropdown() {
         const dropdown = elements[i].getElementsByClassName('pack-order-dropdown')[0];
         dropdown.innerHTML = dropdown_options;
         dropdown.value = i;
+    }
+}
+
+async function activatePacksInOrder() {
+    window.packFunctions.resetAllPacks();
+
+    const elements = document.getElementsByClassName('pack-order-container');
+
+    for (let i = elements.length - 1; i >= 0; i--) {
+        const url = elements[i].id.replace('order-tile-', '');
+
+        console.log(`${i}: ${url}`);
+
+        await window.packFunctions.activatePack(url);
     }
 }
