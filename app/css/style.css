@@ -222,6 +222,14 @@ svg {
     padding: 5px;
 }
 
+.pack-order-preview {
+    opacity: .7;
+}
+
+.pack-order-dragged {
+    opacity: .3;
+}
+
 .flex-options {
     display: flex;
     flex-wrap: wrap;

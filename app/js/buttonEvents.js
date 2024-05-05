@@ -463,6 +463,7 @@ document.addEventListener('DOMContentLoaded', function () {
             scrollToTop();
         }
     });
+
     document.addEventListener('input', function (event) {
         if (event.target.id == "filter_search") {
             const value = event.target.value;
@@ -471,9 +472,68 @@ document.addEventListener('DOMContentLoaded', function () {
             enableFilterApplyButton();
         }
     })
+
     document.addEventListener('submit', function (event) {
         event.preventDefault(); // no forms needed
     })
+
+    /* Drag & Drop sorting of pack prioritys */
+
+    const draggebleElements = document.querySelectorAll('.pack-order');
+
+    let draggedElement = null;
+    let previewElement = null;
+    let insertBefore = null;
+    let insertedBefore = null;
+
+    document.addEventListener('dragstart', (event) => {
+        event.target.classList.add('pack-order-dragged');
+
+        draggedElement = event.target;
+        previewElement = event.target.cloneNode(true);
+        previewElement.classList.add('pack-order-preview')
+    })
+
+    document.addEventListener('dragend', (event) => {
+        draggedElement.classList.remove('pack-order-dragged');
+        previewElement.replaceWith(draggedElement);
+
+        draggedElement = null;
+        previewElement = null;
+    })
+
+    for (let i = 0; i < draggebleElements.length; i++) {
+        draggebleElements[i].addEventListener('dragover', (event) => {
+            const referenceElement = event.target.parentNode;
+
+            if(referenceElement === draggedElement) {
+                return;
+            }
+
+            const rect = event.target.getBoundingClientRect();
+            const centerY = rect.top + rect.height / 2;
+            const mouseY = event.clientY - centerY;
+
+            insertBefore = mouseY < 0;
+
+            if (insertBefore != insertedBefore) {
+                previewElement.remove();
+            }
+
+            if (insertBefore) {
+                if (!insertedBefore || insertedBefore === null) {
+                    referenceElement.parentNode.insertBefore(previewElement, referenceElement);
+                    insertedBefore = true;
+                }
+            }
+            else if (!insertBefore) {
+                if (insertedBefore || insertedBefore === null) {
+                    referenceElement.parentNode.insertBefore(previewElement, referenceElement.nextSibling);
+                    insertedBefore = false;
+                }
+            }
+        })
+    }
 });
 
 document.getElementById("nightlight").addEventListener("click", () => {
