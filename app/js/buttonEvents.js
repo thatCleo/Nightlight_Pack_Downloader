@@ -79,15 +79,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
         else if (event.target.classList.contains('toggle-pack')) {
             const value = event.target.value;
-            console.log(`Activating Pack: ${value}`);
-            window.packFunctions.activatePack(value);
-            addPackOrderTile_Manage(value);
-
-            const buttons = document.getElementsByClassName('manage-button-pack-active');
-
+            
             if (!event.target.classList.contains('manage-button-pack-active')) {
+                window.packFunctions.activatePack(value);
+                console.log(`Activating Pack: ${value}`);
                 event.target.classList.add('manage-button-pack-active');
+                event.target.innerText = 'Activate Pack';
+                addPackOrderTile_Manage(value);
+            } else {
+                window.packFunctions.deactivatePack(value);
+                console.log(`Deactivating Pack: ${value}`);
+                event.target.classList.remove('manage-button-pack-active');
                 event.target.innerText = 'Pack Active';
+                removePackOrderTile_Manage(value);
             }
         }
 

@@ -147,11 +147,11 @@ async function activatePack(event, url) {
     const zipPath = `${currentDirectory}/packfiles/${url}/${url}.zip`;
     const targetPath = `${currentDirectory}/temp/${url}/`;
 
-    if(!checkForValidDDPath()) return;
+    if (!checkForValidDDPath()) return;
 
     // resetAllPacks();
 
-    if(!fileExists(zipPath)) {
+    if (!fileExists(zipPath)) {
         dialog.showErrorBox("Files not found", `The Icon files for the Pack you were about to activate are missing.\nPlease download the Pack from the store to use it in Dead by Daylight.`);
         return;
     }
@@ -168,10 +168,24 @@ async function activatePack(event, url) {
     fs.writeFileSync(`${packPath}/.active`, '');
 }
 
+function deactivatePack(event, url) {
+    const active_packs = getActivePacksSync();
+    console.log(active_packs);
+    for (let i = 0; i < active_packs.length; i++) {
+        if(url !== active_packs[i]) {
+            console.log(active_packs[i]);
+            activatePack(null, active_packs[i]);
+        }
+    }
+
+    const packPath = `${currentDirectory}/packfiles/${url}`;
+    deleteFile(`${packPath}/.active`, '');
+}
+
 function resetAllPacks() {
     console.log("[resetAllPacks] Resetting all packs...");
 
-    if(!checkForValidDDPath()) return;
+    if (!checkForValidDDPath()) return;
 
     try {
         getDirectoriesInPath(getDBDPathSync() + dbd_icon_path).forEach(directory => {
@@ -205,16 +219,21 @@ function getInstalledPacks() {
 }
 
 function getActivePacks() {
-    console.log("[getActivePacks] Getting active packs...");
     return new Promise((resolve, reject) => {
-        let active_packs = [];
-        getDirectoriesInPath(`${currentDirectory}/packfiles`).forEach(directory => {
-            if (fileExists(`${currentDirectory}/packfiles/${directory}/.active`)) {
-                active_packs.push(directory);
-            }
-        })
-        resolve(active_packs);
+        resolve(getActivePacksSync());
     })
+}
+
+function getActivePacksSync() {
+    console.log("[getActivePacksSync] Getting active packs...");
+    let active_packs = [];
+    getDirectoriesInPath(`${currentDirectory}/packfiles`).forEach(directory => {
+        if (fileExists(`${currentDirectory}/packfiles/${directory}/.active`)) {
+            active_packs.push(directory);
+        }
+    })
+    return active_packs;
+
 }
 
 function getPackMetaData(event, pack_url) {
@@ -249,6 +268,7 @@ module.exports = {
     deletePack,
     downloadPack,
     activatePack,
+    deactivatePack,
     resetAllPacks,
     getInstalledPacks,
     getActivePacks,

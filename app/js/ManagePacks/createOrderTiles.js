@@ -6,8 +6,8 @@ function createPackOrderTiles_Manage() {
             let installed_packs = data;
             console.log("Creating Pack Order Tiles for Manage Packs...");
             console.log(installed_packs);
-            installed_packs.forEach(pack => {
-                setPackOrderTiles_Manage(pack);
+            installed_packs.forEach(url => {
+                setPackOrderTiles_Manage(url);
             });
         });
 }
@@ -16,11 +16,27 @@ function addPackOrderTile_Manage(url) {
     setPackOrderTiles_Manage(url);
 }
 
-function setPackOrderTiles_Manage(pack) {
+function removePackOrderTile_Manage(url) {
+    const manage_pack_order_view = document.getElementById('pack-order-container-outer');
+    const pack_order_tiles = manage_pack_order_view.childNodes;
+
+    console.log(pack_order_tiles);
+
+    for (let i = 0; i < pack_order_tiles.length; i++) {
+        if (pack_order_tiles[i].id === `order-tile-${url}`) {
+            manage_pack_order_view.removeChild(pack_order_tiles[i]);
+            break;
+        }
+    }
+
+    setOrderTileDropdown();
+}
+
+function setPackOrderTiles_Manage(url) {
     const manage_pack_order_view = document.getElementById('pack-order-container-outer');
 
     let pack_data;
-    window.packFunctions.getPackMetaData(pack)
+    window.packFunctions.getPackMetaData(url)
         .then(data => {
             pack_data = data;
 
@@ -33,7 +49,7 @@ function setPackOrderTiles_Manage(pack) {
             }
 
             const tile = `
-                <div class="pack-order">
+                <div class="pack-order"">
                     <div class="pack-order-grab">
                         <svg clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2"
                         viewBox="0 0 24 24" width="24px" height="28px" xmlns="http://www.w3.org/2000/svg">
@@ -68,22 +84,27 @@ function setPackOrderTiles_Manage(pack) {
             const packTile = document.createElement('div');
             packTile.innerHTML = tile;
             packTile.classList.add('pack-order-container');
+            packTile.id = `order-tile-${url}`;
             packTile.draggable = true;
 
             manage_pack_order_view.appendChild(packTile);
             console.log(`Added ordering tile for ${pack_data.url}`);
 
-            const elements = document.getElementsByClassName('pack-order-container');
-
-            let dropdown_options = '';
-            for (let i = 0; i < elements.length; i++) {
-                dropdown_options += `<option value="${i}">${i + 1}</option>`;
-            }
-
-            for (let i = 0; i < elements.length; i++) {
-                const dropdown = elements[i].getElementsByClassName('pack-order-dropdown')[0];
-                dropdown.innerHTML = dropdown_options;
-                dropdown.value = i;
-            }
+            setOrderTileDropdown();
         });
+}
+
+function setOrderTileDropdown() {
+    const elements = document.getElementsByClassName('pack-order-container');
+
+    let dropdown_options = '';
+    for (let i = 0; i < elements.length; i++) {
+        dropdown_options += `<option value="${i}">${i + 1}</option>`;
+    }
+
+    for (let i = 0; i < elements.length; i++) {
+        const dropdown = elements[i].getElementsByClassName('pack-order-dropdown')[0];
+        dropdown.innerHTML = dropdown_options;
+        dropdown.value = i;
+    }
 }
