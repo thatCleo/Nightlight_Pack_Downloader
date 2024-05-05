@@ -542,6 +542,9 @@ document.addEventListener('DOMContentLoaded', function () {
     for (let i = 0; i < draggebleElements.length; i++) {
         draggebleElements[i].addEventListener('dragover', (event) => {
             const referenceElement = event.target.parentNode;
+            if(!referenceElement.classList.contains('pack-order-container')) {
+                return;
+            }
 
             if (referenceElement === draggedElement) {
                 return;
