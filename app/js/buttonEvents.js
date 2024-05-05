@@ -497,11 +497,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 container.insertBefore(thisElement, elements[value].nextSibling);
             }
 
-            elements = document.getElementsByClassName('pack-order-container');
-            for (let i = 0; i < elements.length; i++) {
-                const dropdown = elements[i].getElementsByClassName('pack-order-dropdown')[0];
-                dropdown.value = i;
-            }
+            setOrderTileDropdown();
+            activatePacksInOrder();
         }
     });
 
