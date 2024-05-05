@@ -500,6 +500,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
         draggedElement = null;
         previewElement = null;
+
+        const sortedElements = event.target.parentNode.getElementsByClassName('pack-order');
+        console.log(sortedElements);
+        
+        for(let i = 0; i < sortedElements.length; i++) {
+            const dropdown = sortedElements[i].getElementsByClassName('pack-order-dropdown')[0];
+            dropdown.value = i;
+        }
     })
 
     for (let i = 0; i < draggebleElements.length; i++) {
