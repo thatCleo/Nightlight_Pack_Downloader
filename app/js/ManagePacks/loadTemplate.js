@@ -4,7 +4,7 @@ const manage_packs_template = `
     <main id="manage_packs_main" class="container px-4">
         <div><strong class="text-muted">Icon Toolbox</strong>
             <h1 class="mb-2">Manage Icon Packs</h1>
-            <div class="text-muted mb-3">Manage you downloaded packs.</div>
+            <div class="text-muted mb-3">Manage your downloaded packs.</div>
             <button id="reset-all-packs" class="button_icons_revert btn btn-sm w-100 d-block">Revert to default Icons</button>
         </div>
     </main>
