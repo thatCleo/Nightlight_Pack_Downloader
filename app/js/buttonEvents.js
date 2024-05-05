@@ -84,8 +84,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const buttons = document.getElementsByClassName('manage-button-pack-active');
             for (let i = 0; i < buttons.length; i++) {
-                buttons[i].innerText = 'Activate Pack';
-                buttons[i].classList.remove('manage-button-pack-active');
+                // buttons[i].innerText = 'Activate Pack';
+                // buttons[i].classList.remove('manage-button-pack-active');
             }
 
             if (!event.target.classList.contains('manage-button-pack-active')) {
@@ -99,9 +99,11 @@ document.addEventListener('DOMContentLoaded', function () {
             window.packFunctions.resetAllPacks()
 
             const buttons = document.getElementsByClassName('manage-button-pack-active');
-            for (let i = 0; i < buttons.length; i++) {
-                buttons[i].innerText = 'Activate Pack';
-                buttons[i].classList.remove('manage-button-pack-active');
+            const length = buttons.length;
+
+            for (let i = 0; i < length; i++) {
+                buttons[0].innerText = 'Activate Pack';
+                buttons[0].classList.remove('manage-button-pack-active');
             }
         }
 

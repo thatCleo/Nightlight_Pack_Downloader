@@ -149,7 +149,7 @@ async function activatePack(event, url) {
 
     if(!checkForValidDDPath()) return;
 
-    resetAllPacks();
+    // resetAllPacks();
 
     if(!fileExists(zipPath)) {
         dialog.showErrorBox("Files not found", `The Icon files for the Pack you were about to activate are missing.\nPlease download the Pack from the store to use it in Dead by Daylight.`);
