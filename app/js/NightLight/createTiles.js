@@ -42,7 +42,7 @@ const dbd_version_title = [
 function setPackTiles(json) {
   const packview = document.getElementsByClassName('row-cols-1');
   if (packview.length == 0) {
-    document.getElementById('info').innerText = `Error: packview.lenght = ${packview.length}`
+    document.getElementById('info').innerText = `Error: packview.length = ${packview.length}`
     return;
   }
 

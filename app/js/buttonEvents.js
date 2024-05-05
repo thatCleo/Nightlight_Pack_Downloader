@@ -241,10 +241,10 @@ document.addEventListener('DOMContentLoaded', function () {
             pack_download_button.innerText = 'Download';
 
             let index = variant_display.classList[2];
-            const lenght = variant_display.children.length;
+            const length = variant_display.children.length;
 
             if (button.classList.contains('button_variant_next')) {
-                if (index >= (lenght - 1)) return;
+                if (index >= (length - 1)) return;
 
                 index++;
 
@@ -259,7 +259,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     variant_titles[index - 2].childNodes[0].classList.remove('description_variant_visible');
                 }
 
-                if (index < lenght - 1) {
+                if (index < length - 1) {
                     variant_titles[index + 1].childNodes[0].classList.add('description_variant_visible');
                 }
 
@@ -278,7 +278,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 variant_titles[index + 1].childNodes[0].classList.remove('description_variant_active');
 
 
-                if (index < lenght - 2) {
+                if (index < length - 2) {
                     variant_titles[index + 2].childNodes[0].classList.remove('description_variant_visible');
                 }
 
