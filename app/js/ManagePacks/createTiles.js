@@ -54,10 +54,8 @@ function setPackTiles_Manage(packs) {
             packContent += `, ${formatText(pack_data.has[i])}`
         }
 
-        const tile =
-          `
-          <div id="pack-banner-${pack_data.url}-manage" class="_1he3xh0"><img src="${window.directory.currentPath()}/packfiles/${pack_data.url}/banner.png"
-              loading="lazy" alt="Pack Banner for ${pack_data.url}" class="_1he3xh1">
+        const tile =`
+          <div id="pack-banner-${pack_data.url}-manage" class="_1he3xh0"><img src="${window.directory.currentPath()}/packfiles/${pack_data.url}/banner.png" loading="lazy" alt="Pack Banner for ${pack_data.url}" class="_1he3xh1">
             <div class="_1he3xh5">
               <span class="_1he3xh6">${pack_data.title}</span>
               <div class="_1he3xh7 badge bg-secondary">v${pack_data.version}</div>
@@ -90,8 +88,7 @@ function setPackTiles_Manage(packs) {
                 <button value="${pack_data.url}" class="manage-buttons manage-delete-button delete-pack btn btn-sm w-100 d-block">Delete Pack</button><button value="${pack_data.url}" class="manage-buttons toggle-pack btn btn-sm w-100 d-block">Activate Pack</button>
                 </div>
               </div>
-          </div>
-        `;
+          </div>`;
 
         const packTile = document.createElement('div');
         packTile.innerHTML = tile;

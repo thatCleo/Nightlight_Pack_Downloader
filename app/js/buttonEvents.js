@@ -81,6 +81,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const value = event.target.value;
             console.log(`Activating Pack: ${value}`);
             window.packFunctions.activatePack(value);
+            addPackOrderTile_Manage(value);
 
             const buttons = document.getElementsByClassName('manage-button-pack-active');
 

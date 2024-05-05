@@ -11,7 +11,7 @@ const manage_packs_template = `
     <div id="alert_bar_container"></div>
     <div class="container px-4">
     <div id="manage_packs_main_content" class="row row-cols-1 row-cols-lg-2 row-cols-xxl-3 g-3"></div>
-    <div class="pack-order-container-outer" id="pack-order-container-outer></div>
+    <div class="pack-order-container-outer" id="pack-order-container-outer"></div>
     </div><footer class="footer pb-3 nl-footer">
     <div class="container px-4">
         <div class="row">
@@ -29,3 +29,4 @@ manage_packs_container.innerHTML = manage_packs_template;
 
 removeManageNavigation();
 createPackTiles_Manage();
+createPackOrderTiles_Manage();
