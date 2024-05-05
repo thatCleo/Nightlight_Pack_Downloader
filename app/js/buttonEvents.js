@@ -83,10 +83,6 @@ document.addEventListener('DOMContentLoaded', function () {
             window.packFunctions.activatePack(value);
 
             const buttons = document.getElementsByClassName('manage-button-pack-active');
-            for (let i = 0; i < buttons.length; i++) {
-                // buttons[i].innerText = 'Activate Pack';
-                // buttons[i].classList.remove('manage-button-pack-active');
-            }
 
             if (!event.target.classList.contains('manage-button-pack-active')) {
                 event.target.classList.add('manage-button-pack-active');
