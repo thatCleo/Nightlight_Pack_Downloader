@@ -1,6 +1,6 @@
 const { downloadFile } = require('./webFunctions');
 const { fileExists, deleteFile, copyFile, unzipFile, getDirectoriesInPath } = require('./fileFunctions');
-const { getDBDPathSync, currentDirectory } = require('./options');
+const { getDBDPathSync, currentDirectory, getPackOrderSync, clearPackOrder, setPackOrder } = require('./options');
 const fs = require('fs');
 const { dialog } = require('electron');
 
@@ -147,31 +147,37 @@ async function activatePack(event, url) {
     const zipPath = `${currentDirectory}/packfiles/${url}/${url}.zip`;
     const targetPath = `${currentDirectory}/temp/${url}/`;
 
-    if(!checkForValidDDPath()) return;
+    console.log(`[activatePack] activating ${url}`);
 
-    resetAllPacks();
+    if (!checkForValidDDPath()) return;
 
-    if(!fileExists(zipPath)) {
+    if (!fileExists(zipPath)) {
         dialog.showErrorBox("Files not found", `The Icon files for the Pack you were about to activate are missing.\nPlease download the Pack from the store to use it in Dead by Daylight.`);
         return;
     }
 
-    unzipFile(zipPath, targetPath)
-        .then(() => {
-            copyFile(targetPath, getDBDPathSync() + dbd_icon_path)
-                .then(() => {
-                    deleteFile(targetPath);
-                })
-        });
+    setPackOrder(url);
 
     const packPath = `${currentDirectory}/packfiles/${url}`;
     fs.writeFileSync(`${packPath}/.active`, '');
+
+    return new Promise((resolve, reject) => {
+        unzipFile(zipPath, targetPath)
+            .then(() => {
+                copyFile(targetPath, getDBDPathSync() + dbd_icon_path)
+                    .then(() => {
+                        deleteFile(targetPath);
+                        console.log(`[activatePack] Done unzipping ${url}`);
+                        resolve();
+                    })
+            });
+    });
 }
 
 function resetAllPacks() {
     console.log("[resetAllPacks] Resetting all packs...");
 
-    if(!checkForValidDDPath()) return;
+    if (!checkForValidDDPath()) return;
 
     try {
         getDirectoriesInPath(getDBDPathSync() + dbd_icon_path).forEach(directory => {
@@ -181,13 +187,17 @@ function resetAllPacks() {
         console.log("[resetAllPacks] Error deleting files: " + err);
     }
 
+    clearPackOrder();
+
     getDirectoriesInPath(`${currentDirectory}/packfiles`).forEach(directory => {
-        try {
+
+        if (fileExists(`${currentDirectory}/packfiles/${directory}/.active`)) {
             deleteFile(`${currentDirectory}/packfiles/${directory}/.active`);
         }
-        catch (err) {
+        else {
             console.log(`[resetAllPacks] Pack '${directory}' is not active. Skipping...`);
         }
+
     })
 }
 
@@ -205,15 +215,26 @@ function getInstalledPacks() {
 }
 
 function getActivePacks() {
-    console.log("[getActivePacks] Getting active packs...");
     return new Promise((resolve, reject) => {
-        let active_packs = [];
-        getDirectoriesInPath(`${currentDirectory}/packfiles`).forEach(directory => {
-            if (fileExists(`${currentDirectory}/packfiles/${directory}/.active`)) {
-                active_packs.push(directory);
-            }
-        })
-        resolve(active_packs);
+        resolve(getActivePacksSync());
+    })
+}
+
+function getActivePacksSync() {
+    console.log("[getActivePacksSync] Getting active packs...");
+    let active_packs = [];
+    getDirectoriesInPath(`${currentDirectory}/packfiles`).forEach(directory => {
+        if (fileExists(`${currentDirectory}/packfiles/${directory}/.active`)) {
+            active_packs.push(directory);
+        }
+    })
+    return active_packs;
+
+}
+
+function getActivePacksInOrder() {
+    return new Promise((resolve, reject) => {
+        resolve(getPackOrderSync());
     })
 }
 
@@ -252,5 +273,6 @@ module.exports = {
     resetAllPacks,
     getInstalledPacks,
     getActivePacks,
+    getActivePacksInOrder,
     getPackMetaData
 }
