@@ -93,4 +93,4 @@ const nightlight_template = `
 console.log("Embedding webpage...");
 const webview = document.getElementById('webview-container-page');
 webview.innerHTML = nightlight_template;
-// webview.style.display = 'block';
+webview.style.display = 'block';
