@@ -245,6 +245,18 @@ img {
     opacity: .3;
 }
 
+.pack-order-disabled {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+
+    pointer-events: none;
+
+    opacity: .8;
+}
+
 .flex-options {
     display: flex;
     flex-wrap: wrap;

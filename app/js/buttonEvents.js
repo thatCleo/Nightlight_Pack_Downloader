@@ -534,8 +534,7 @@ document.addEventListener('DOMContentLoaded', function () {
         draggedElement = null;
         previewElement = null;
 
-        setOrderTileDropdown();
-        activatePacksInOrder();
+        updatePackOrderTiles_Manage();
     })
 
     for (let i = 0; i < draggebleElements.length; i++) {

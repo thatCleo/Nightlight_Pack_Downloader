@@ -13,13 +13,15 @@ function createPackOrderTiles_Manage() {
 }
 
 async function addPackOrderTile_Manage(url) {
-    console.log('adding ordering tile');
     await setPackOrderTiles_Manage(url);
-    console.log('activating packs in order');
-    activatePacksInOrder();
+    await deactivateDragging();
+    await activatePacksInOrder();
+    activateDragging();
 }
 
 function removePackOrderTile_Manage(url) {
+    deactivateDragging();
+
     const manage_pack_order_view = document.getElementById('pack-order-container-outer');
     const pack_order_tiles = manage_pack_order_view.childNodes;
 
@@ -32,6 +34,13 @@ function removePackOrderTile_Manage(url) {
 
     setOrderTileDropdown();
     activatePacksInOrder();
+}
+
+async function updatePackOrderTiles_Manage() {
+    await setOrderTileDropdown();
+    await deactivateDragging();
+    await activatePacksInOrder();
+    activateDragging();
 }
 
 async function setPackOrderTiles_Manage(url) {
@@ -51,7 +60,7 @@ async function setPackOrderTiles_Manage(url) {
             }
 
             const tile = `
-                <div class="pack-order"">
+                <div class="pack-order">
                     <div class="pack-order-grab">
                         <svg clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2"
                         viewBox="0 0 24 24" width="24px" height="28px" xmlns="http://www.w3.org/2000/svg">
@@ -154,9 +163,22 @@ async function activatePacksInOrder() {
 
     for (let i = elements.length - 1; i >= 0; i--) {
         const url = elements[i].id.replace('order-tile-', '');
-
         console.log(`${i}: ${url}`);
 
         await window.packFunctions.activatePack(url);
+    }
+}
+
+async function deactivateDragging() {
+    const elements = document.getElementsByClassName('pack-order-container');
+    for(let i = 0; i < elements.length; i++) {
+        elements[i].classList.add('pack-order-disabled');
+    }
+}
+
+function activateDragging() {
+    const elements = document.getElementsByClassName('pack-order-container');
+    for(let i = 0; i < elements.length; i++) {
+        elements[i].classList.remove('pack-order-disabled');
     }
 }
