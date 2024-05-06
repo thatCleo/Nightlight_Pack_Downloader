@@ -1,6 +1,6 @@
 const { downloadFile } = require('./webFunctions');
 const { fileExists, deleteFile, copyFile, unzipFile, getDirectoriesInPath } = require('./fileFunctions');
-const { getDBDPathSync, currentDirectory } = require('./options');
+const { getDBDPathSync, currentDirectory, getPackOrderSync, clearPackOrder, setPackOrder } = require('./options');
 const fs = require('fs');
 const { dialog } = require('electron');
 
@@ -156,6 +156,8 @@ async function activatePack(event, url) {
         return;
     }
 
+    setPackOrder(url);
+
     const packPath = `${currentDirectory}/packfiles/${url}`;
     fs.writeFileSync(`${packPath}/.active`, '');
 
@@ -184,6 +186,8 @@ function resetAllPacks() {
     } catch (err) {
         console.log("[resetAllPacks] Error deleting files: " + err);
     }
+
+    clearPackOrder();
 
     getDirectoriesInPath(`${currentDirectory}/packfiles`).forEach(directory => {
 
@@ -228,6 +232,12 @@ function getActivePacksSync() {
 
 }
 
+function getActivePacksInOrder() {
+    return new Promise((resolve, reject) => {
+        resolve(getPackOrderSync());
+    })
+}
+
 function getPackMetaData(event, pack_url) {
     return new Promise((resolve, reject) => {
         let pack_data;
@@ -263,5 +273,6 @@ module.exports = {
     resetAllPacks,
     getInstalledPacks,
     getActivePacks,
+    getActivePacksInOrder,
     getPackMetaData
 }

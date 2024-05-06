@@ -1,7 +1,7 @@
 function createPackOrderTiles_Manage() {
     const manage_pack_order_view = document.getElementById('pack-order-container-outer');
     manage_pack_order_view.innerHTML = '';
-    window.packFunctions.getActivePacks()
+    window.packFunctions.getActivePacksInOrder()
         .then(data => {
             let installed_packs = data;
             console.log("Creating Pack Order Tiles for Manage Packs...");
