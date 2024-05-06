@@ -157,8 +157,7 @@ async function setPackOrderTiles_Manage(url) {
                     container.insertBefore(thisElement, elements[value].nextSibling);
                 }
     
-                setOrderTileDropdown();
-                activatePacksInOrder();
+                updatePackOrderTiles_Manage();
             })
 
             manage_pack_order_view.appendChild(packTile);
