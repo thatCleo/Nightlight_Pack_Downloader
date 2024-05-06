@@ -130,6 +130,12 @@ img {
     margin-bottom: 1.5rem;
 }
 
+.manage_packs_div {
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: #323232 solid 1px;
+}
+
 .pack-order-container-outer {
     display: flex;
     flex-direction: column;
@@ -141,7 +147,7 @@ img {
 .pack-order-container {
     width: 100%;
     height: 110px;
-    padding: 15px 35px;
+    padding: 15px 25px;
 }
 
 .pack-order {

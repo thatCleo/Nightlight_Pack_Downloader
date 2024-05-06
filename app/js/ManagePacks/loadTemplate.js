@@ -12,7 +12,7 @@ const manage_packs_template = `
     <div class="container px-4">
         <div id="manage_packs_main_content" class="row row-cols-1 row-cols-lg-2 row-cols-xxl-3 g-3"></div>
     </div>
-    <main id="manage_packs_main" class="container px-4">
+    <main id="manage_packs_main" class="manage_packs_div container px-4">
         <div>
             <div class="text-muted mb-3">Manage wich active pack takes priority over others.</div>
         </div>
