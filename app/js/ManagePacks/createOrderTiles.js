@@ -181,6 +181,9 @@ async function deactivateDragging() {
     for (let i = 0; i < elements_tiles.length; i++) {
         elements_tiles[i].classList.add('pack-order-disabled');
     }
+
+    const revert_button = document.getElementById('reset-all-packs');
+    revert_button.classList.add('pack-order-disabled')
 }
 
 function activateDragging() {
@@ -193,4 +196,7 @@ function activateDragging() {
     for (let i = 0; i < elements_tiles.length; i++) {
         elements_tiles[i].classList.remove('pack-order-disabled');
     }
+
+    const revert_button = document.getElementById('reset-all-packs');
+    revert_button.classList.remove('pack-order-disabled')
 }
