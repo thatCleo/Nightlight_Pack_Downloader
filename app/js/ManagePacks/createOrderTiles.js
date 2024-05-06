@@ -19,8 +19,8 @@ async function addPackOrderTile_Manage(url) {
     activateDragging();
 }
 
-function removePackOrderTile_Manage(url) {
-    deactivateDragging();
+async function removePackOrderTile_Manage(url) {
+    await deactivateDragging();
 
     const manage_pack_order_view = document.getElementById('pack-order-container-outer');
     const pack_order_tiles = manage_pack_order_view.childNodes;
@@ -33,11 +33,13 @@ function removePackOrderTile_Manage(url) {
     }
 
     setOrderTileDropdown();
-    activatePacksInOrder();
+    
+    await activatePacksInOrder();
+    activateDragging();
 }
 
 async function updatePackOrderTiles_Manage() {
-    await setOrderTileDropdown();
+    setOrderTileDropdown();
     await deactivateDragging();
     await activatePacksInOrder();
     activateDragging();
@@ -138,7 +140,7 @@ async function setPackOrderTiles_Manage(url) {
             setOrderTileDropdown();
         });
 
-        console.log('done adding tiles');
+    console.log('done adding tiles');
 }
 
 function setOrderTileDropdown() {
@@ -170,15 +172,25 @@ async function activatePacksInOrder() {
 }
 
 async function deactivateDragging() {
-    const elements = document.getElementsByClassName('pack-order-container');
-    for(let i = 0; i < elements.length; i++) {
-        elements[i].classList.add('pack-order-disabled');
+    const elements_drag = document.getElementsByClassName('pack-order-container');
+    for (let i = 0; i < elements_drag.length; i++) {
+        elements_drag[i].classList.add('pack-order-disabled');
+    }
+
+    const elements_tiles = document.getElementsByClassName('pack-tile-manage');
+    for (let i = 0; i < elements_tiles.length; i++) {
+        elements_tiles[i].classList.add('pack-order-disabled');
     }
 }
 
 function activateDragging() {
-    const elements = document.getElementsByClassName('pack-order-container');
-    for(let i = 0; i < elements.length; i++) {
-        elements[i].classList.remove('pack-order-disabled');
+    const elements_drag = document.getElementsByClassName('pack-order-container');
+    for (let i = 0; i < elements_drag.length; i++) {
+        elements_drag[i].classList.remove('pack-order-disabled');
+    }
+
+    const elements_tiles = document.getElementsByClassName('pack-tile-manage');
+    for (let i = 0; i < elements_tiles.length; i++) {
+        elements_tiles[i].classList.remove('pack-order-disabled');
     }
 }

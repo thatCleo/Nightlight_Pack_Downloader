@@ -80,6 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
             window.packFunctions.deletePack(value)
                 .then(() => {
                     createPackTiles_Manage();
+                    removePackOrderTile_Manage(value);
                 })
         }
 

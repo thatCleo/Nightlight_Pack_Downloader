@@ -92,6 +92,7 @@ function setPackTiles_Manage(packs) {
 
         const packTile = document.createElement('div');
         packTile.innerHTML = tile;
+        packTile.classList.add('pack-tile-manage')
 
         window.packFunctions.getActivePacks()
           .then((result) => {
