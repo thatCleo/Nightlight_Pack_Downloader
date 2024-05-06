@@ -2,7 +2,7 @@ const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('node:path')
 const { httpGet, downloadFile, downloadFileProgress, openLink } = require('./webFunctions');
 const { fileExists, clearCache, getCacheSize } = require('./fileFunctions');
-const { deletePack, downloadPack, activatePack, resetAllPacks, getInstalledPacks, getActivePacks, getPackMetaData } = require('./packFunctions');
+const { deletePack, downloadPack, activatePack, resetAllPacks, getInstalledPacks, getActivePacks, getActivePacksInOrder, getPackMetaData } = require('./packFunctions');
 const { setDBDPath, setDBDPathFromDialog, getDBDPath } = require('./options');
 
 const createWindow = () => {
@@ -34,6 +34,7 @@ app.whenReady().then(() => {
   ipcMain.handle('packFunctions:resetAllPacks', resetAllPacks);
   ipcMain.handle('packFunctions:getInstalledPacks', getInstalledPacks);
   ipcMain.handle('packFunctions:getActivePacks', getActivePacks);
+  ipcMain.handle('packFunctions:getActivePacksInOrder', getActivePacksInOrder);
   ipcMain.handle('packFunctions:getPackMetaData', getPackMetaData);
 
   ipcMain.handle('fileFunctions:fileExists', fileExists);

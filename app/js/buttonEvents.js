@@ -18,6 +18,12 @@ let includes = '';
 let search = '';
 let dbd_version = '';
 
+/* Variables for drag & drop */
+let draggedElement = null;
+let previewElement = null;
+let insertBefore = null;
+let insertedBefore = null;
+
 document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('click', function (event) {
         if (event.target.classList.contains('open_link')) {
@@ -75,35 +81,42 @@ document.addEventListener('DOMContentLoaded', function () {
             window.packFunctions.deletePack(value)
                 .then(() => {
                     createPackTiles_Manage();
+                    removePackOrderTile_Manage(value);
                 })
         }
 
         else if (event.target.classList.contains('toggle-pack')) {
             const value = event.target.value;
-            console.log(`Activating Pack: ${value}`);
-            window.packFunctions.activatePack(value);
-
-            const buttons = document.getElementsByClassName('manage-button-pack-active');
-            for (let i = 0; i < buttons.length; i++) {
-                buttons[i].innerText = 'Activate Pack';
-                buttons[i].classList.remove('manage-button-pack-active');
-            }
 
             if (!event.target.classList.contains('manage-button-pack-active')) {
+                // window.packFunctions.activatePack(value);
+                console.log(`Activating Pack: ${value}`);
                 event.target.classList.add('manage-button-pack-active');
                 event.target.innerText = 'Pack Active';
+                addPackOrderTile_Manage(value);
+            } else {
+                // window.packFunctions.deactivatePack(value);
+                console.log(`Deactivating Pack: ${value}`);
+                event.target.classList.remove('manage-button-pack-active');
+                event.target.innerText = 'Activate Pack';
+                removePackOrderTile_Manage(value);
             }
         }
 
         else if (event.target.id.includes('reset-all-packs')) {
             console.log(`Resetting All Packs...`);
-            window.packFunctions.resetAllPacks()
+            window.packFunctions.resetAllPacks();
 
             const buttons = document.getElementsByClassName('manage-button-pack-active');
-            for (let i = 0; i < buttons.length; i++) {
-                buttons[i].innerText = 'Activate Pack';
-                buttons[i].classList.remove('manage-button-pack-active');
+            const length = buttons.length;
+
+            for (let i = 0; i < length; i++) {
+                buttons[0].innerText = 'Activate Pack';
+                buttons[0].classList.remove('manage-button-pack-active');
             }
+
+            const pack_order_contianer = document.getElementById('pack-order-container-outer');
+            pack_order_contianer.innerHTML = '';
         }
 
         else if (event.target.classList.contains('set-dbd-path')) {
@@ -473,7 +486,34 @@ document.addEventListener('DOMContentLoaded', function () {
             loadPackTiles();
             scrollToTop();
         }
+
+        else if (event.target.classList.contains('pack-order-dropdown')) {
+            let elements = document.getElementsByClassName('pack-order-container');
+            const container = elements[0].parentNode;
+            const thisElement = event.target.parentNode.parentNode.parentNode;
+            const value = event.target.value;
+            let last_value = null;
+
+            for (let i = 0; i < elements.length; i++) {
+                if (elements[i] === thisElement) {
+                    last_value = i;
+                    break;
+                }
+            }
+
+            console.log(last_value);
+
+            if (value < last_value) {
+                container.insertBefore(thisElement, elements[value]);
+            } else {
+                container.insertBefore(thisElement, elements[value].nextSibling);
+            }
+
+            setOrderTileDropdown();
+            activatePacksInOrder();
+        }
     });
+
     document.addEventListener('input', function (event) {
         if (event.target.id == "filter_search") {
             const value = event.target.value;
@@ -482,9 +522,68 @@ document.addEventListener('DOMContentLoaded', function () {
             enableFilterApplyButton();
         }
     })
+
     document.addEventListener('submit', function (event) {
         event.preventDefault(); // no forms needed
     })
+
+    /* Drag & Drop sorting of pack prioritys */
+
+    const draggebleElements = document.querySelectorAll('.pack-order');
+
+    document.addEventListener('dragstart', (event) => {
+        event.target.classList.add('pack-order-dragged');
+
+        draggedElement = event.target;
+        previewElement = event.target.cloneNode(true);
+        previewElement.classList.add('pack-order-preview')
+    })
+
+    document.addEventListener('dragend', (event) => {
+        draggedElement.classList.remove('pack-order-dragged');
+        previewElement.replaceWith(draggedElement);
+
+        draggedElement = null;
+        previewElement = null;
+
+        updatePackOrderTiles_Manage();
+    })
+
+    for (let i = 0; i < draggebleElements.length; i++) {
+        draggebleElements[i].addEventListener('dragover', (event) => {
+            const referenceElement = event.target.parentNode;
+            if (!referenceElement.classList.contains('pack-order-container')) {
+                return;
+            }
+
+            if (referenceElement === draggedElement) {
+                return;
+            }
+
+            const rect = event.target.getBoundingClientRect();
+            const centerY = rect.top + rect.height / 2;
+            const mouseY = event.clientY - centerY;
+
+            insertBefore = mouseY < 0;
+
+            if (insertBefore != insertedBefore) {
+                previewElement.remove();
+            }
+
+            if (insertBefore) {
+                if (!insertedBefore || insertedBefore === null) {
+                    referenceElement.parentNode.insertBefore(previewElement, referenceElement);
+                    insertedBefore = true;
+                }
+            }
+            else if (!insertBefore) {
+                if (insertedBefore || insertedBefore === null) {
+                    referenceElement.parentNode.insertBefore(previewElement, referenceElement.nextSibling);
+                    insertedBefore = false;
+                }
+            }
+        });
+    }
 });
 
 document.getElementById("nightlight").addEventListener("click", () => {

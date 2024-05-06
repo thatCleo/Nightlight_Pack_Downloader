@@ -3,6 +3,7 @@ const fs = require('fs');
 const { app } = require('electron');
 
 let dbd_game_path = '';
+let pack_order = [];
 
 let currentDirectory = __dirname;
 currentDirectory = currentDirectory.replace('resources/app.asar', '');
@@ -15,6 +16,7 @@ function loadOptions() {
     if (fileExists(`${currentDirectory}/options.json`)) {
         let options = JSON.parse(fs.readFileSync(`${currentDirectory}/options.json`, 'utf8'));
         dbd_game_path = options.dbd_game_path;
+        pack_order = options.pack_order;
     }
 }
 
@@ -35,7 +37,8 @@ async function setDBDPathFromDialog() {
         dbd_game_path = path;
         console.log(`DBD Game Path: ${dbd_game_path}`);
         const json_string = {
-            "dbd_game_path": dbd_game_path
+            "dbd_game_path": dbd_game_path,
+            "pack_order": pack_order
         }
         fs.writeFileSync(`${currentDirectory}/options.json`, JSON.stringify(json_string));
     }
@@ -47,10 +50,33 @@ async function setDBDPath(event, value) {
         dbd_game_path = value;
         console.log(`DBD Game Path: ${dbd_game_path}`);
         const json_string = {
-            "dbd_game_path": dbd_game_path
+            "dbd_game_path": dbd_game_path,
+            "pack_order": pack_order
         }
         fs.writeFileSync(`${currentDirectory}/options.json`, JSON.stringify(json_string));
     }
+}
+
+function getPackOrderSync() {
+    return pack_order;
+}
+
+async function setPackOrder(url) {
+    pack_order.splice(0, 0, url);
+    const json_string = {
+        "dbd_game_path": dbd_game_path,
+        "pack_order": pack_order
+    }
+    fs.writeFileSync(`${currentDirectory}/options.json`, JSON.stringify(json_string));
+}
+
+async function clearPackOrder() {
+    pack_order = [];
+    const json_string = {
+        "dbd_game_path": dbd_game_path,
+        "pack_order": pack_order
+    }
+    fs.writeFileSync(`${currentDirectory}/options.json`, JSON.stringify(json_string));
 }
 
 module.exports = {
@@ -58,6 +84,9 @@ module.exports = {
     setDBDPathFromDialog,
     getDBDPath,
     getDBDPathSync,
+    setPackOrder,
+    getPackOrderSync,
+    clearPackOrder,
     dbd_game_path,
     currentDirectory
 }

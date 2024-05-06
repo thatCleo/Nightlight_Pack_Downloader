@@ -1,7 +1,6 @@
 const { contextBridge, ipcRenderer, app } = require('electron');
 const fs = require('fs');
 const { currentDirectory } = require('./options');
-const { getCacheSize } = require('./fileFunctions');
 
 contextBridge.exposeInMainWorld('versions', {
   node: () => process.versions.node,
@@ -37,6 +36,7 @@ contextBridge.exposeInMainWorld('packFunctions', {
   resetAllPacks: () => ipcRenderer.invoke('packFunctions:resetAllPacks'),
   getInstalledPacks: () => ipcRenderer.invoke('packFunctions:getInstalledPacks'),
   getActivePacks: () => ipcRenderer.invoke('packFunctions:getActivePacks'),
+  getActivePacksInOrder: () => ipcRenderer.invoke('packFunctions:getActivePacksInOrder'),
   getPackMetaData: (url) => ipcRenderer.invoke('packFunctions:getPackMetaData', url)
 })
 

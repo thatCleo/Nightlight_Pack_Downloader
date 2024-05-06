@@ -7,10 +7,10 @@ const { log } = require('console');
 function fileExists(filePath) {
     try {
         fs.accessSync(filePath, fs.constants.F_OK);
-        console.log(`[fileExists] File "${filePath}" exists.`);
+        // console.log(`[fileExists] File "${filePath}" exists.`);
         return true;
     } catch (err) {
-        console.log(`[fileExists] File "${filePath}" does not exist.`);
+        // console.log(`[fileExists] File "${filePath}" does not exist.`);
         return false;
     }
 }

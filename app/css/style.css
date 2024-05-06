@@ -12,6 +12,14 @@ svg {
     pointer-events: none;
 }
 
+img {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
 .topbar {
     display: flex;
     background-color: #1a1a1a;
@@ -120,6 +128,133 @@ svg {
 
 .manage_pack_tile {
     margin-bottom: 1.5rem;
+}
+
+.manage_packs_div {
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: #323232 solid 1px;
+}
+
+.pack-order-container-outer {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    margin: 40px 0 20px 0;
+}
+
+.pack-order-container {
+    width: 100%;
+    height: 110px;
+    padding: 15px 25px;
+}
+
+.pack-order {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-content: center;
+
+    position: relative;
+
+    background-color: #1e1e1e;
+    border-radius: 3px;
+}
+
+.pack-order-grab {
+    fill: #f2f2f2;
+
+    align-self: center;
+
+    margin: 0px 20px;
+
+    cursor: grab;
+}
+
+.pack-order-image-container {
+    padding: 5px;
+    margin: 5px;
+}
+
+.pack-order-image {
+    height: 100%;
+    width: 100%;
+    max-width: 300px;
+    max-height: 120px;
+
+    object-fit: contain;
+}
+
+.pack-order-info {
+    color: #f2f2f2;
+    margin: 5px 10px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+
+.pack-order-info-content {
+    color: #5c5c5c;
+    display: flex;
+
+    flex-direction: row;
+    align-content: center;
+}
+
+.pack-order-info-content-icon {
+    align-self: center;
+}
+
+.pack-order-info-content-label {
+    max-width: 90%;
+
+    margin-left: 5px;
+
+    text-overflow: ellipsis;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+.pack-order-dropdown-container {
+    position: absolute;
+    right: 0;
+    align-self: center;
+
+    margin: 0px 15px;
+}
+
+.pack-order-dropdown {
+    background-color: #1e1e1e;
+    color: #f2f2f2;
+
+    border: none;
+    border-radius: 3px;
+
+    padding: 5px;
+}
+
+.pack-order-preview {
+    opacity: .7;
+}
+
+.pack-order-dragged {
+    opacity: .3;
+}
+
+.pack-order-disabled {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+
+    pointer-events: none;
+
+    opacity: .8;
 }
 
 .flex-options {
