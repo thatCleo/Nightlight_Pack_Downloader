@@ -14,7 +14,6 @@ const manage_packs_template = `
     </div>
     <main id="manage_packs_main" class="container px-4">
         <div>
-            <h1 class="mb-2">Manage Pack Priority</h1>
             <div class="text-muted mb-3">Manage wich active pack takes priority over others.</div>
         </div>
     </main>
