@@ -134,6 +134,33 @@ async function setPackOrderTiles_Manage(url) {
                 }
             })
 
+            const dropdown = packTile.getElementsByClassName('pack-order-dropdown')[0];
+            dropdown.addEventListener('change', function (event) {
+                let elements = document.getElementsByClassName('pack-order-container');
+                const container = elements[0].parentNode;
+                const thisElement = event.target.parentNode.parentNode.parentNode;
+                const value = event.target.value;
+                let last_value = null;
+    
+                for (let i = 0; i < elements.length; i++) {
+                    if (elements[i] === thisElement) {
+                        last_value = i;
+                        break;
+                    }
+                }
+    
+                console.log(last_value);
+    
+                if (value < last_value) {
+                    container.insertBefore(thisElement, elements[value]);
+                } else {
+                    container.insertBefore(thisElement, elements[value].nextSibling);
+                }
+    
+                setOrderTileDropdown();
+                activatePacksInOrder();
+            })
+
             manage_pack_order_view.appendChild(packTile);
             console.log(`Added ordering tile for ${pack_data.url}`);
 
