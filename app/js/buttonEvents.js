@@ -509,8 +509,8 @@ document.addEventListener('DOMContentLoaded', function () {
         event.target.classList.add('pack-order-dragged');
 
         draggedElement = event.target;
-        previewElement = event.target.cloneNode(true);
-        previewElement.classList.add('pack-order-preview')
+        previewElement = event.target; //.cloneNode(true);
+        // previewElement.classList.add('pack-order-preview');
     })
 
     document.addEventListener('dragend', (event) => {
