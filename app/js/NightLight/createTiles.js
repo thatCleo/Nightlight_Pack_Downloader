@@ -3,6 +3,7 @@ let packData;
 let variants_data;
 
 const dbd_version_title = [
+  ["8.0.0", "Dungeons & Dragons"],
   ["7.6.0", "All Things Wicked"],
   ["7.5.0", "Alan Wake"],
   ["7.4.0", "Chucky"],
