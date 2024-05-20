@@ -466,7 +466,7 @@ document.addEventListener('DOMContentLoaded', function () {
             enableFilterApplyButton();
         }
 
-        else if (event.target.id = 'filter_dbd_version') {
+        else if (event.target.id == 'filter_dbd_version') {
             const value = event.target.value;
             dbd_version = value;
             enableFilterResetButton();
