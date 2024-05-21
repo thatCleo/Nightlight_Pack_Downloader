@@ -26,6 +26,7 @@ const options_template = `
                 <div class="col-xs-4 col-md-4">
                     <h3>Night<span class="text-nl">Light</span> <small class="text-muted fs-5">Icon Packs</small></h3>
                     <p class="text-muted mb-2">Icon Pack Tool. Built on top of <a class="open_link" value="https://nightlight.gg/">Nightlight.gg</a> by <a class="open_link" value="https://boop.pro/">BritishBoop</a></p>
+                    <p class="text-muted mb-2">View the source code of this project on <a class="open_link" value="https://github.com/thisMicki/nightlight_pack_downloader">Github</a></p>
                     <p class="text-muted"><small>Not affiliated with Behaviour Interactive, Dead by Daylight™ or Nightlight.gg in any way</small></p>
                 </div>
             </div>

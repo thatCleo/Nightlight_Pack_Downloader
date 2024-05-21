@@ -24,6 +24,9 @@ img {
     display: flex;
     background-color: #1a1a1a;
     height: 45px;
+    width: calc(100% - 185px);
+    position: absolute;
+    right: 0;
 }
 
 .topbar-button {
@@ -59,21 +62,28 @@ img {
 
 .flex-container {
     display: flex;
-    height: calc(100vh - 45px);
+    height: 100vh;
 }
 
 .sidebar {
     background-color: #1e1e1e;
     margin-left: 0px;
     height: 100%;
-    /* stretch from top of page to bottom */
     width: 185px;
+
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 .sidebar-button {
     cursor: pointer;
     background-color: #1e1e1e;
-    color: #f2f2f2;
+    color: #bfc2c3;
     font-size: 15px;
     height: 45px;
     width: calc(100%);
@@ -83,17 +93,61 @@ img {
 }
 
 .sidebar-button:hover {
-    background-color: #1b1b1b;
+    color: #7b7c7f;
+    /* background-color: #1b1b1b; */
 }
 
 .sidebar-button:active {
     background-color: #15667a;
 }
 
+.sidebar-button-active {
+    background-color: #15667a;
+}
+/* 
+.sidebar-button-active:hover {
+    background-color: #135c6e;
+} */
+
+.sidebar-title {
+    margin: 15px 0 0 0;
+    text-align: center;
+}
+
+.sidebar-caption {
+    color: #5c5c5c;
+    font-size: 15px;
+    margin: 5px 0 0 10px;
+    align-self: flex-start;
+}
+
+.sidebar-section {
+    width: 90%;
+    height: 1px;
+    margin-top: 15px;
+    background-color: #5c5c5c;
+}
+
+.main-section {
+    width: 95%;
+    height: 1px;
+    margin-top: 35px;
+    background-color: #5c5c5c;
+}
+
+.section-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .info {
     display: flex;
     justify-content: center;
     align-content: center;
+
+    position: absolute;
+    bottom: 10px;
 
     font-size: 10px;
     font-style: italic;
@@ -131,9 +185,7 @@ img {
 }
 
 .manage_packs_div {
-    margin-top: 50px;
-    padding-top: 20px;
-    border-top: #323232 solid 1px;
+    margin-top: 25px;
 }
 
 .pack-order-container-outer {
@@ -421,6 +473,10 @@ img {
     overflow: hidden;
     white-space: nowrap;
     vertical-align: middle;
+}
+
+.open_link {
+    cursor: pointer;
 }
 
 .hidden {

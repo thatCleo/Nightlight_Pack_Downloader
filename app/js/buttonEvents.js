@@ -560,22 +560,43 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-document.getElementById("nightlight").addEventListener("click", () => {
+document.getElementById("nightlight").addEventListener("click", (event) => {
     webviewPage.style.display = "block";
     managePacksPage.style.display = "none";
     optionsPage.style.display = "none";
+
+    const prev_button = document.getElementsByClassName('sidebar-button-active');
+    if(prev_button.length == 1) {
+        prev_button[0].classList.remove('sidebar-button-active');
+    }
+
+    event.target.classList.add('sidebar-button-active');
 });
 
-document.getElementById("manage-packs").addEventListener("click", () => {
+document.getElementById("manage-packs").addEventListener("click", (event) => {
     webviewPage.style.display = "none";
     managePacksPage.style.display = "block";
     optionsPage.style.display = "none";
+
+    const prev_button = document.getElementsByClassName('sidebar-button-active');
+    if(prev_button.length == 1) {
+        prev_button[0].classList.remove('sidebar-button-active');
+    }
+
+    event.target.classList.add('sidebar-button-active');
 });
 
-document.getElementById("options").addEventListener("click", () => {
+document.getElementById("options").addEventListener("click", (event) => {
     webviewPage.style.display = "none";
     managePacksPage.style.display = "none";
     optionsPage.style.display = "block";
+
+    const prev_button = document.getElementsByClassName('sidebar-button-active');
+    if(prev_button.length == 1) {
+        prev_button[0].classList.remove('sidebar-button-active');
+    }
+
+    event.target.classList.add('sidebar-button-active');
 
     window.fileFunctions.getCacheSize()
         .then(size => {
