@@ -446,6 +446,10 @@ img {
     background-color: #073c49;
 }
 
+.supporter-icon {
+    margin-left: 5px;
+}
+
 .pack_tile {
     height: 100%;
 }

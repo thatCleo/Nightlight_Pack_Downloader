@@ -38,7 +38,9 @@ const dbd_version_title = [
   ["1.3.1", "Of Flesh and Mud"],
   ["1.2.1", "Halloween"],
   ["1.1.0", "The Last Breath"]
-]
+];
+
+const supporter_icon = `<svg focusable="false" data-prefix="fas" data-icon="crown" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="svg-inline--fa fa-crown gold supporter-icon"><path fill="currentColor" d="M309 106c11.4-7 19-19.7 19-34c0-22.1-17.9-40-40-40s-40 17.9-40 40c0 14.4 7.6 27 19 34L209.7 220.6c-9.1 18.2-32.7 23.4-48.6 10.7L72 160c5-6.7 8-15 8-24c0-22.1-17.9-40-40-40S0 113.9 0 136s17.9 40 40 40c.2 0 .5 0 .7 0L86.4 427.4c5.5 30.4 32 52.6 63 52.6H426.6c30.9 0 57.4-22.1 63-52.6L535.3 176c.2 0 .5 0 .7 0c22.1 0 40-17.9 40-40s-17.9-40-40-40s-40 17.9-40 40c0 9 3 17.3 8 24l-89.1 71.3c-15.9 12.7-39.5 7.5-48.6-10.7L309 106z"></path></svg>`;
 
 function setPackTiles(json) {
   const packview = document.getElementsByClassName('row-cols-1');
@@ -149,18 +151,24 @@ function setPackTiles(json) {
     pack.creators.forEach(creator => {
       const creatorName = creator.username;
       let avatar_element = document.createElement('span');
+      avatar_element.classList.add('d-flex');
+      avatar_element.classList.add('align-items-center');
 
       if (creator.user != null) {
         console.log(`${pack.id}_${creator.user.user_id}`);
-        avatar_element.innerHTML = `<span class="d-flex align-items-center"><img id="pack-avatar-${pack.id}-${creator.user.user_id}" src="${window.directory.currentPath()}/cached_images/${creator.user.user_id}_${creator.user.avatar_id}/avatar.png" alt="${creatorName}" class="avatar">${creatorName}</span>`;
+        avatar_element.innerHTML = `<img id="pack-avatar-${pack.id}-${creator.user.user_id}" src="${window.directory.currentPath()}/cached_images/${creator.user.user_id}_${creator.user.avatar_id}/avatar.png" alt="${creatorName}" class="avatar">${creatorName}`;
 
         if (creator.user.colour) {
           avatar_element.style.color = `#${creator.user.colour}`;
         }
 
+        if(creator.user.is_supporter) {
+          avatar_element.innerHTML += supporter_icon;
+        }
+
         downloadAvatar(creator.user.user_id, creator.user.avatar_id, pack.id);
       } else {
-        avatar_element.innerHTML = `<span class="d-flex align-items-center"><img id="pack-avatar-${pack.id}-null" class="avatar">${creatorName}</span>`;
+        avatar_element.innerHTML = `<img id="pack-avatar-${pack.id}-null" class="avatar">${creatorName}`;
       }
 
       avatar_elements.appendChild(avatar_element);
@@ -395,8 +403,6 @@ function getTotalPageNum(packs_per_age, total_packs) {
   total_pages = Math.ceil(total_packs / packs_per_age);
   return total_pages
 }
-
-/*  */
 
 /* Pack tile */
 /*
