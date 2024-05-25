@@ -140,19 +140,31 @@ function setPackTiles(json) {
       variants[(default_variant_index - 1)].childNodes[0].classList.add('description_variant_visible');
     }
 
-    let avatar_elemets = '<div class="_1he3xh8 pack_creator_avatars">';
+    // let avatar_elements = '<div class="_1he3xh8 pack_creator_avatars">';
+    let avatar_elements = document.createElement('div');
+
+    avatar_elements.classList.add('_1he3xh8');
+    avatar_elements.classList.add('pack_creator_avatars');
+
     pack.creators.forEach(creator => {
       const creatorName = creator.username;
+      let avatar_element = document.createElement('span');
 
       if (creator.user != null) {
         console.log(`${pack.id}_${creator.user.user_id}`);
-        avatar_elemets += `<span class="d-flex align-items-center"><img id="pack-avatar-${pack.id}-${creator.user.user_id}" src="${window.directory.currentPath()}/cached_images/${creator.user.user_id}_${creator.user.avatar_id}/avatar.png" alt="${creatorName}" class="avatar">${creatorName}</span>`;
+        avatar_element.innerHTML = `<span class="d-flex align-items-center"><img id="pack-avatar-${pack.id}-${creator.user.user_id}" src="${window.directory.currentPath()}/cached_images/${creator.user.user_id}_${creator.user.avatar_id}/avatar.png" alt="${creatorName}" class="avatar">${creatorName}</span>`;
+
+        if (creator.user.colour) {
+          avatar_element.style.color = `#${creator.user.colour}`;
+        }
+
         downloadAvatar(creator.user.user_id, creator.user.avatar_id, pack.id);
       } else {
-        avatar_elemets += `<span class="d-flex align-items-center"><img id="pack-avatar-${pack.id}-null" class="avatar">${creatorName}</span>`;
+        avatar_element.innerHTML = `<span class="d-flex align-items-center"><img id="pack-avatar-${pack.id}-null" class="avatar">${creatorName}</span>`;
       }
+
+      avatar_elements.appendChild(avatar_element);
     });
-    avatar_elemets += '</div>';
 
     const packTile = document.createElement('div');
 
@@ -195,7 +207,7 @@ function setPackTiles(json) {
     <div class="_1he3xhc variants">
       ${variants_template}
     </div>
-    ${avatar_elemets}
+    
     <div class="_1he3xha pack_stats"><span title="Dead by Daylight Version"><svg focusable="false" data-prefix="fas" data-icon="code-branch" role="img"
           xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-code-branch">
           <path fill="currentColor"
@@ -225,6 +237,11 @@ function setPackTiles(json) {
         `;
     packTile.innerHTML = tile;
     packTile.id = pack.id;
+
+    const variant_container = packTile.getElementsByClassName('variants')[0];
+    console.log(variant_container);
+
+    variant_container.parentNode.insertBefore(avatar_elements, variant_container.nextElementSibling);
 
     if (variants_template != '') {
       const variant_container = packTile.getElementsByClassName(`variants-${pack.id}`)[0];
@@ -378,6 +395,8 @@ function getTotalPageNum(packs_per_age, total_packs) {
   total_pages = Math.ceil(total_packs / packs_per_age);
   return total_pages
 }
+
+/*  */
 
 /* Pack tile */
 /*
