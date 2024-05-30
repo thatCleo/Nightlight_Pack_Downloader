@@ -317,7 +317,6 @@ img {
 }
 
 .dbd-path {
-    margin-left: 7px;
     width: 80%;
 }
 
@@ -339,6 +338,26 @@ img {
 .dbd-path-button:hover {
     background-color: #282828;
     border-color: #282828;
+}
+
+.container_options {
+    width: 100%;
+}
+
+.container_options_title {
+    margin-bottom: 5px;
+}
+
+.container_options_title_text {
+    margin: 0;
+    color: #5c5c5c;
+}
+
+.container_options_content {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .container_options_clear_cache {
