@@ -1,6 +1,5 @@
 const { getPathFromDialog, fileExists } = require('./fileFunctions');
 const fs = require('fs');
-const { app } = require('electron');
 
 let dbd_game_path = '';
 let pack_order = [];
@@ -40,7 +39,7 @@ async function setDBDPathFromDialog() {
             "dbd_game_path": dbd_game_path,
             "pack_order": pack_order
         }
-        fs.writeFileSync(`${currentDirectory}/options.json`, JSON.stringify(json_string));
+        setDBDPath(null, path);
     }
 }
 
@@ -49,6 +48,7 @@ async function setDBDPath(event, value) {
     if(fileExists(value)) {
         dbd_game_path = value;
         console.log(`DBD Game Path: ${dbd_game_path}`);
+        checkForDataFolder();
         const json_string = {
             "dbd_game_path": dbd_game_path,
             "pack_order": pack_order
@@ -77,6 +77,12 @@ async function clearPackOrder() {
         "pack_order": pack_order
     }
     fs.writeFileSync(`${currentDirectory}/options.json`, JSON.stringify(json_string));
+}
+
+function checkForDataFolder() {
+    if (!fs.existsSync(`${currentDirectory}/`)) {
+        fs.mkdirSync(`${currentDirectory}/`, { recursive: true });
+    }
 }
 
 module.exports = {
