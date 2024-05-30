@@ -59,33 +59,3 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
-
-// ipcMain.handle('directory:current', () => {
-//   console.log('currentPath: ' + __dirname);
-//   return __dirname;
-// })
-
-// ipcMain.handle('webFunctions:httpGet', async (url) => {
-//   console.log('httpGet: ' + url);
-//   http.get(url, response => {
-//     let rawData = '';
-
-//     response.on('data', chunk => {
-//       rawData += chunk;
-//     });
-
-//     response.on('end', () => {
-//       const parsedData = JSON.parse(rawData);
-//       resolve(parsedData);
-//     });
-
-//   }).on('error', (error) => {
-//     console.log(`Error: ${error.message} pls fix`);
-//     rejects('Error: ' + error);
-//   });
-//   // httpGet(url);
-// })
-
-// ipcMain.handle('webFunctions:downloadPack', (url, button) => {
-//   downloadPack(url, button);
-// })

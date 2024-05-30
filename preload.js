@@ -1,4 +1,4 @@
-const { contextBridge, ipcRenderer, app } = require('electron');
+const { contextBridge, ipcRenderer } = require('electron');
 const fs = require('fs');
 const { currentDirectory } = require('./options');
 
@@ -6,21 +6,10 @@ contextBridge.exposeInMainWorld('versions', {
   node: () => process.versions.node,
   chrome: () => process.versions.chrome,
   electron: () => process.versions.electron,
-});
-
-// contextBridge.exposeInMainWorld('directory', {
-//   currentPath: () => __dirname
-// });
-
-contextBridge.exposeInMainWorld('electron', {
-  Buffer: require('buffer').Buffer
+  app: () => '0.1.5' // Why does app.getVersion() break everything?! AHHH!
 });
 
 contextBridge.exposeInMainWorld('fs', fs);
-
-// contextBridge.exposeInMainWorld('directory', {
-//   currentPath: () =>  ipcRenderer.invoke('directory.current')
-// })
 
 contextBridge.exposeInMainWorld('webFunctions', {
   httpGet: (url) => ipcRenderer.invoke('webFunctions:httpGet', url),
