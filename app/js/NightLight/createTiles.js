@@ -11,6 +11,7 @@ const dbd_version_title = [
   ["7.1.0", "Nicolas Cage"],
   ["7.0.0", "End Transmission"],
   ["6.6.0", "Tools of Torment"],
+  ["6.4.0", "Forged in Fog"],
   ["6.2.0", "Resident Evil: Project W"],
   ["6.0.0", "Roots of Dread"],
   ["5.6.0", "Sadako Rising"],
