@@ -24,6 +24,9 @@ function loadPackTiles() {
 
 function createPackTiles(page, per_page, sort_by, search, author, dbd_version, includes, include_mode) {
     console.log("Creating Pack Tiles...")
+    if(page <= 0) {
+        page = 1;
+    }
     if (author != '') {
         author = `&author=${author}`;
     }
