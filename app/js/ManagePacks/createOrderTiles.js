@@ -200,29 +200,29 @@ async function activatePacksInOrder() {
 async function deactivateDragging() {
     const elements_drag = document.getElementsByClassName('pack-order-container');
     for (let i = 0; i < elements_drag.length; i++) {
-        elements_drag[i].classList.add('pack-order-disabled');
+        elements_drag[i].classList.add('disabled');
     }
 
     const elements_tiles = document.getElementsByClassName('pack-tile-manage');
     for (let i = 0; i < elements_tiles.length; i++) {
-        elements_tiles[i].classList.add('pack-order-disabled');
+        elements_tiles[i].classList.add('disabled');
     }
 
     const revert_button = document.getElementById('reset-all-packs');
-    revert_button.classList.add('pack-order-disabled')
+    revert_button.classList.add('disabled')
 }
 
 function activateDragging() {
     const elements_drag = document.getElementsByClassName('pack-order-container');
     for (let i = 0; i < elements_drag.length; i++) {
-        elements_drag[i].classList.remove('pack-order-disabled');
+        elements_drag[i].classList.remove('disabled');
     }
 
     const elements_tiles = document.getElementsByClassName('pack-tile-manage');
     for (let i = 0; i < elements_tiles.length; i++) {
-        elements_tiles[i].classList.remove('pack-order-disabled');
+        elements_tiles[i].classList.remove('disabled');
     }
 
     const revert_button = document.getElementById('reset-all-packs');
-    revert_button.classList.remove('pack-order-disabled')
+    revert_button.classList.remove('disabled')
 }

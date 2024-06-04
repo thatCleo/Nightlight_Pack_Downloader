@@ -416,6 +416,28 @@ document.addEventListener('DOMContentLoaded', function () {
             pack_content_display.innerText = has;
             pack_content_display.parentNode.title = has;
         }
+
+        else if (event.target.classList.contains('manage-pack-update')) {
+            event.target.classList.add('disabled');
+            deactivateDragging();
+
+            const pack_url = event.target.id.replace('update-', '');
+            const url =`https://nightlight.gg/api/v1/packs?page=1&per_page=12&sort_by=downloads&${pack_url}&includes=&include_mode=any`;
+
+            window.webFunctions.httpGet(url)
+                .then(data => {
+                    data = JSON.parse(data);
+                    data = data.data.packs;
+                    window.packFunctions.updatePack(pack_url, data)
+                        .then((pack_is_active) => {
+                            createPackTiles_Manage();
+                            if (pack_is_active) {
+                                updatePackOrderTiles_Manage();
+                            }
+                            activateDragging();
+                        })
+                });
+        }
     });
 
     document.addEventListener('change', function (event) {
@@ -566,7 +588,7 @@ document.getElementById("nightlight").addEventListener("click", (event) => {
     optionsPage.style.display = "none";
 
     const prev_button = document.getElementsByClassName('sidebar-button-active');
-    if(prev_button.length == 1) {
+    if (prev_button.length == 1) {
         prev_button[0].classList.remove('sidebar-button-active');
     }
 
@@ -579,7 +601,7 @@ document.getElementById("manage-packs").addEventListener("click", (event) => {
     optionsPage.style.display = "none";
 
     const prev_button = document.getElementsByClassName('sidebar-button-active');
-    if(prev_button.length == 1) {
+    if (prev_button.length == 1) {
         prev_button[0].classList.remove('sidebar-button-active');
     }
 
@@ -592,7 +614,7 @@ document.getElementById("options").addEventListener("click", (event) => {
     optionsPage.style.display = "block";
 
     const prev_button = document.getElementsByClassName('sidebar-button-active');
-    if(prev_button.length == 1) {
+    if (prev_button.length == 1) {
         prev_button[0].classList.remove('sidebar-button-active');
     }
 

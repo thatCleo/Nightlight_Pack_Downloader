@@ -15,8 +15,6 @@ function setPackTiles_Manage(packs) {
 
   packs.forEach(pack_url => {
 
-    console.log(`Added tile for installed pack ${pack_url}`);
-
     let pack_data;
     window.packFunctions.getPackMetaData(pack_url)
       .then(data => {
@@ -62,7 +60,9 @@ function setPackTiles_Manage(packs) {
             </div>
             <div class="_1he3xh4">
               <div class="_1he3xhc">
-                <div class="_15ryw142 _15ryw140 end-0 position-absolute"></div>
+                <div class="_15ryw142 _15ryw140 end-0 position-absolute">
+                  <button class="manage-pack-update" id="update-${pack_data.url}" title="Download newest version again">↻</button>
+                </div>
               </div>
               ${avatar_elemets}
               <div class="_1he3xha manage_pack_tile"><span><svg focusable="false" data-prefix="fas" data-icon="code-branch" role="img"
