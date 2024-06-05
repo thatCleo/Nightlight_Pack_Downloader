@@ -422,7 +422,7 @@ document.addEventListener('DOMContentLoaded', function () {
             deactivateDragging();
 
             const pack_url = event.target.id.replace('update-', '');
-            const url =`https://nightlight.gg/api/v1/packs?page=1&per_page=12&sort_by=downloads&${pack_url}&includes=&include_mode=any`;
+            const url =`https://nightlight.gg/api/v1/packs?page=1&per_page=1&sort_by=downloads&search=${pack_url}&includes=&include_mode=any`;
 
             window.webFunctions.httpGet(url)
                 .then(data => {
