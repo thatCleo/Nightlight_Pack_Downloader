@@ -286,6 +286,54 @@ async function activatePack(event, url) {
     });
 }
 
+async function activatePackParts(event, url, parts) {
+    const parts_dir = [
+        ["Perks", ["Perks/"]],
+        ["Portraits", ["CharPortraits/"]],
+        ["Items", ["items/", "Items/"]],
+        ["Offerings", ["Favors/"]],
+        ["Powers", ["Powers/"]],
+        ["Add-Ons", ["ItemAddons/"]],
+        ["Status", ["StatusEffects/"]],
+        ["Daily Rituals", ["DailyRituals/"]],
+        ["Emblems", ["Emblems/"]],
+        ["Help", ["Help/"]],
+        ["Help Loading", ["Help Loading/"]],
+        ["Actions", ["Actions/"]],
+        ["Auric Packs", ["Packs/"]],
+        ["Store Backgrounds", ["StoreBackgrounds/"]],
+    ]
+
+    const zipPath = `${currentDirectory}/packfiles/${url}/${url}.zip`;
+    const targetPath = `${currentDirectory}/temp/${url}/`;
+
+    console.log(`[activatePack] activating ${url}`);
+
+    if (!checkForValidDDPath()) return;
+
+    if (!fileExists(zipPath)) {
+        dialog.showErrorBox("Files not found", `The Icon files for the Pack you were about to activate are missing.\nPlease download the Pack from the store to use it in Dead by Daylight.`);
+        return;
+    }
+
+    setPackOrder(url);
+
+    const packPath = `${currentDirectory}/packfiles/${url}`;
+    fs.writeFileSync(`${packPath}/.active`, '');
+
+    return new Promise((resolve, reject) => {
+        unzipFile(zipPath, targetPath)
+            .then(() => {
+                parts.forEach(part => {
+                    for(let i = 0; i < parts_dir[parts_dir.indexOf(part)].length; i++) {
+                        const current_part_path = parts_dir[indexOf(part)][1][i];
+                        copyFile(targetPath + current_part_path, getDBDPathSync() + dbd_icon_path + current_part_path);
+                    }
+                });
+            });
+    });
+}
+
 function resetAllPacks() {
     console.log("[resetAllPacks] Resetting all packs...");
 
@@ -383,6 +431,7 @@ module.exports = {
     downloadPack,
     updatePack,
     activatePack,
+    activatePackParts,
     resetAllPacks,
     getInstalledPacks,
     getActivePacks,
