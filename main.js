@@ -32,7 +32,7 @@ app.whenReady().then(() => {
   ipcMain.handle('packFunctions:deletePack', deletePack);
   ipcMain.handle('packFunctions:updatePack', updatePack);
   ipcMain.handle('packFunctions:activatePack', activatePack);
-  ipcMain.handle('packFunctions:activatePackParts', activatePackParts)
+  ipcMain.handle('packFunctions:activatePackParts', activatePackParts);
   ipcMain.handle('packFunctions:resetAllPacks', resetAllPacks);
   ipcMain.handle('packFunctions:getInstalledPacks', getInstalledPacks);
   ipcMain.handle('packFunctions:getActivePacks', getActivePacks);

@@ -270,15 +270,22 @@ img {
 }
 
 .pack-order-info-content-label {
-    max-width: 90%;
+    max-width: 100%;
 
     margin-left: 5px;
+    margin-bottom: 0;
 
     text-overflow: ellipsis;
     display: inline-block;
     overflow: hidden;
     white-space: nowrap;
     vertical-align: middle;
+
+    cursor: pointer;
+}
+
+.pack-order-info-content-label.active {
+    color: #c5c5c5;
 }
 
 .pack-order-dropdown-container {

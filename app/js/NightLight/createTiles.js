@@ -199,8 +199,6 @@ function setPackTiles(json) {
 
     let pack_downloads = pack.downloads.toLocaleString('en-US');
 
-
-
     let packContent = "";
     for (let i = 0; i < pack.has.length; i++) {
       if (packContent == "")
@@ -252,7 +250,7 @@ function setPackTiles(json) {
     packTile.id = pack.id;
 
     const variant_container = packTile.getElementsByClassName('variants')[0];
-    console.log(variant_container);
+    // console.log(variant_container);
 
     variant_container.parentNode.insertBefore(avatar_elements, variant_container.nextElementSibling);
 
