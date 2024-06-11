@@ -1,5 +1,5 @@
 const information = document.getElementById('info');
-information.innerText = `App (${versions.app()})\nChrome (v${versions.chrome()})\nNode.js (v${versions.node()})\nElectron (v${versions.electron()})`;
+information.innerText = `App (v${versions.app()})\nChrome (v${versions.chrome()})\nNode.js (v${versions.node()})\nElectron (v${versions.electron()})`;
 setWebEmbed();
 
 function setWebEmbed() {
