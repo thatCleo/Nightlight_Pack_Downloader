@@ -325,10 +325,28 @@ async function activatePackParts(event, url, parts) {
         unzipFile(zipPath, targetPath)
             .then(() => {
                 parts.forEach(part => {
-                    for(let i = 0; i < parts_dir[parts_dir.indexOf(part)].length; i++) {
-                        const current_part_path = parts_dir[indexOf(part)][1][i];
-                        copyFile(targetPath + current_part_path, getDBDPathSync() + dbd_icon_path + current_part_path);
+
+                    let part_index = null;
+                    for (let i = 0; i < parts_dir.length; i++) {
+                        if(parts_dir[i][0] == part) {
+                            part_index = i;
+                            break;
+                        }
                     }
+
+                    console.log(part_index);
+
+                    for(let i = 0; i < parts_dir[part_index][1].length; i++) {
+                        const current_part_path = parts_dir[part_index][1][i];
+                        if(fileExists(targetPath + current_part_path)) {
+                            copyFile(targetPath + current_part_path, getDBDPathSync() + dbd_icon_path + current_part_path);
+                        }
+                        else {
+                            console.log(`[activatePackParts] failed to activate ${current_part_path} for ${url}`);
+                            resolve(false);
+                        }
+                    }
+                    resolve(true);
                 });
             });
     });

@@ -37,8 +37,6 @@ function createPackTiles(page, per_page, sort_by, search, author, dbd_version, i
         dbd_version = `&version=${dbd_version}`
     }
 
-    console.log(`${search}, ${dbd_version}`);
-
     window.webFunctions.httpGet(`https://nightlight.gg/api/v1/packs?page=${page}&per_page=${per_page}&sort_by=${sort_by}${author}${search}${dbd_version}&includes=${includes}&include_mode=${include_mode}`)
         .then(data => {
             setPackTiles(data);

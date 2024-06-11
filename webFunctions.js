@@ -1,7 +1,6 @@
 const { Buffer } = require('buffer');
 const fs = require('fs');
 const https = require('https');
-const { fileExists } = require('./fileFunctions');
 
 async function httpGet(event, url) {
     console.log(`[httpGet] Fetching ${url}...`);
@@ -42,7 +41,7 @@ async function httpGet(event, url) {
 }
 
 async function downloadFile(event, downloadURL, directoryPath, fileName) {
-    //console.log(`[downloadFile] Downloading ${fileName}`);
+    // console.log(`[downloadFile] Downloading ${fileName}`);
     try {
         const response = await fetch(downloadURL);
         const arrayBuffer = await response.arrayBuffer();

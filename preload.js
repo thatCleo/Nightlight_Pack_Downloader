@@ -24,6 +24,7 @@ contextBridge.exposeInMainWorld('packFunctions', {
   deletePack: (url, button) => ipcRenderer.invoke('packFunctions:deletePack', url, button),
   updatePack: (url, packData) => ipcRenderer.invoke('packFunctions:updatePack', url, packData),
   activatePack: (url) => ipcRenderer.invoke('packFunctions:activatePack', url),
+  activatePackParts: (url, parts) => ipcRenderer.invoke('packFunctions:activatePackParts', url, parts),
   resetAllPacks: () => ipcRenderer.invoke('packFunctions:resetAllPacks'),
   getInstalledPacks: () => ipcRenderer.invoke('packFunctions:getInstalledPacks'),
   getActivePacks: () => ipcRenderer.invoke('packFunctions:getActivePacks'),
