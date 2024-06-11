@@ -198,6 +198,10 @@ img {
     transform: rotate(90deg);
 }
 
+.manage-dbd-version-title {
+    max-width: fit-content !important;
+}
+
 .pack-order-container-outer {
     display: flex;
     flex-direction: column;
