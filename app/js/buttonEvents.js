@@ -15,6 +15,8 @@ let sort_by = 'downloads';
 
 let author = '';
 let includes = '';
+const include_mode_deault = 'any';
+let include_mode = 'any';
 let search = '';
 let dbd_version = '';
 
@@ -180,6 +182,7 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('filter_dbd_version').value = '';
 
             includes = '';
+            include_mode = include_mode_deault;
             clearFilterShortcuts();
 
             loadPackTiles();
@@ -200,6 +203,7 @@ document.addEventListener('DOMContentLoaded', function () {
             enableFilterApplyButton();
 
             includes = 'portraits';
+            include_mode = 'only';
             event.target.classList.add('filter_shortcut_active');
 
             enableFilterResetButton();
@@ -210,6 +214,7 @@ document.addEventListener('DOMContentLoaded', function () {
             enableFilterApplyButton();
 
             includes = 'perks';
+            include_mode = 'only';
             event.target.classList.add('filter_shortcut_active');
 
             enableFilterResetButton();
@@ -220,6 +225,7 @@ document.addEventListener('DOMContentLoaded', function () {
             enableFilterApplyButton();
 
             includes = 'perks,portraits,items,offerings,powers,addons';
+            include_mode = 'all';
             event.target.classList.add('filter_shortcut_active');
 
             enableFilterResetButton();

@@ -13,12 +13,6 @@ function setWebEmbed() {
 
 function loadPackTiles() {
     console.log("Loading Pack Tiles...");
-    
-    let include_mode = 'any';
-    if(includes != '') {
-        include_mode = 'only';
-    }
-
     createPackTiles(current_page, packs_per_page, sort_by, search, author, dbd_version, includes, include_mode);
 }
 
