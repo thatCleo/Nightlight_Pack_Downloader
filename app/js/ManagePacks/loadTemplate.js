@@ -9,9 +9,7 @@ const manage_packs_template = `<div>
     </div>
 </main>
 <div id="alert_bar_container"></div>
-<div class="container px-4">
-    <div id="manage_packs_main_content" class="row row-cols-1 row-cols-lg-2 row-cols-xxl-3 g-3"></div>
-</div>
+    <div id="manage-pack-tiles" class="manage-pack-tiles"></div>
 <div class="section-container">
     <div class="main-section"></div>
 </div>

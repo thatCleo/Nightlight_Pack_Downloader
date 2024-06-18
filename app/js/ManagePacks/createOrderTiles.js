@@ -48,20 +48,16 @@ async function updatePackOrderTiles_Manage() {
 async function setPackOrderTiles_Manage(url) {
     const manage_pack_order_view = document.getElementById('pack-order-container-outer');
 
-    let pack_data;
-    await window.packFunctions.getPackMetaData(url)
-        .then(data => {
-            pack_data = data;
+    let pack_data = await window.packFunctions.getPackMetaData(url)
+    let packContent = "";
+    for (let i = 0; i < pack_data.has.length; i++) {
+        if (packContent == "")
+            packContent += `${formatText(pack_data.has[i])}`;
+        else
+            packContent += `, ${formatText(pack_data.has[i])}`
+    }
 
-            let packContent = "";
-            for (let i = 0; i < pack_data.has.length; i++) {
-                if (packContent == "")
-                    packContent += `${formatText(pack_data.has[i])}`;
-                else
-                    packContent += `, ${formatText(pack_data.has[i])}`
-            }
-
-            const tile = `
+    const tile = `
                 <div class="pack-order">
                     <div class="pack-order-grab">
                         <svg clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2"
@@ -94,77 +90,76 @@ async function setPackOrderTiles_Manage(url) {
                     </div>
                 </div>`;
 
-            const packTile = document.createElement('div');
-            packTile.innerHTML = tile;
-            packTile.classList.add('pack-order-container');
-            packTile.id = `order-tile-${url}`;
-            packTile.draggable = true;
+    const packTile = document.createElement('div');
+    packTile.innerHTML = tile;
+    packTile.classList.add('pack-order-container');
+    packTile.id = `order-tile-${url}`;
+    packTile.draggable = true;
 
-            packTile.addEventListener('dragover', (event) => {
-                const referenceElement = event.target.parentNode;
-                if (!referenceElement.classList.contains('pack-order-container')) {
-                    return;
-                }
+    packTile.addEventListener('dragover', (event) => {
+        const referenceElement = event.target.parentNode;
+        if (!referenceElement.classList.contains('pack-order-container')) {
+            return;
+        }
 
-                if (referenceElement === draggedElement) {
-                    return;
-                }
+        if (referenceElement === draggedElement) {
+            return;
+        }
 
-                const rect = event.target.getBoundingClientRect();
-                const centerY = rect.top + rect.height / 2;
-                const mouseY = event.clientY - centerY;
+        const rect = event.target.getBoundingClientRect();
+        const centerY = rect.top + rect.height / 2;
+        const mouseY = event.clientY - centerY;
 
-                insertBefore = mouseY < 0;
+        insertBefore = mouseY < 0;
 
-                if (insertBefore != insertedBefore) {
-                    previewElement.remove();
-                }
+        if (insertBefore != insertedBefore) {
+            previewElement.remove();
+        }
 
-                if (insertBefore) {
-                    if (!insertedBefore || insertedBefore === null) {
-                        referenceElement.parentNode.insertBefore(previewElement, referenceElement);
-                        insertedBefore = true;
-                    }
-                }
-                else if (!insertBefore) {
-                    if (insertedBefore || insertedBefore === null) {
-                        referenceElement.parentNode.insertBefore(previewElement, referenceElement.nextSibling);
-                        insertedBefore = false;
-                    }
-                }
-            })
+        if (insertBefore) {
+            if (!insertedBefore || insertedBefore === null) {
+                referenceElement.parentNode.insertBefore(previewElement, referenceElement);
+                insertedBefore = true;
+            }
+        }
+        else if (!insertBefore) {
+            if (insertedBefore || insertedBefore === null) {
+                referenceElement.parentNode.insertBefore(previewElement, referenceElement.nextSibling);
+                insertedBefore = false;
+            }
+        }
+    })
 
-            const dropdown = packTile.getElementsByClassName('pack-order-dropdown')[0];
-            dropdown.addEventListener('change', function (event) {
-                let elements = document.getElementsByClassName('pack-order-container');
-                const container = elements[0].parentNode;
-                const thisElement = event.target.parentNode.parentNode.parentNode;
-                const value = event.target.value;
-                let last_value = null;
-    
-                for (let i = 0; i < elements.length; i++) {
-                    if (elements[i] === thisElement) {
-                        last_value = i;
-                        break;
-                    }
-                }
-    
-                console.log(last_value);
-    
-                if (value < last_value) {
-                    container.insertBefore(thisElement, elements[value]);
-                } else {
-                    container.insertBefore(thisElement, elements[value].nextSibling);
-                }
-    
-                updatePackOrderTiles_Manage();
-            })
+    const dropdown = packTile.getElementsByClassName('pack-order-dropdown')[0];
+    dropdown.addEventListener('change', function (event) {
+        let elements = document.getElementsByClassName('pack-order-container');
+        const container = elements[0].parentNode;
+        const thisElement = event.target.parentNode.parentNode.parentNode;
+        const value = event.target.value;
+        let last_value = null;
 
-            manage_pack_order_view.appendChild(packTile);
-            console.log(`Added ordering tile for ${pack_data.url}`);
+        for (let i = 0; i < elements.length; i++) {
+            if (elements[i] === thisElement) {
+                last_value = i;
+                break;
+            }
+        }
 
-            setOrderTileDropdown();
-        });
+        console.log(last_value);
+
+        if (value < last_value) {
+            container.insertBefore(thisElement, elements[value]);
+        } else {
+            container.insertBefore(thisElement, elements[value].nextSibling);
+        }
+
+        updatePackOrderTiles_Manage();
+    })
+
+    manage_pack_order_view.appendChild(packTile);
+    console.log(`Added ordering tile for ${pack_data.url}`);
+
+    setOrderTileDropdown();
 
     console.log('done adding tiles');
 }
@@ -203,9 +198,19 @@ async function deactivateDragging() {
         elements_drag[i].classList.add('disabled');
     }
 
-    const elements_tiles = document.getElementsByClassName('pack-tile-manage');
+    const elements_tiles = document.getElementsByClassName('manage-pack-tile-container');
     for (let i = 0; i < elements_tiles.length; i++) {
         elements_tiles[i].classList.add('disabled');
+    }
+
+    const elements_update_button = document.getElementsByClassName('manage-pack-tile-update');
+    for (let i = 0; i < elements_update_button.length; i++) {
+        elements_update_button[i].classList.add('disabled');
+    }
+
+    const elements_delete_button = document.getElementsByClassName('manage-pack-tile-delete');
+    for (let i = 0; i < elements_delete_button.length; i++) {
+        elements_delete_button[i].classList.add('disabled');
     }
 
     const revert_button = document.getElementById('reset-all-packs');
@@ -218,9 +223,19 @@ function activateDragging() {
         elements_drag[i].classList.remove('disabled');
     }
 
-    const elements_tiles = document.getElementsByClassName('pack-tile-manage');
+    const elements_tiles = document.getElementsByClassName('manage-pack-tile-container');
     for (let i = 0; i < elements_tiles.length; i++) {
         elements_tiles[i].classList.remove('disabled');
+    }
+
+    const elements_update_button = document.getElementsByClassName('manage-pack-tile-update');
+    for (let i = 0; i < elements_update_button.length; i++) {
+        elements_update_button[i].classList.remove('disabled');
+    }
+
+    const elements_delete_button = document.getElementsByClassName('manage-pack-tile-delete');
+    for (let i = 0; i < elements_delete_button.length; i++) {
+        elements_delete_button[i].classList.remove('disabled');
     }
 
     const revert_button = document.getElementById('reset-all-packs');

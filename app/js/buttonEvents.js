@@ -26,6 +26,7 @@ let insertedBefore = null;
 
 document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('click', function (event) {
+
         if (event.target.classList.contains('open_link')) {
             let url = event.target.value;
             if (url == null) {
@@ -71,34 +72,34 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     variant_container.childNodes[0].classList.remove('downloading');
 
-                    createPackTiles_Manage();
+                    setPackTiles_Manage([value]);
                 })
         }
 
         else if (event.target.classList.contains('delete-pack')) {
+            event.target.parentNode.parentNode.style.width = "0";
+            event.target.style.opacity = "0";
             const value = event.target.value;
+
             console.log(`Deleting Pack: ${value}`);
-            window.packFunctions.deletePack(value)
-                .then(() => {
-                    createPackTiles_Manage();
-                    removePackOrderTile_Manage(value);
-                })
+            window.packFunctions.deletePack(value);
+            removePackOrderTile_Manage(value);
+
+            setTimeout(function() {
+                event.target.parentNode.parentNode.remove();
+              }, 125);
         }
 
         else if (event.target.classList.contains('toggle-pack')) {
-            const value = event.target.value;
+            const value = event.target.id.replace('manage-tile-', '');
 
-            if (!event.target.classList.contains('manage-button-pack-active')) {
-                // window.packFunctions.activatePack(value);
+            if (!event.target.classList.contains('manage-pack-tile-pack-active')) {
                 console.log(`Activating Pack: ${value}`);
-                event.target.classList.add('manage-button-pack-active');
-                event.target.innerText = 'Pack Active';
+                event.target.classList.add('manage-pack-tile-pack-active');
                 addPackOrderTile_Manage(value);
             } else {
-                // window.packFunctions.deactivatePack(value);
                 console.log(`Deactivating Pack: ${value}`);
-                event.target.classList.remove('manage-button-pack-active');
-                event.target.innerText = 'Activate Pack';
+                event.target.classList.remove('manage-pack-tile-pack-active');
                 removePackOrderTile_Manage(value);
             }
         }
@@ -107,12 +108,11 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log(`Resetting All Packs...`);
             window.packFunctions.resetAllPacks();
 
-            const buttons = document.getElementsByClassName('manage-button-pack-active');
+            const buttons = document.getElementsByClassName('manage-pack-tile-pack-active');
             const length = buttons.length;
 
             for (let i = 0; i < length; i++) {
-                buttons[0].innerText = 'Activate Pack';
-                buttons[0].classList.remove('manage-button-pack-active');
+                buttons[0].classList.remove('manage-pack-tile-pack-active');
             }
 
             const pack_order_contianer = document.getElementById('pack-order-container-outer');
@@ -417,12 +417,12 @@ document.addEventListener('DOMContentLoaded', function () {
             pack_content_display.parentNode.title = has;
         }
 
-        else if (event.target.classList.contains('manage-pack-update')) {
+        else if (event.target.classList.contains('manage-pack-tile-update')) {
             event.target.classList.add('disabled');
             deactivateDragging();
 
             const pack_url = event.target.id.replace('update-', '');
-            const url =`https://nightlight.gg/api/v1/packs?page=1&per_page=1&sort_by=downloads&search=${pack_url}&includes=&include_mode=any`;
+            const url = `https://nightlight.gg/api/v1/packs?page=1&per_page=1&sort_by=downloads&search=${pack_url}&includes=&include_mode=any`;
 
             window.webFunctions.httpGet(url)
                 .then(data => {
