@@ -15,4 +15,4 @@ It uses the Nightlight API / Website to retrive avalible packs and download cont
 - [x] Managing Pack Order (which packs have priority over others)
 - [x] Options (only DBD File path)
 
-_since the officion linux port for the nightlight app is going to be released for public testing farly soon, I won't continue actively developing this replacement for it. I might however still do some things here and there_
+_There is an official linux port for the nightlight app avalible. To get access & support (only for the official version, not this one), join the [Nightlight Discord](https://nightlight.gg/discord) and look at the #desktop-for-linux channel<br>I will still work on this occasioanlly to add features & QOL-Stuff I think could be useful_
