@@ -105,7 +105,7 @@ img {
     background-color: #15667a;
 }
 
-/* 
+/*
 .sidebar-button-active:hover {
     background-color: #135c6e;
 } */
@@ -411,9 +411,26 @@ img {
     color: #f2f2f2;
     margin: 5px 10px;
 
+    max-width: calc(100% - 450px);
+
     display: flex;
     flex-direction: column;
     justify-content: start;
+    transition: 125ms;
+}
+
+@media (max-width: 749px){
+    .pack-order-info {
+        opacity: 0;
+    }
+}
+
+.pack-order-info-title {
+    text-overflow: ellipsis;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: middle;
 }
 
 .pack-order-info-content {
@@ -465,6 +482,8 @@ img {
 .pack-order-dragged {
     opacity: .3;
 }
+
+/* Options */
 
 .flex-options {
     display: flex;

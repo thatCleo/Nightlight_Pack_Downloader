@@ -73,7 +73,7 @@ async function setPackOrderTiles_Manage(url) {
                         alt="Pack Banner for ${pack_data.url}">
                     </div>
                     <div class="pack-order-info">
-                        <h2>${pack_data.title}</h2>
+                        <h2 class="pack-order-info-title">${pack_data.title}</h2>
                         <div class="pack-order-info-content">
                         <svg class="pack-order-info-content-icon" focusable="false" data-prefix="fas" data-icon="box-open"
                             role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" width="18px" height="18px"
