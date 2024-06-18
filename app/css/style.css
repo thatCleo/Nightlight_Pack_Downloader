@@ -217,7 +217,7 @@ img {
 }
 
 .manage-pack-tile:hover {
-    border-color: #073c49;
+    border-color: #073c49 !important;
 }
 
 .manage-pack-tile-pack-active {
