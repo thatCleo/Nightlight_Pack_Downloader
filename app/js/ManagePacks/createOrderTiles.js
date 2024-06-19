@@ -190,7 +190,7 @@ async function activatePacksInOrder() {
 
     const old_order = await window.packFunctions.getActivePacksInOrder();
 
-    const order_is_different = false;
+    let order_is_different = false;
 
     for(let i = 0; i < new_order.length; i++) {
         if (new_order[i] != old_order[i]) {
