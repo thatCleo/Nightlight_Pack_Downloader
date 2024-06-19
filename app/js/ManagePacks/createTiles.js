@@ -100,7 +100,9 @@ async function checkForPackUpdates() {
   const installed_packs = await window.packFunctions.getInstalledPacks();
   const check_delay = 250; // 250ms to not throw to many requests at the server simultaneously
 
-  checkForPackUpdatesDelayed(installed_packs, 0, check_delay);
+  if(installed_packs.length > 0) {
+    checkForPackUpdatesDelayed(installed_packs, 0, check_delay);
+  }
 }
 
 function checkForPackUpdatesDelayed(installed_packs, index, delay) {
