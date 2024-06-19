@@ -424,7 +424,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         else if (event.target.classList.contains('manage-pack-tile-update')) {
-            event.target.classList.add('disabled');
+            event.target.remove();
             deactivateDragging();
 
             const pack_url = event.target.id.replace('update-', '');
@@ -454,6 +454,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 event.target.childNodes[1].classList.add('hidden');
                 window.options.setCheckForPackUpdateOnStartup(false);
             }
+        }
+
+        else if (event.target.classList.contains('button-toggle-autoupdate-pack-check-now')) {
+            checkForPackUpdates();
         }
     });
 
