@@ -180,10 +180,33 @@ function setOrderTileDropdown() {
 }
 
 async function activatePacksInOrder() {
-    window.packFunctions.resetAllPacks();
-
     const elements = document.getElementsByClassName('pack-order-container');
+    let new_order = [];
 
+    for (let i = elements.length - 1; i >= 0; i--) {
+        const url = elements[i].id.replace('order-tile-', '');
+        new_order.splice(0, 0, url);
+    }
+
+    const old_order = await window.packFunctions.getActivePacksInOrder();
+
+    const order_is_different = false;
+
+    for(let i = 0; i < new_order.length; i++) {
+        if (new_order[i] != old_order[i]) {
+            order_is_different = true;
+            break;
+        }
+    }
+
+    if(!order_is_different) {
+        return;
+    }
+
+    console.log(old_order);
+    console.log(new_order);
+
+    window.packFunctions.resetAllPacks();
     for (let i = elements.length - 1; i >= 0; i--) {
         const url = elements[i].id.replace('order-tile-', '');
         console.log(`${i}: ${url}`);
