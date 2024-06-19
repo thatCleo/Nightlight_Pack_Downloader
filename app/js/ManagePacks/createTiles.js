@@ -4,7 +4,7 @@ function createPackTiles_Manage() {
 
   window.packFunctions.getInstalledPacks()
     .then(data => {
-      let installed_packs = data;
+      const installed_packs = data;
       console.log("Creating Pack Tiles for Manage Packs...");
       console.log(installed_packs);
       setPackTiles_Manage(installed_packs);
@@ -22,13 +22,13 @@ function setPackTiles_Manage(packs) {
       .then(data => {
         pack_data = data;
 
-        let dbdVersionTitle = pack_data.dbd_version;
+        let dbd_version_title_tile = pack_data.dbd_version;
         for (let i = 0; i < dbd_version_title.length; i++) {
-          if (dbd_version_title[i][0] == dbdVersionTitle) {
-            dbdVersionTitle = dbd_version_title[i][1];
-              break;
+          if (dbd_version_title[i][0] == dbd_version_title_tile) {
+            dbd_version_title_tile = dbd_version_title[i][1];
+            break;
           }
-      }
+        }
 
         let packContent = "";
         for (let i = 0; i < pack_data.has.length; i++) {
@@ -40,12 +40,12 @@ function setPackTiles_Manage(packs) {
 
         const tile = `
           <div class="manage-pack-tile toggle-pack" id="manage-tile-${pack_data.url}">
-            <button class="manage-pack-tile-delete delete-pack" value="${pack_data.url}" title="Delete ${pack_data.title}">
+            <button class="manage-pack-tile-update hidden" id="update-${pack_data.url}" title="Download newest version again">↻</button>
+            <button class="manage-pack-tile-delete delete-pack" value="${pack_data.url}" title="Delete: ${pack_data.title}">
               <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M18 6L17.1991 18.0129C17.129 19.065 17.0939 19.5911 16.8667 19.99C16.6666 20.3412 16.3648 20.6235 16.0011 20.7998C15.588 21 15.0607 21 14.0062 21H9.99377C8.93927 21 8.41202 21 7.99889 20.7998C7.63517 20.6235 7.33339 20.3412 7.13332 19.99C6.90607 19.5911 6.871 19.065 6.80086 18.0129L6 6M4 6H20M16 6L15.7294 5.18807C15.4671 4.40125 15.3359 4.00784 15.0927 3.71698C14.8779 3.46013 14.6021 3.26132 14.2905 3.13878C13.9376 3 13.523 3 12.6936 3H11.3064C10.477 3 10.0624 3 9.70951 3.13878C9.39792 3.26132 9.12208 3.46013 8.90729 3.71698C8.66405 4.00784 8.53292 4.40125 8.27064 5.18807L8 6" stroke="#f2f2f2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
-            <button class="manage-pack-tile-update" id="update-${pack_data.url}" title="Download newest version again">↻</button>
             <div class="manage-pack-tile-image-container">
               <img class="manage-pack-tile-image" src="${window.directory.currentPath()}/packfiles/${pack_data.url}/banner.png" alt="Pack Banner for ${pack_data.url}">
             </div>
@@ -61,7 +61,7 @@ function setPackTiles_Manage(packs) {
                   d="M80 104c13.3 0 24-10.7 24-24s-10.7-24-24-24S56 66.7 56 80s10.7 24 24 24zm80-24c0 32.8-19.7 61-48 73.3v87.8c18.8-10.9 40.7-17.1 64-17.1h96c35.3 0 64-28.7 64-64v-6.7C307.7 141 288 112.8 288 80c0-44.2 35.8-80 80-80s80 35.8 80 80c0 32.8-19.7 61-48 73.3V160c0 70.7-57.3 128-128 128H176c-35.3 0-64 28.7-64 64v6.7c28.3 12.3 48 40.5 48 73.3c0 44.2-35.8 80-80 80s-80-35.8-80-80c0-32.8 19.7-61 48-73.3V352 153.3C19.7 141 0 112.8 0 80C0 35.8 35.8 0 80 0s80 35.8 80 80zm232 0c0-13.3-10.7-24-24-24s-24 10.7-24 24s10.7 24 24 24s24-10.7 24-24zM80 456c13.3 0 24-10.7 24-24s-10.7-24-24-24s-24 10.7-24 24s10.7 24 24 24z">
                 </path>
               </svg>
-              <p class="manage-pack-tile-game-version">${dbdVersionTitle}</p>
+              <p class="manage-pack-tile-game-version">${dbd_version_title_tile}</p>
             </div>
             <div class="manage-pack-tile-content-container">
               <svg class="manage-pack-tile-content-svg" focusable="false" data-prefix="fas" data-icon="box-open"
@@ -94,4 +94,31 @@ function setPackTiles_Manage(packs) {
         console.log(`Added tile for ${pack_data.url}`);
       });
   });
+}
+
+async function checkForPackUpdates() {
+  const installed_packs = await window.packFunctions.getInstalledPacks();
+  const check_delay = 250; // 250ms to not throw to many requests at the server simultaneously
+
+  checkForPackUpdatesDelayed(installed_packs, 0, check_delay);
+}
+
+function checkForPackUpdatesDelayed(installed_packs, index, delay) {
+  const pack_url = installed_packs[index];
+  window.webFunctions.httpGet(`https://nightlight.gg/api/v1/packs?page=1&per_page=1&sort_by=downloads&search=${pack_url}`)
+    .then((pack_data) => {
+      pack_data = JSON.parse(pack_data);
+      window.packFunctions.getPackMetaData(pack_url)
+        .then((current_pack_data) => {
+          if (pack_data.data.packs[0].updated_at != current_pack_data.last_updated) {
+            document.getElementById(`update-${pack_url}`).classList.remove('hidden');
+          }
+
+          if (index + 1 < installed_packs.length) {
+            setTimeout(() => {
+              checkForPackUpdatesDelayed(installed_packs, index + 1, delay)
+            }, delay);
+          }
+        })
+    })
 }

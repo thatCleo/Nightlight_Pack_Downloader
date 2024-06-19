@@ -43,5 +43,7 @@ contextBridge.exposeInMainWorld('directory', {
 contextBridge.exposeInMainWorld('options', {
   setDBDPath: (value) => ipcRenderer.invoke('options:setDBDPath', value),
   setDBDPathFromDialog: () => ipcRenderer.invoke('options:setDBDPathFromDialog'),
-  getDBDPath: () => ipcRenderer.invoke('options:getDBDPath')
+  getDBDPath: () => ipcRenderer.invoke('options:getDBDPath'),
+  getCheckForPackUpdateOnStartup: () => ipcRenderer.invoke('options:getCheckForPackUpdateOnStartup'),
+  setCheckForPackUpdateOnStartup: (check) => ipcRenderer.invoke('options:setCheckForPackUpdateOnStartup', check)
 })

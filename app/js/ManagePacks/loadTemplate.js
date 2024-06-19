@@ -43,3 +43,11 @@ manage_packs_container.innerHTML = manage_packs_template;
 removeManageNavigation();
 createPackTiles_Manage();
 createPackOrderTiles_Manage();
+
+window.options.getCheckForPackUpdateOnStartup()
+    .then((check) => {
+        console.log(`Check for Pack Updates? ${check}`)
+        if (check) {
+            checkForPackUpdates();
+        }
+    });

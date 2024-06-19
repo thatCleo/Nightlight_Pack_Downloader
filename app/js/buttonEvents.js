@@ -428,7 +428,7 @@ document.addEventListener('DOMContentLoaded', function () {
             deactivateDragging();
 
             const pack_url = event.target.id.replace('update-', '');
-            const url = `https://nightlight.gg/api/v1/packs?page=1&per_page=1&sort_by=downloads&search=${pack_url}&includes=&include_mode=any`;
+            const url = `https://nightlight.gg/api/v1/packs?page=1&per_page=1&sort_by=downloads&search=${pack_url}`;
 
             window.webFunctions.httpGet(url)
                 .then(data => {
@@ -436,13 +436,24 @@ document.addEventListener('DOMContentLoaded', function () {
                     data = data.data.packs;
                     window.packFunctions.updatePack(pack_url, data)
                         .then((pack_is_active) => {
-                            createPackTiles_Manage();
                             if (pack_is_active) {
                                 updatePackOrderTiles_Manage();
                             }
                             activateDragging();
                         })
                 });
+        }
+
+        else if (event.target.classList.contains('checkbox-toggle-autoupdate-pack')) {
+            console.log('pressed');
+            if (event.target.childNodes[1].classList.contains('hidden')) {
+                event.target.childNodes[1].classList.remove('hidden');
+                window.options.setCheckForPackUpdateOnStartup(true);
+            }
+            else {
+                event.target.childNodes[1].classList.add('hidden');
+                window.options.setCheckForPackUpdateOnStartup(false);
+            }
         }
     });
 

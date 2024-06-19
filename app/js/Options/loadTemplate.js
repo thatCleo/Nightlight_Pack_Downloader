@@ -33,6 +33,18 @@ const options_template = `<div>
                 <label class="label_options_cache_size">---- KB</label>
             </div>
         </div>
+        <div class="container_options">
+            <div class="container_options_title">
+                <p class="container_options_title_text">Updates</p>
+            </div>
+            <div class="container_options_content">
+                <div id="options-toggle-autoupdate-pack" class="checkbox-options checkbox-toggle-autoupdate-pack">
+                    <svg class="hidden" width="18px" height="18px" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--twemoji" preserveAspectRatio="xMidYMid meet"><path fill="#f2f2f2" d="M34.459 1.375a2.999 2.999 0 0 0-4.149.884L13.5 28.17l-8.198-7.58a2.999 2.999 0 1 0-4.073 4.405l10.764 9.952s.309.266.452.359a2.999 2.999 0 0 0 4.15-.884L35.343 5.524a2.999 2.999 0 0 0-.884-4.149z">
+                    </path></svg>
+                </div>
+                <label class="label-options-toggle-autoupdate-pack">Check for Pack Updates on Startup</label>
+            </div>
+        </div>
     </div>
 </div>
 <footer class="footer pb-3 nl-footer">
