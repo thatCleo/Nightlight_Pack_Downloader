@@ -1,6 +1,26 @@
 const information = document.getElementById('info');
 information.innerText = `App (v${versions.app()})\nChrome (v${versions.chrome()})\nNode.js (v${versions.node()})\nElectron (v${versions.electron()})`;
+
+/* Nightlight Page Setup */
+const webview = document.getElementById('webview-container-page');
+webview.style.display = 'block';
 setWebEmbed();
+
+/* Manage Packs Page Setup */
+// removeManageNavigation();
+createPackTiles_Manage();
+createPackOrderTiles_Manage();
+
+window.options.getCheckForPackUpdateOnStartup()
+    .then((check) => {
+        console.log(`Check for Pack Updates? ${check}`)
+        if (check) {
+            checkForPackUpdates();
+        }
+    });
+
+/* Options Page Setup */
+setOptionValuesToElements();
 
 function setWebEmbed() {
     fixStyling();
