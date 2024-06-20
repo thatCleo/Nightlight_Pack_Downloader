@@ -1,5 +1,7 @@
+const path = require('path');
 const { getPathFromDialog, fileExists } = require('./fileFunctions');
 const fs = require('fs');
+const { userInfo } = require('os');
 
 let dbd_game_path = '';
 let pack_order = [];
@@ -7,7 +9,13 @@ let check_for_packupdates_on_startup = false;
 
 let currentDirectory = __dirname;
 currentDirectory = currentDirectory.replace('resources/app.asar', '');
-currentDirectory += '/data'
+currentDirectory = path.join(currentDirectory, '/data');
+
+currentDirectory = path.join('/home/', userInfo().username, '/.local/share/nightlight_pack_downloader');
+if(!fileExists(currentDirectory)) {
+    fs.mkdirSync(currentDirectory);
+}
+
 console.log('Dir: ' + currentDirectory);
 
 loadOptions();
