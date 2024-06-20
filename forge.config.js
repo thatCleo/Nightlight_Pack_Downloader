@@ -17,11 +17,21 @@ module.exports = {
     },
     {
       name: '@electron-forge/maker-deb',
-      config: {},
+      config: {
+        options: {
+          maintainer: 'thisMicki',
+          homepage: 'https://github.com/thisMicki/Nightlight_Pack_Downloader',
+          icon: `${__dirname}/app/images/icon.png`,
+        }
+      },
     },
     {
       name: '@electron-forge/maker-rpm',
-      config: {},
+      options: {
+        maintainer: 'thisMicki',
+        homepage: 'https://github.com/thisMicki/Nightlight_Pack_Downloader',
+        icon: `${__dirname}/app/images/icon.png`,
+      },
     },
   ],
   plugins: [
