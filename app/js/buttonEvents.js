@@ -434,6 +434,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(data => {
                     data = JSON.parse(data);
                     data = data.data.packs;
+
+                    downloadBanner(data[0].id, data[0].current_version);
+
                     window.packFunctions.updatePack(pack_url, data)
                         .then((pack_is_active) => {
                             if (pack_is_active) {
