@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const StreamZip = require('node-stream-zip');
 const { dialog } = require('electron');
-const { log } = require('console');
+const { userInfo } = require('os');
 
 function fileExists(filePath) {
     try {
@@ -136,16 +136,14 @@ function getDirectorySize(directoryPath, callback) {
 }
 
 function getCacheSize() {
-    let path = __dirname;
-    path = path.replace('resources/app.asar', '');
-    path += '/data/cached_images';
+    const cache_path = path.join('/home/', userInfo().username, '/.local/share/nightlight_pack_downloader/cached_images');
 
     return new Promise((resolve, reject) => {
-        if (!fileExists(path)) {
+        if (!fileExists(cache_path)) {
             resolve(0);
             return;
         }
-        getDirectorySize(path, (err, size) => {
+        getDirectorySize(cache_path, (err, size) => {
             if (err) {
                 console.error('Error:', err);
                 return;

@@ -7,11 +7,7 @@ let dbd_game_path = '';
 let pack_order = [];
 let check_for_packupdates_on_startup = false;
 
-let currentDirectory = __dirname;
-currentDirectory = currentDirectory.replace('resources/app.asar', '');
-currentDirectory = path.join(currentDirectory, '/data');
-
-currentDirectory = path.join('/home/', userInfo().username, '/.local/share/nightlight_pack_downloader');
+const currentDirectory = path.join('/home/', userInfo().username, '/.local/share/nightlight_pack_downloader');
 if(!fileExists(currentDirectory)) {
     fs.mkdirSync(currentDirectory);
 }
