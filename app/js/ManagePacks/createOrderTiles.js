@@ -33,7 +33,7 @@ async function removePackOrderTile_Manage(url) {
     }
 
     setOrderTileDropdown();
-    
+
     await activatePacksInOrder();
     activateDragging();
 }
@@ -190,16 +190,18 @@ async function activatePacksInOrder() {
 
     const old_order = await window.packFunctions.getActivePacksInOrder();
 
-    let order_is_different = false;
+    let order_is_different = new_order.length != old_order.length;
 
-    for(let i = 0; i < new_order.length; i++) {
-        if (new_order[i] != old_order[i]) {
-            order_is_different = true;
-            break;
+    if (!order_is_different) {
+        for (let i = 0; i < new_order.length; i++) {
+            if (new_order[i] != old_order[i]) {
+                order_is_different = true;
+                break;
+            }
         }
     }
 
-    if(!order_is_different) {
+    if (!order_is_different) {
         return;
     }
 
