@@ -4,6 +4,8 @@ const StreamZip = require('node-stream-zip');
 const { dialog } = require('electron');
 const { userInfo } = require('os');
 
+const cache_path = path.join('/home/', userInfo().username, '/.local/share/nightlight_pack_downloader/cached_images');
+
 function fileExists(filePath) {
     try {
         fs.accessSync(filePath, fs.constants.F_OK);
@@ -136,8 +138,6 @@ function getDirectorySize(directoryPath, callback) {
 }
 
 function getCacheSize() {
-    const cache_path = path.join('/home/', userInfo().username, '/.local/share/nightlight_pack_downloader/cached_images');
-
     return new Promise((resolve, reject) => {
         if (!fileExists(cache_path)) {
             resolve(0);
@@ -154,17 +154,13 @@ function getCacheSize() {
 }
 
 async function clearCache() {
-    let path = __dirname;
-    path = path.replace('resources/app.asar', '');
-    path += '/data/cached_images';
-
     return new Promise((resolve, reject) => {
 
-        if (!fileExists(path)) return;
+        if (!fileExists(cache_path)) return;
 
         console.log('[clearCache] Clearing Cache...');
 
-        deleteFile(path);
+        deleteFile(cache_path);
         resolve(true);
     });
 }
