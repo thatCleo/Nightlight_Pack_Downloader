@@ -2,6 +2,8 @@ const webviewPage = document.getElementById('webview-container-page');
 const managePacksPage = document.getElementById('manage-packs-page');
 const optionsPage = document.getElementById('options-page');
 
+const notification_popup = document.getElementById('notification');
+
 let buttons = document.getElementsByClassName("button_page_nav");
 
 let packs_per_page = 12;

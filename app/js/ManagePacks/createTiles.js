@@ -96,16 +96,26 @@ function setPackTiles_Manage(packs) {
   });
 }
 
+let is_checking_for_pack_updates = false;
+
 async function checkForPackUpdates() {
+  if (is_checking_for_pack_updates) return;
+
+  is_checking_for_pack_updates = true;
+
+  notification_popup.innerText = 'Checking for Pack Updates...';
+  notification_popup.classList.add('show');
+
   const installed_packs = await window.packFunctions.getInstalledPacks();
   const check_delay = 250; // 250ms to not throw to many requests at the server simultaneously
+  const updates_found_count = 0;
 
-  if(installed_packs.length > 0) {
-    checkForPackUpdatesDelayed(installed_packs, 0, check_delay);
+  if (installed_packs.length > 0) {
+    checkForPackUpdatesDelayed(installed_packs, 0, check_delay, updates_found_count);
   }
 }
 
-function checkForPackUpdatesDelayed(installed_packs, index, delay) {
+function checkForPackUpdatesDelayed(installed_packs, index, delay, updates_found_count) {
   const pack_url = installed_packs[index];
   window.webFunctions.httpGet(`https://nightlight.gg/api/v1/packs?page=1&per_page=1&sort_by=downloads&search=${pack_url}`)
     .then((pack_data) => {
@@ -114,12 +124,23 @@ function checkForPackUpdatesDelayed(installed_packs, index, delay) {
         .then((current_pack_data) => {
           if (pack_data.data.packs[0].updated_at != current_pack_data.last_updated) {
             document.getElementById(`update-${pack_url}`).classList.remove('hidden');
+            updates_found_count++;
           }
 
           if (index + 1 < installed_packs.length) {
             setTimeout(() => {
-              checkForPackUpdatesDelayed(installed_packs, index + 1, delay)
+              checkForPackUpdatesDelayed(installed_packs, index + 1, delay, updates_found_count)
             }, delay);
+          } else {
+            notification_popup.classList.remove('show');
+            setTimeout(() => {
+              notification_popup.innerText = `Found ${updates_found_count} Update${(updates_found_count == 1 ? '' : 's')}`
+              notification_popup.classList.add('show');
+              setTimeout(() => {
+                notification_popup.classList.remove('show');
+                is_checking_for_pack_updates = false;
+              }, 2500);
+            }, 125);
           }
         })
     })

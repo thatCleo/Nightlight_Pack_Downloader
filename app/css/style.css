@@ -20,6 +20,35 @@ img {
     -ms-user-select: none;
 }
 
+notification {
+    background-color: #1e1e1e;
+    border: #13596b solid 1px;
+    border-radius: 5px;
+    padding: 10px;
+    opacity: 0;
+    font-size: medium;
+
+    align-self: center;
+
+    user-select: none;
+
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    transition: 125ms ease-in-out;
+}
+
+notification:hover {
+    opacity: 1 !important;
+}
+
+notification.show {
+    bottom: 20px;
+    opacity: .8;
+}
+
 .topbar {
     display: flex;
     background-color: #1a1a1a;
