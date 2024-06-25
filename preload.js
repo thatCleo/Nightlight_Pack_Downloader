@@ -7,7 +7,7 @@ contextBridge.exposeInMainWorld('versions', {
   node: () => process.versions.node,
   chrome: () => process.versions.chrome,
   electron: () => process.versions.electron,
-  app: () => '0.2.7' // Why does app.getVersion() break everything?! AHHH!
+  app: () => '0.2.8' // Why does app.getVersion() break everything?! AHHH!
 });
 
 contextBridge.exposeInMainWorld('fs', fs);
