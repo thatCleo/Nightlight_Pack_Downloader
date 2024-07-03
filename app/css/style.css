@@ -49,6 +49,13 @@ notification.show {
     opacity: .8;
 }
 
+.svg-inline {
+    display: inline-block;
+    height: 1em;
+    overflow: visible;
+    vertical-align: -.125em
+}
+
 .topbar {
     display: flex;
     background-color: #1a1a1a;
@@ -205,28 +212,28 @@ notification.show {
     padding: 0 19px;
 }
 
-@media (min-width: 1860px){
+@media (min-width: 1860px) {
     .manage-pack-tiles>* {
         flex: 0 0 auto;
         width: 25%;
     }
 }
 
-@media (min-width: 1400px) and (max-width: 1859px){
+@media (min-width: 1400px) and (max-width: 1859px) {
     .manage-pack-tiles>* {
         flex: 0 0 auto;
         width: 33.3333333333%;
     }
 }
 
-@media (min-width: 930px) and (max-width: 1399px){
+@media (min-width: 930px) and (max-width: 1399px) {
     .manage-pack-tiles>* {
         flex: 0 0 auto;
         width: 50%;
     }
 }
 
-@media (max-width: 929px){
+@media (max-width: 929px) {
     .manage-pack-tiles>* {
         flex: 0 0 auto;
         width: 100%;
@@ -262,6 +269,8 @@ notification.show {
     background: #282828;
     border-radius: 5px;
     margin: 5px;
+    display: flex;
+    justify-content: center;
 }
 
 .manage-pack-tile-image {
@@ -295,18 +304,22 @@ notification.show {
     border-radius: 5px;
     padding: 3px;
     margin-right: 10px;
+    margin-bottom: 4px;
     width: fit-content;
 }
 
 .manage-pack-tile-pack-version {
     margin: 0;
-    font-size: small;
+    margin-bottom: -4px;
+    font-size: x-small;
+    font-weight: 600;
     color: #bfc2c3;
 }
 
 .manage-pack-tile-game-version-svg {
     scale: .8;
     margin-right: 2px;
+    margin-bottom: 4px;
     color: #bfc2c3;
 }
 
@@ -330,6 +343,7 @@ notification.show {
 .manage-pack-tile-content-svg {
     color: #bfc2c3;
     scale: .8;
+    margin-bottom: 4px;
 }
 
 .manage-pack-tile-content {
@@ -453,7 +467,7 @@ notification.show {
     transition: 125ms;
 }
 
-@media (max-width: 749px){
+@media (max-width: 799px) {
     .pack-order-info {
         opacity: 0;
     }
@@ -477,6 +491,7 @@ notification.show {
 
 .pack-order-info-content-icon {
     align-self: center;
+    min-width: 18px;
 }
 
 .pack-order-info-content-label {
