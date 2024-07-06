@@ -380,7 +380,7 @@ function checkForValidDDPath() {
             return false;
         }
 
-        dialog.showErrorBox("Invalid game path", `The path (${path}) set is invalid. Please verify your Dead by Daylight installation path in the options.`);
+        dialog.showErrorBox("Invalid game path", `The path (${path}) set is invalid. Please verify your Dead by Daylight installation path.`);
         return false;
     }
     return true;
@@ -395,5 +395,6 @@ module.exports = {
     getInstalledPacks,
     getActivePacks,
     getActivePacksInOrder,
-    getPackMetaData
+    getPackMetaData,
+    checkForValidDDPath
 }

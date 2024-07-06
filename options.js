@@ -2,6 +2,8 @@ const path = require('path');
 const { getPathFromDialog, fileExists } = require('./fileFunctions');
 const fs = require('fs');
 const { userInfo } = require('os');
+const { checkForValidDDPath } = require('./packFunctions');
+const { dialog } = require('electron');
 
 let dbd_game_path = '';
 let pack_order = [];
@@ -9,7 +11,7 @@ let check_for_packupdates_on_startup = false;
 let check_for_appupdate_on_startup = false;
 
 const currentDirectory = path.join('/home/', userInfo().username, '/.local/share/nightlight_pack_downloader');
-if(!fileExists(currentDirectory)) {
+if (!fileExists(currentDirectory)) {
     fs.mkdirSync(currentDirectory);
 }
 
@@ -49,11 +51,20 @@ async function setDBDPathFromDialog() {
 
 async function setDBDPath(event, value) {
     console.log(`Setting DBD Path...`);
-    if(fileExists(value)) {
+    if (fileExists(`${value}/DeadByDaylight.exe`)) {
         dbd_game_path = value;
         console.log(`DBD Game Path: ${dbd_game_path}`);
-        checkForDataFolder();
         saveOptions();
+        dialog.showMessageBox(
+            {
+                type: 'info',
+                message: `The path is saved.`,
+                detail: `${value}`,
+                title: "Game path saved"
+            }
+        );
+    } else {
+        dialog.showErrorBox("Invalid game path", `The path (${value}) set is invalid. Please verify your Dead by Daylight installation path.`);
     }
 }
 
@@ -100,6 +111,7 @@ function checkForDataFolder() {
 }
 
 function saveOptions() {
+    checkForDataFolder();
     const json_string = {
         "dbd_game_path": dbd_game_path,
         "pack_order": pack_order,
