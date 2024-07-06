@@ -6,6 +6,7 @@ const { userInfo } = require('os');
 let dbd_game_path = '';
 let pack_order = [];
 let check_for_packupdates_on_startup = false;
+let check_for_appupdate_on_startup = false;
 
 const currentDirectory = path.join('/home/', userInfo().username, '/.local/share/nightlight_pack_downloader');
 if(!fileExists(currentDirectory)) {
@@ -22,6 +23,7 @@ function loadOptions() {
         dbd_game_path = options.dbd_game_path;
         pack_order = options.pack_order;
         check_for_packupdates_on_startup = options.check_for_packupdates_on_startup;
+        check_for_appupdate_on_startup = options.check_for_appupdate_on_startup;
     }
 }
 
@@ -80,6 +82,17 @@ async function setCheckForPackUpdateOnStartup(event, check) {
     saveOptions();
 }
 
+async function getCheckForAppUpdateOnStartup() {
+    return new Promise((resolve, reject) => {
+        resolve(check_for_appupdate_on_startup)
+    })
+}
+
+async function setCheckForAppUpdateOnStartup(event, check) {
+    check_for_appupdate_on_startup = check;
+    saveOptions();
+}
+
 function checkForDataFolder() {
     if (!fs.existsSync(`${currentDirectory}/`)) {
         fs.mkdirSync(`${currentDirectory}/`, { recursive: true });
@@ -90,7 +103,8 @@ function saveOptions() {
     const json_string = {
         "dbd_game_path": dbd_game_path,
         "pack_order": pack_order,
-        "check_for_packupdates_on_startup": check_for_packupdates_on_startup
+        "check_for_packupdates_on_startup": check_for_packupdates_on_startup,
+        "check_for_appupdate_on_startup": check_for_appupdate_on_startup
     }
     fs.writeFileSync(`${currentDirectory}/options.json`, JSON.stringify(json_string));
 }
@@ -105,6 +119,8 @@ module.exports = {
     clearPackOrder,
     getCheckForPackUpdateOnStartup,
     setCheckForPackUpdateOnStartup,
+    getCheckForAppUpdateOnStartup,
+    setCheckForAppUpdateOnStartup,
     dbd_game_path,
     currentDirectory
 }

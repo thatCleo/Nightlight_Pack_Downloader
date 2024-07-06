@@ -7,7 +7,7 @@ contextBridge.exposeInMainWorld('versions', {
   node: () => process.versions.node,
   chrome: () => process.versions.chrome,
   electron: () => process.versions.electron,
-  app: () => '0.2.8' // Why does app.getVersion() break everything?! AHHH!
+  app: () => '0.2.8-beta.1' // Why does app.getVersion() break everything?! AHHH!
 });
 
 contextBridge.exposeInMainWorld('fs', fs);
@@ -45,5 +45,7 @@ contextBridge.exposeInMainWorld('options', {
   setDBDPathFromDialog: () => ipcRenderer.invoke('options:setDBDPathFromDialog'),
   getDBDPath: () => ipcRenderer.invoke('options:getDBDPath'),
   getCheckForPackUpdateOnStartup: () => ipcRenderer.invoke('options:getCheckForPackUpdateOnStartup'),
-  setCheckForPackUpdateOnStartup: (check) => ipcRenderer.invoke('options:setCheckForPackUpdateOnStartup', check)
+  setCheckForPackUpdateOnStartup: (check) => ipcRenderer.invoke('options:setCheckForPackUpdateOnStartup', check),
+  getCheckForAppUpdateOnStartup: () => ipcRenderer.invoke('options:getCheckForAppUpdateOnStartup'),
+  setCheckForAppUpdateOnStartup: (check) => ipcRenderer.invoke('options:setCheckForAppUpdateOnStartup', check)
 })

@@ -32,15 +32,8 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('click', function (event) {
 
         if (event.target.classList.contains('open_link')) {
-            let url = event.target.value;
-            if (url == null) {
-                if (event.target.innerText.toLowerCase().includes('nightlight')) {
-                    url = 'https://nightlight.gg';
-                }
-                else if (event.target.innerText.toLowerCase().includes('boop')) {
-                    url = 'https://boop.pro';
-                }
-            }
+            let url = event.target.id;
+            
 
             console.log(`Opening Link: ${url}`);
             window.webFunctions.openLink(url);
@@ -89,9 +82,9 @@ document.addEventListener('DOMContentLoaded', function () {
             window.packFunctions.deletePack(value);
             removePackOrderTile_Manage(value);
 
-            setTimeout(function() {
+            setTimeout(function () {
                 event.target.parentNode.parentNode.remove();
-              }, 125);
+            }, 125);
         }
 
         else if (event.target.classList.contains('toggle-pack')) {
@@ -450,7 +443,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         else if (event.target.classList.contains('checkbox-toggle-autoupdate-pack')) {
-            console.log('pressed');
             if (event.target.childNodes[1].classList.contains('hidden')) {
                 event.target.childNodes[1].classList.remove('hidden');
                 window.options.setCheckForPackUpdateOnStartup(true);
@@ -463,6 +455,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
         else if (event.target.classList.contains('button-toggle-autoupdate-pack-check-now')) {
             checkForPackUpdates();
+        }
+
+        else if (event.target.classList.contains('checkbox-toggle-autoupdate-app')) {
+            if (event.target.childNodes[1].classList.contains('hidden')) {
+                event.target.childNodes[1].classList.remove('hidden');
+                window.options.setCheckForAppUpdateOnStartup(true);
+            }
+            else {
+                event.target.childNodes[1].classList.add('hidden');
+                window.options.setCheckForAppUpdateOnStartup(false);
+            }
         }
     });
 

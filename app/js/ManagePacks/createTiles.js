@@ -117,12 +117,12 @@ async function checkForPackUpdates() {
 
 function checkForPackUpdatesDelayed(installed_packs, index, delay, updates_found_count) {
 
-  if(index % 3 == 0) {
+  if (index % 3 == 0) {
     notification_popup.innerText = 'Checking for Pack Updates.';
   } else {
     notification_popup.innerText += '.';
   }
-  
+
 
   const pack_url = installed_packs[index];
   window.webFunctions.httpGet(`https://nightlight.gg/api/v1/packs?page=1&per_page=1&sort_by=downloads&search=${pack_url}`)
@@ -147,6 +147,13 @@ function checkForPackUpdatesDelayed(installed_packs, index, delay, updates_found
               setTimeout(() => {
                 notification_popup.classList.remove('show');
                 is_checking_for_pack_updates = false;
+                window.options.getCheckForAppUpdateOnStartup()
+                  .then((check) => {
+                    console.log(`Check for App Updates? ${check}`);
+                    if (check) {
+                      checkForAppUpdate();
+                    }
+                  });
               }, 2500);
             }, 125);
           }

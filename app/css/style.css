@@ -624,7 +624,7 @@ notification.show {
     color: #3c3c3c;
 }
 
-.label-options-toggle-autoupdate-pack {
+.label-options-toggle {
     color: #81888e;
     margin-left: 5px;
 }
@@ -645,6 +645,15 @@ notification.show {
 .button-toggle-autoupdate-pack-check-now:active {
     background-color: #1e1e1e;
     border-color: #1e1e1e;
+}
+
+.label-options-autoupdate-app-new {
+    margin: 0;
+    margin-left: 25px;
+    background-color: #1e1e1e;
+    border: #13596b solid 1px;
+    border-radius: 5px;
+    padding: 0 2px;
 }
 
 .checkbox-options {

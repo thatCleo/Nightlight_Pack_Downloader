@@ -3,7 +3,7 @@ const path = require('node:path')
 const { httpGet, downloadFile, downloadFileProgress, openLink } = require('./webFunctions');
 const { fileExists, clearCache, getCacheSize } = require('./fileFunctions');
 const { deletePack, downloadPack, updatePack, activatePack, resetAllPacks, getInstalledPacks, getActivePacks, getActivePacksInOrder, getPackMetaData } = require('./packFunctions');
-const { setDBDPath, setDBDPathFromDialog, getDBDPath, getCheckForPackUpdateOnStartup, setCheckForPackUpdateOnStartup } = require('./options');
+const { setDBDPath, setDBDPathFromDialog, getDBDPath, getCheckForPackUpdateOnStartup, setCheckForPackUpdateOnStartup, getCheckForAppUpdateOnStartup, setCheckForAppUpdateOnStartup } = require('./options');
 
 let win;
 
@@ -62,6 +62,8 @@ if (!gotTheLock) {
     ipcMain.handle('options:getDBDPath', getDBDPath);
     ipcMain.handle('options:getCheckForPackUpdateOnStartup', getCheckForPackUpdateOnStartup);
     ipcMain.handle('options:setCheckForPackUpdateOnStartup', setCheckForPackUpdateOnStartup);
+    ipcMain.handle('options:getCheckForAppUpdateOnStartup', getCheckForAppUpdateOnStartup);
+    ipcMain.handle('options:setCheckForAppUpdateOnStartup', setCheckForAppUpdateOnStartup);
 
     createWindow();
 

@@ -6,12 +6,19 @@ function setOptionValuesToElements() {
         dbdPathElement.value = result
     })
 
-    const check_on_startup = document.getElementById('options-toggle-autoupdate-pack').childNodes[1];
+    const check_pack_on_startup = document.getElementById('options-toggle-autoupdate-pack').childNodes[1];
     window.options.getCheckForPackUpdateOnStartup()
     .then((check) => {
-        console.log(`Check for Pack Updates? ${check}`)
         if (check) {
-            check_on_startup.classList.remove('hidden');
+            check_pack_on_startup.classList.remove('hidden');
+        }
+    });
+
+    const check_app_on_startup = document.getElementById('options-toggle-autoupdate-app').childNodes[1];
+    window.options.getCheckForAppUpdateOnStartup()
+    .then((check) => {
+        if (check) {
+            check_app_on_startup.classList.remove('hidden');
         }
     });
 

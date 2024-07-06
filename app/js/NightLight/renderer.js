@@ -11,12 +11,20 @@ setWebEmbed();
 createPackTiles_Manage();
 createPackOrderTiles_Manage();
 
-window.options.getCheckForPackUpdateOnStartup()
+window.options.getCheckForAppUpdateOnStartup()
     .then((check) => {
-        console.log(`Check for Pack Updates? ${check}`)
+        console.log(`Check for App Updates? ${check}`);
         if (check) {
-            checkForPackUpdates();
+            checkForAppUpdate();
         }
+
+        window.options.getCheckForPackUpdateOnStartup()
+            .then((check) => {
+                console.log(`Check for Pack Updates? ${check}`);
+                if (check) {
+                    checkForPackUpdates();
+                }
+            });
     });
 
 /* Options Page Setup */
@@ -38,7 +46,7 @@ function loadPackTiles() {
 
 function createPackTiles(page, per_page, sort_by, search, author, dbd_version, includes, include_mode) {
     console.log("Creating Pack Tiles...")
-    if(page <= 0) {
+    if (page <= 0) {
         page = 1;
     }
     if (author != '') {
@@ -57,4 +65,20 @@ function createPackTiles(page, per_page, sort_by, search, author, dbd_version, i
         .then(data => {
             setPackTiles(data);
         })
+}
+
+function checkForAppUpdate() {
+    window.webFunctions.httpGet(`https://api.github.com/repos/thisMicki/Nightlight_Pack_Downloader/releases`)
+        .then(data => {
+            data = JSON.parse(data);
+            if (data[0].name != `v${versions.app()}`) {
+                document.getElementsByClassName('label-options-autoupdate-app-new')[0].classList.remove('hidden');
+
+                notification_popup.innerText = `New App Version (${data[0].name}) avalible on Github!`;
+                notification_popup.classList.add('show');
+                setTimeout(() => {
+                    notification_popup.classList.remove('show');
+                }, 2500);
+            }
+        });
 }
