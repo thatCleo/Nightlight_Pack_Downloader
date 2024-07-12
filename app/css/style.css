@@ -1,5 +1,5 @@
 body {
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
     background-color: #121212;
     color: #f2f2f2;
     margin: 0;
@@ -46,14 +46,14 @@ notification:hover {
 
 notification.show {
     bottom: 20px;
-    opacity: .8;
+    opacity: 0.8;
 }
 
 .svg-inline {
     display: inline-block;
     height: 1em;
     overflow: visible;
-    vertical-align: -.125em
+    vertical-align: -0.125em;
 }
 
 .topbar {
@@ -213,28 +213,28 @@ notification.show {
 }
 
 @media (min-width: 1860px) {
-    .manage-pack-tiles>* {
+    .manage-pack-tiles > * {
         flex: 0 0 auto;
         width: 25%;
     }
 }
 
 @media (min-width: 1400px) and (max-width: 1859px) {
-    .manage-pack-tiles>* {
+    .manage-pack-tiles > * {
         flex: 0 0 auto;
         width: 33.3333333333%;
     }
 }
 
 @media (min-width: 930px) and (max-width: 1399px) {
-    .manage-pack-tiles>* {
+    .manage-pack-tiles > * {
         flex: 0 0 auto;
         width: 50%;
     }
 }
 
 @media (max-width: 929px) {
-    .manage-pack-tiles>* {
+    .manage-pack-tiles > * {
         flex: 0 0 auto;
         width: 100%;
     }
@@ -260,7 +260,7 @@ notification.show {
     border-color: #13596b !important;
 }
 
-.manage-pack-tile>* {
+.manage-pack-tile > * {
     pointer-events: none;
     user-select: none;
 }
@@ -317,7 +317,7 @@ notification.show {
 }
 
 .manage-pack-tile-game-version-svg {
-    scale: .8;
+    scale: 0.8;
     margin-right: 2px;
     margin-bottom: 4px;
     color: #bfc2c3;
@@ -342,7 +342,7 @@ notification.show {
 
 .manage-pack-tile-content-svg {
     color: #bfc2c3;
-    scale: .8;
+    scale: 0.8;
     margin-bottom: 4px;
 }
 
@@ -366,7 +366,7 @@ notification.show {
     position: absolute;
     right: 5px;
     top: 5px;
-    opacity: .5;
+    opacity: 0.5;
     pointer-events: all;
     transition: 125ms;
 
@@ -392,7 +392,7 @@ notification.show {
     position: absolute;
     right: 48px;
     top: 5px;
-    opacity: .5;
+    opacity: 0.5;
 
     /* transform: rotate(90deg); */
     pointer-events: all;
@@ -526,11 +526,11 @@ notification.show {
 }
 
 .pack-order-preview {
-    opacity: .7;
+    opacity: 0.7;
 }
 
 .pack-order-dragged {
-    opacity: .3;
+    opacity: 0.3;
 }
 
 /* Options */
@@ -680,7 +680,7 @@ notification.show {
     border-color: #1e1e1e;
 }
 
-.checkbox-options>* {
+.checkbox-options > * {
     pointer-events: none;
 }
 
@@ -798,7 +798,7 @@ notification.show {
     pointer-events: none !important;
     cursor: default;
 
-    opacity: .8;
+    opacity: 0.8;
 }
 
 /* changes to nightlight-styles.css */

@@ -1,44 +1,38 @@
 function createPackTiles_Manage() {
-  const manage_pack_view = document.getElementById('manage-pack-tiles');
-  manage_pack_view.innerHTML = '';
+  const manage_pack_view = document.getElementById("manage-pack-tiles");
+  manage_pack_view.innerHTML = "";
 
-  window.packFunctions.getInstalledPacks()
-    .then(data => {
-      const installed_packs = data;
-      console.log("Creating Pack Tiles for Manage Packs...");
-      console.log(installed_packs);
-      setPackTiles_Manage(installed_packs);
-    });
+  window.packFunctions.getInstalledPacks().then((data) => {
+    const installed_packs = data;
+    console.log("Creating Pack Tiles for Manage Packs...");
+    console.log(installed_packs);
+    setPackTiles_Manage(installed_packs);
+  });
 }
 
 function setPackTiles_Manage(packs) {
+  const manage_pack_view = document.getElementById("manage-pack-tiles");
 
-  const manage_pack_view = document.getElementById('manage-pack-tiles');
-
-  packs.forEach(pack_url => {
-
+  packs.forEach((pack_url) => {
     let pack_data;
-    window.packFunctions.getPackMetaData(pack_url)
-      .then(data => {
-        pack_data = data;
+    window.packFunctions.getPackMetaData(pack_url).then((data) => {
+      pack_data = data;
 
-        let dbd_version_title_tile = pack_data.dbd_version;
-        for (let i = 0; i < dbd_version_title.length; i++) {
-          if (dbd_version_title[i][0] == dbd_version_title_tile) {
-            dbd_version_title_tile = dbd_version_title[i][1];
-            break;
-          }
+      let dbd_version_title_tile = pack_data.dbd_version;
+      for (let i = 0; i < dbd_version_title.length; i++) {
+        if (dbd_version_title[i][0] == dbd_version_title_tile) {
+          dbd_version_title_tile = dbd_version_title[i][1];
+          break;
         }
+      }
 
-        let packContent = "";
-        for (let i = 0; i < pack_data.has.length; i++) {
-          if (packContent == "")
-            packContent += `${formatText(pack_data.has[i])}`;
-          else
-            packContent += `, ${formatText(pack_data.has[i])}`
-        }
+      let packContent = "";
+      for (let i = 0; i < pack_data.has.length; i++) {
+        if (packContent == "") packContent += `${formatText(pack_data.has[i])}`;
+        else packContent += `, ${formatText(pack_data.has[i])}`;
+      }
 
-        const tile = `
+      const tile = `
           <div class="manage-pack-tile toggle-pack" id="manage-tile-${pack_data.url}">
             <button class="manage-pack-tile-update hidden" id="update-${pack_data.url}" title="Update: ${pack_data.title}">↻</button>
             <button class="manage-pack-tile-delete delete-pack" value="${pack_data.url}" title="Delete: ${pack_data.title}">
@@ -73,90 +67,24 @@ function setPackTiles_Manage(packs) {
                         </svg>
               <p class="manage-pack-tile-content">${packContent}</p>
             </div>
-          </div>`
+          </div>`;
 
-        const packTile = document.createElement('div');
-        packTile.innerHTML = tile;
-        packTile.classList.add('manage-pack-tile-container')
+      const packTile = document.createElement("div");
+      packTile.innerHTML = tile;
+      packTile.classList.add("manage-pack-tile-container");
 
-        window.packFunctions.getActivePacks()
-          .then((result) => {
-            if (result.includes(pack_data.url)) {
-              console.log(`Pack ${pack_data.url} is active`);
-              const button = packTile.getElementsByClassName('manage-pack-tile')[0];
-              button.classList.add('manage-pack-tile-pack-active');
-            } else {
-              console.log(`Pack ${pack_data.url} is not active`);
-            }
-          })
-
-        manage_pack_view.appendChild(packTile);
-        console.log(`Added tile for ${pack_data.url}`);
+      window.packFunctions.getActivePacks().then((result) => {
+        if (result.includes(pack_data.url)) {
+          console.log(`Pack ${pack_data.url} is active`);
+          const button = packTile.getElementsByClassName("manage-pack-tile")[0];
+          button.classList.add("manage-pack-tile-pack-active");
+        } else {
+          console.log(`Pack ${pack_data.url} is not active`);
+        }
       });
+
+      manage_pack_view.appendChild(packTile);
+      console.log(`Added tile for ${pack_data.url}`);
+    });
   });
-}
-
-let is_checking_for_pack_updates = false;
-
-async function checkForPackUpdates() {
-  if (is_checking_for_pack_updates) return;
-
-  is_checking_for_pack_updates = true;
-
-  notification_popup.innerText = 'Checking for Pack Updates';
-  notification_popup.classList.add('show');
-
-  const installed_packs = await window.packFunctions.getInstalledPacks();
-  const check_delay = 250; // 250ms to not throw to many requests at the server simultaneously
-  const updates_found_count = 0;
-
-  if (installed_packs.length > 0) {
-    checkForPackUpdatesDelayed(installed_packs, 0, check_delay, updates_found_count);
-  }
-}
-
-function checkForPackUpdatesDelayed(installed_packs, index, delay, updates_found_count) {
-
-  if (index % 3 == 0) {
-    notification_popup.innerText = 'Checking for Pack Updates.';
-  } else {
-    notification_popup.innerText += '.';
-  }
-
-
-  const pack_url = installed_packs[index];
-  window.webFunctions.httpGet(`https://nightlight.gg/api/v1/packs?page=1&per_page=1&sort_by=downloads&search=${pack_url}`)
-    .then((pack_data) => {
-      pack_data = JSON.parse(pack_data);
-      window.packFunctions.getPackMetaData(pack_url)
-        .then((current_pack_data) => {
-          if (pack_data.data.packs[0].updated_at != current_pack_data.last_updated) {
-            document.getElementById(`update-${pack_url}`).classList.remove('hidden');
-            updates_found_count++;
-          }
-
-          if (index + 1 < installed_packs.length) {
-            setTimeout(() => {
-              checkForPackUpdatesDelayed(installed_packs, index + 1, delay, updates_found_count)
-            }, delay);
-          } else {
-            notification_popup.classList.remove('show');
-            setTimeout(() => {
-              notification_popup.innerText = `Found ${updates_found_count} Update${(updates_found_count == 1 ? '' : 's')}`
-              notification_popup.classList.add('show');
-              setTimeout(() => {
-                notification_popup.classList.remove('show');
-                is_checking_for_pack_updates = false;
-                window.options.getCheckForAppUpdateOnStartup()
-                  .then((check) => {
-                    console.log(`Check for App Updates? ${check}`);
-                    if (check) {
-                      checkForAppUpdate();
-                    }
-                  });
-              }, 2500);
-            }, 125);
-          }
-        })
-    })
 }

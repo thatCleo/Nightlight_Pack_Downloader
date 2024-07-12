@@ -1,312 +1,693 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
+    <head>
+        <meta charset="UTF-8" />
 
-<head>
-  <meta charset="UTF-8" />
+        <meta
+            http-equiv="Content-Security-Policy"
+            content="default-src 'self'; script-src 'self'; img-src 'self'"
+        />
+        <meta
+            http-equiv="X-Content-Security-Policy"
+            content="default-src 'self'; script-src 'self'; img-src 'self'"
+        />
 
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; img-src 'self'" />
-  <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'; img-src 'self'" />
+        <link href="./css/nightlight-styles.css" rel="stylesheet" />
+        <link href="./css/nightlight-css-bundle.css" rel="stylesheet" />
+        <link href="./css/style.css" rel="stylesheet" />
 
-  <link href="./css/nightlight-styles.css" rel="stylesheet">
-  <link href="./css/nightlight-css-bundle.css" rel="stylesheet">
-  <link href="./css/style.css" rel="stylesheet">
+        <title>NightLight Pack Downloader</title>
+    </head>
 
-  <title>NightLight Pack Downloader</title>
-</head>
+    <body>
+        <div class="flex-container">
+            <div class="sidebar">
+                <p class="sidebar-title">
+                    Night<span class="text-nl">Light</span>
+                    <span class="text-muted">Pack Downloader</span>
+                </p>
 
-<body>
-  <div class="flex-container">
-    <div class="sidebar">
-      <p class="sidebar-title">Night<span class="text-nl">Light</span> <span class="text-muted">Pack Downloader</span>
-      </p>
+                <div class="sidebar-section"></div>
+                <p class="sidebar-caption">Packs</p>
+                <button
+                    id="nightlight"
+                    class="sidebar-button sidebar-button-active"
+                >
+                    Browse
+                </button>
+                <button id="manage-packs" class="sidebar-button">Manage</button>
 
-      <div class="sidebar-section"></div>
-      <p class="sidebar-caption">Packs</p>
-      <button id="nightlight" class="sidebar-button sidebar-button-active">Browse</button>
-      <button id="manage-packs" class="sidebar-button">Manage</button>
+                <div class="sidebar-section"></div>
+                <p class="sidebar-caption">Other</p>
+                <button id="options" class="sidebar-button">Options</button>
 
-      <div class="sidebar-section"></div>
-      <p class="sidebar-caption">Other</p>
-      <button id="options" class="sidebar-button">Options</button>
-
-      <p class="info" id="info"></p>
-    </div>
-    <div class="webview-container" id="webview-container-page">
-      <div class="main">
-        <main class="container px-4" id="main">
-          <div>
-            <h1 class="mb-2">Browse Icon Packs</h1>
-            <div class="text-muted mb-3">A library of community made custom Icon Packs for Dead by Daylight to
-              download and install from Nightlight.gg</div>
-            <form class="row"><input type="submit" hidden="">
-              <div class="col-12">
-                <div class="d-flex align-items-center mb-2 gap-2 flex-wrap">
-                  <h5 class="mb-0 py-2">Filters</h5>
-                  <div class="btn btn-sm lh-1 disabled" id="button_filter_apply" role="button">Apply</div>
-                  <div class="btn btn-sm lh-1" id="button_filter_reload" role="button">Refresh</div>
-                  <div class="btn btn-secondary btn-sm me-auto lh-1 disabled" role="button">Reset</div>
-                  <div class="align-items-center d-flex gap-2"><label
-                      class="fw-bold d-flex align-items-center">Shortcuts</label>
-                    <div class="btn btn-secondary btn-sm lh-1" id="button_filter_shortcut_portraits" role="button">
-                      Portraits Only</div>
-                    <div class="btn btn-secondary btn-sm lh-1" id="button_filter_shortcut_perks" role="button">
-                      Perks Only</div>
-                    <div class="btn btn-secondary btn-sm lh-1" id="button_filter_shortcut_equippable" role="button">All
-                      Equippable</div>
-                  </div>
-                </div>
-                <div class="_1x345eg0">
-                  <div class="_1x345eg3">
-                    <div class="row g-2" id="row_1">
-                      <div class="col-12 col-md-6 col-lg-3">
-                        <div class="cell align-items-center d-flex gap-2"><label for=":R6lca9:"
-                            class="fw-bold d-flex align-items-center">Sort</label><select class="form-select"
-                            aria-label="Sort" id="filter_sort_by" autocomplete="off"></select></div>
-                      </div>
-                      <div class="col-12 col-md-6 col-lg-4">
-                        <div class="cell align-items-center d-flex gap-2"><label for=":Ralca9:"
-                            class="fw-bold d-flex align-items-center">Author</label><select class="form-select"
-                            aria-label="Author" id="sort_by_author" autocomplete="off"></select></div>
-                      </div>
-                      <div class="col-12 col-md-6 col-lg-5">
-                        <div class="cell align-items-center d-flex gap-2"><label for=":Relca9:"
-                            class="fw-bold d-flex align-items-center">Search</label><input type="text"
-                            class="form-control" id="filter_search" name="search" autocomplete="off" maxlength="50"
-                            placeholder="Title, URL, or description..." value=""></div>
-                      </div>
-                      <div class="col-12 col-md-6 col-lg-2 col-xl-2">
-                        <div class="cell d-flex gap-2 h-100 align-items-center hidden"></div>
-                      </div>
-                      <div class="col-12 col-md-6">
-                        <div class="cell d-flex gap-1 justify-content-between align-items-center hidden">
-                          <strong class="d-flex flex-column align-items-center">Includes <div class="d-flex">
-                              <div role="button" class="_15ryw141 _15ryw140 _15ryw144"></div>
-                              <strong class="_1gc8fw10 _1gc8fw12"></strong>
-                              <div role="button" class="_15ryw142 _15ryw140 _15ryw144"></div>
-                            </div></strong><select class="form-select" aria-label="Includes" id=":Rmlca9:" multiple=""
-                            autocomplete="off"></select>
+                <p class="info" id="info"></p>
+            </div>
+            <div class="webview-container" id="webview-container-page">
+                <div class="main">
+                    <main class="container px-4" id="main">
+                        <div>
+                            <h1 class="mb-2">Browse Icon Packs</h1>
+                            <div class="text-muted mb-3">
+                                A library of community made custom Icon Packs
+                                for Dead by Daylight to download and install
+                                from Nightlight.gg
+                            </div>
+                            <form class="row">
+                                <input type="submit" hidden="" />
+                                <div class="col-12">
+                                    <div
+                                        class="d-flex align-items-center mb-2 gap-2 flex-wrap"
+                                    >
+                                        <h5 class="mb-0 py-2">Filters</h5>
+                                        <div
+                                            class="btn btn-sm lh-1 disabled"
+                                            id="button_filter_apply"
+                                            role="button"
+                                        >
+                                            Apply
+                                        </div>
+                                        <div
+                                            class="btn btn-sm lh-1"
+                                            id="button_filter_reload"
+                                            role="button"
+                                        >
+                                            Refresh
+                                        </div>
+                                        <div
+                                            class="btn btn-secondary btn-sm me-auto lh-1 disabled"
+                                            role="button"
+                                        >
+                                            Reset
+                                        </div>
+                                        <div
+                                            class="align-items-center d-flex gap-2"
+                                        >
+                                            <label
+                                                class="fw-bold d-flex align-items-center"
+                                                >Shortcuts</label
+                                            >
+                                            <div
+                                                class="btn btn-secondary btn-sm lh-1"
+                                                id="button_filter_shortcut_portraits"
+                                                role="button"
+                                            >
+                                                Portraits Only
+                                            </div>
+                                            <div
+                                                class="btn btn-secondary btn-sm lh-1"
+                                                id="button_filter_shortcut_perks"
+                                                role="button"
+                                            >
+                                                Perks Only
+                                            </div>
+                                            <div
+                                                class="btn btn-secondary btn-sm lh-1"
+                                                id="button_filter_shortcut_equippable"
+                                                role="button"
+                                            >
+                                                All Equippable
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="_1x345eg0">
+                                        <div class="_1x345eg3">
+                                            <div class="row g-2" id="row_1">
+                                                <div
+                                                    class="col-12 col-md-6 col-lg-3"
+                                                >
+                                                    <div
+                                                        class="cell align-items-center d-flex gap-2"
+                                                    >
+                                                        <label
+                                                            for=":R6lca9:"
+                                                            class="fw-bold d-flex align-items-center"
+                                                            >Sort</label
+                                                        ><select
+                                                            class="form-select"
+                                                            aria-label="Sort"
+                                                            id="filter_sort_by"
+                                                            autocomplete="off"
+                                                        ></select>
+                                                    </div>
+                                                </div>
+                                                <div
+                                                    class="col-12 col-md-6 col-lg-4"
+                                                >
+                                                    <div
+                                                        class="cell align-items-center d-flex gap-2"
+                                                    >
+                                                        <label
+                                                            for=":Ralca9:"
+                                                            class="fw-bold d-flex align-items-center"
+                                                            >Author</label
+                                                        ><select
+                                                            class="form-select"
+                                                            aria-label="Author"
+                                                            id="sort_by_author"
+                                                            autocomplete="off"
+                                                        ></select>
+                                                    </div>
+                                                </div>
+                                                <div
+                                                    class="col-12 col-md-6 col-lg-5"
+                                                >
+                                                    <div
+                                                        class="cell align-items-center d-flex gap-2"
+                                                    >
+                                                        <label
+                                                            for=":Relca9:"
+                                                            class="fw-bold d-flex align-items-center"
+                                                            >Search</label
+                                                        ><input
+                                                            type="text"
+                                                            class="form-control"
+                                                            id="filter_search"
+                                                            name="search"
+                                                            autocomplete="off"
+                                                            maxlength="50"
+                                                            placeholder="Title, URL, or description..."
+                                                            value=""
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div
+                                                    class="col-12 col-md-6 col-lg-2 col-xl-2"
+                                                >
+                                                    <div
+                                                        class="cell d-flex gap-2 h-100 align-items-center hidden"
+                                                    ></div>
+                                                </div>
+                                                <div class="col-12 col-md-6">
+                                                    <div
+                                                        class="cell d-flex gap-1 justify-content-between align-items-center hidden"
+                                                    >
+                                                        <strong
+                                                            class="d-flex flex-column align-items-center"
+                                                            >Includes
+                                                            <div class="d-flex">
+                                                                <div
+                                                                    role="button"
+                                                                    class="_15ryw141 _15ryw140 _15ryw144"
+                                                                ></div>
+                                                                <strong
+                                                                    class="_1gc8fw10 _1gc8fw12"
+                                                                ></strong>
+                                                                <div
+                                                                    role="button"
+                                                                    class="_15ryw142 _15ryw140 _15ryw144"
+                                                                ></div></div></strong
+                                                        ><select
+                                                            class="form-select"
+                                                            aria-label="Includes"
+                                                            id=":Rmlca9:"
+                                                            multiple=""
+                                                            autocomplete="off"
+                                                        ></select>
+                                                    </div>
+                                                </div>
+                                                <div
+                                                    class="col-12 col-md-6 col-lg-4"
+                                                >
+                                                    <div
+                                                        class="cell align-items-center d-flex gap-2 h-100"
+                                                    >
+                                                        <label
+                                                            for="filter_dbd_version"
+                                                            class="fw-bold d-flex align-items-center"
+                                                            >Version</label
+                                                        ><select
+                                                            class="form-select"
+                                                            aria-label="Version"
+                                                            id="filter_dbd_version"
+                                                            autocomplete="off"
+                                                        ></select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div
+                                class="row row-cols-1 row-cols-lg-2 row-cols-xxl-3 g-3 mt-0"
+                            ></div>
+                            <div class="my-3">
+                                <div
+                                    class="d-flex justify-content-between mt-3"
+                                >
+                                    <div
+                                        class="d-flex align-items-center text-nowrap"
+                                    >
+                                        <div
+                                            class="d-flex align-items-center me-3"
+                                        >
+                                            <span
+                                                class="me-2 d-none d-md-inline"
+                                                >Per Page:</span
+                                            ><select
+                                                class="form-select"
+                                                autocomplete="off"
+                                            ></select>
+                                        </div>
+                                        <span
+                                            ><span class="d-none d-md-inline"
+                                                >Showing </span
+                                            >NaN</span
+                                        >
+                                    </div>
+                                    <div
+                                        class="d-flex align-items-center gap-2"
+                                    >
+                                        <button
+                                            disabled=""
+                                            class="btn btn-sm btn-secondary d-none d-sm-inline"
+                                        >
+                                            <svg
+                                                focusable="false"
+                                                data-prefix="far"
+                                                data-icon="angles-left"
+                                                role="img"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 512 512"
+                                                class="svg-inline--fa fa-angles-left"
+                                            >
+                                                <path
+                                                    fill="currentColor"
+                                                    d="M47 239c-9.4 9.4-9.4 24.6 0 33.9L207 433c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9L97.9 256 241 113c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L47 239zM399 79L239 239c-9.4 9.4-9.4 24.6 0 33.9L399 433c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-143-143L433 113c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0z"
+                                                ></path>
+                                            </svg></button
+                                        ><button
+                                            disabled=""
+                                            class="btn btn-sm btn-secondary"
+                                        >
+                                            <svg
+                                                focusable="false"
+                                                data-prefix="far"
+                                                data-icon="angle-left"
+                                                role="img"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 320 512"
+                                                class="svg-inline--fa fa-angle-left"
+                                            >
+                                                <path
+                                                    fill="currentColor"
+                                                    d="M47 239c-9.4 9.4-9.4 24.6 0 33.9L207 433c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9L97.9 256 241 113c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L47 239z"
+                                                ></path>
+                                            </svg>
+                                        </button>
+                                        <div
+                                            class="d-flex mx-1 align-items-center gap-1 text-nowrap"
+                                        >
+                                            <input
+                                                class="form-control text-center"
+                                                min="1"
+                                                step="1"
+                                                max="NaN"
+                                                type="number"
+                                                pattern="\d*"
+                                                value="1"
+                                            />of
+                                            <!-- -->NaN
+                                        </div>
+                                        <button
+                                            class="btn btn-sm btn-secondary"
+                                        >
+                                            <svg
+                                                focusable="false"
+                                                data-prefix="far"
+                                                data-icon="angle-right"
+                                                role="img"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 320 512"
+                                                class="svg-inline--fa fa-angle-right"
+                                            >
+                                                <path
+                                                    fill="currentColor"
+                                                    d="M273 239c9.4 9.4 9.4 24.6 0 33.9L113 433c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l143-143L79 113c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0L273 239z"
+                                                ></path>
+                                            </svg></button
+                                        ><button
+                                            class="btn btn-sm btn-secondary d-none d-sm-inline"
+                                        >
+                                            <svg
+                                                focusable="false"
+                                                data-prefix="far"
+                                                data-icon="angles-right"
+                                                role="img"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 512 512"
+                                                class="svg-inline--fa fa-angles-right"
+                                            >
+                                                <path
+                                                    fill="currentColor"
+                                                    d="M113 433L273 273c9.4-9.4 9.4-24.6 0-33.9L113 79c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l143 143L79 399c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0zm192 0L465 273c9.4-9.4 9.4-24.6 0-33.9L305 79c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l143 143L271 399c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0z"
+                                                ></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                      </div>
-                      <div class="col-12 col-md-6 col-lg-4">
-                        <div class="cell align-items-center d-flex gap-2 h-100"><label for="filter_dbd_version"
-                            class="fw-bold d-flex align-items-center">Version</label><select class="form-select"
-                            aria-label="Version" id="filter_dbd_version" autocomplete="off"></select></div>
-                      </div>
+                    </main>
+                    <footer class="footer pb-3 nl-footer">
+                        <div class="container px-4">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <h3>
+                                        Night<span class="text-nl">Light</span>
+                                        <small class="text-muted fs-5"
+                                            >Icon Packs</small
+                                        >
+                                    </h3>
+                                    <p class="text-muted mb-2">
+                                        Icon Pack Tool built on top of
+                                        <a
+                                            class="open_link"
+                                            id="https://nightlight.gg/"
+                                            >Nightlight.gg</a
+                                        >
+                                        by
+                                        <a
+                                            class="open_link"
+                                            id="https://boop.pro/"
+                                            >BritishBoop</a
+                                        >
+                                    </p>
+                                    <p class="text-muted mb-2">
+                                        View the source code of this project on
+                                        <a
+                                            class="open_link"
+                                            id="https://github.com/thisMicki/nightlight_pack_downloader"
+                                            >Github</a
+                                        >
+                                    </p>
+                                    <p class="text-muted">
+                                        <small
+                                            >Not affiliated with Behaviour
+                                            Interactive, Dead by Daylight™ or
+                                            Nightlight.gg in any way</small
+                                        >
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+            <div class="webview-container" id="manage-packs-page">
+                <div>
+                    <main id="manage_packs_main" class="container px-4">
+                        <div>
+                            <h1 class="mb-2">Manage Icon Packs</h1>
+                            <div class="text-muted mb-3">
+                                Manage your downloaded packs.
+                            </div>
+                            <button
+                                id="reset-all-packs"
+                                class="button_icons_revert btn btn-sm w-100 d-block"
+                            >
+                                Revert to default Icons
+                            </button>
+                        </div>
+                    </main>
+                    <div id="alert_bar_container"></div>
+                    <div id="manage-pack-tiles" class="manage-pack-tiles"></div>
+                    <div class="section-container">
+                        <div class="main-section"></div>
                     </div>
-                  </div>
+                    <div
+                        id="manage_packs_main"
+                        class="manage_packs_div container px-4"
+                    >
+                        <div>
+                            <div class="text-muted mb-3">
+                                Manage wich active pack takes priority over
+                                others.
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="pack-order-container-outer"
+                        id="pack-order-container-outer"
+                    ></div>
                 </div>
-              </div>
-            </form>
-            <div class="row row-cols-1 row-cols-lg-2 row-cols-xxl-3 g-3 mt-0"></div>
-            <div class="my-3">
-              <div class="d-flex justify-content-between mt-3">
-                <div class="d-flex align-items-center text-nowrap">
-                  <div class="d-flex align-items-center me-3"><span class="me-2 d-none d-md-inline">Per
-                      Page:</span><select class="form-select " autocomplete="off"></select></div>
-                  <span><span class="d-none d-md-inline">Showing </span>NaN</span>
-                </div>
-                <div class="d-flex align-items-center gap-2"><button disabled=""
-                    class="btn btn-sm btn-secondary d-none d-sm-inline"><svg focusable="false" data-prefix="far"
-                      data-icon="angles-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                      class="svg-inline--fa fa-angles-left">
-                      <path fill="currentColor"
-                        d="M47 239c-9.4 9.4-9.4 24.6 0 33.9L207 433c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9L97.9 256 241 113c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L47 239zM399 79L239 239c-9.4 9.4-9.4 24.6 0 33.9L399 433c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-143-143L433 113c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0z">
-                      </path>
-                    </svg></button><button disabled="" class="btn btn-sm btn-secondary"><svg focusable="false"
-                      data-prefix="far" data-icon="angle-left" role="img" xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 320 512" class="svg-inline--fa fa-angle-left">
-                      <path fill="currentColor"
-                        d="M47 239c-9.4 9.4-9.4 24.6 0 33.9L207 433c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9L97.9 256 241 113c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L47 239z">
-                      </path>
-                    </svg></button>
-                  <div class="d-flex mx-1 align-items-center gap-1 text-nowrap"><input class="form-control text-center"
-                      min="1" step="1" max="NaN" type="number" pattern="\d*" value="1">of <!-- -->NaN</div><button
-                    class="btn btn-sm btn-secondary"><svg focusable="false" data-prefix="far" data-icon="angle-right"
-                      role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"
-                      class="svg-inline--fa fa-angle-right">
-                      <path fill="currentColor"
-                        d="M273 239c9.4 9.4 9.4 24.6 0 33.9L113 433c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l143-143L79 113c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0L273 239z">
-                      </path>
-                    </svg></button><button class="btn btn-sm btn-secondary d-none d-sm-inline"><svg focusable="false"
-                      data-prefix="far" data-icon="angles-right" role="img" xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 512 512" class="svg-inline--fa fa-angles-right">
-                      <path fill="currentColor"
-                        d="M113 433L273 273c9.4-9.4 9.4-24.6 0-33.9L113 79c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l143 143L79 399c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0zm192 0L465 273c9.4-9.4 9.4-24.6 0-33.9L305 79c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l143 143L271 399c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0z">
-                      </path>
-                    </svg></button>
-                </div>
-              </div>
+                <footer class="footer pb-3 nl-footer">
+                    <div class="container px-4">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <h3>
+                                    Night<span class="text-nl">Light</span>
+                                    <small class="text-muted fs-5"
+                                        >Icon Packs</small
+                                    >
+                                </h3>
+                                <p class="text-muted mb-2">
+                                    Icon Pack Tool built on top of
+                                    <a
+                                        class="open_link"
+                                        id="https://nightlight.gg/"
+                                        >Nightlight.gg</a
+                                    >
+                                    by
+                                    <a class="open_link" id="https://boop.pro/"
+                                        >BritishBoop</a
+                                    >
+                                </p>
+                                <p class="text-muted mb-2">
+                                    View the source code of this project on
+                                    <a
+                                        class="open_link"
+                                        id="https://github.com/thisMicki/nightlight_pack_downloader"
+                                        >Github</a
+                                    >
+                                </p>
+                                <p class="text-muted">
+                                    <small
+                                        >Not affiliated with Behaviour
+                                        Interactive, Dead by Daylight™ or
+                                        Nightlight.gg in any way</small
+                                    >
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
             </div>
-          </div>
-        </main>
-        <footer class="footer pb-3 nl-footer">
-          <div class="container px-4">
-            <div class="row">
-              <div class="col-xs-4">
-                <h3>Night<span class="text-nl">Light</span> <small class="text-muted fs-5">Icon Packs</small></h3>
-                <p class="text-muted mb-2">Icon Pack Tool built on top of <a class="open_link"
-                    id="https://nightlight.gg/">Nightlight.gg</a> by <a class="open_link"
-                    id="https://boop.pro/">BritishBoop</a></p>
-                <p class="text-muted mb-2">View the source code of this project on <a class="open_link"
-                    id="https://github.com/thisMicki/nightlight_pack_downloader">Github</a></p>
-                <p class="text-muted"><small>Not affiliated with Behaviour Interactive, Dead by Daylight™ or
-                    Nightlight.gg in any way</small></p>
-              </div>
+            <div class="webview-container" id="options-page">
+                <div>
+                    <main id="options_main" class="container px-4">
+                        <div>
+                            <h1 class="mb-2">Options</h1>
+                            <div class="text-muted mb-3">
+                                Manage Options like your DBD Path.
+                            </div>
+                        </div>
+                    </main>
+                    <div id="alert_bar_container"></div>
+                    <div class="container px-4">
+                        <div
+                            id="options_main_content"
+                            class="row row-cols-1 row-cols-lg-2 row-cols-xxl-3 g-3 flex-options"
+                        >
+                            <div class="container_options">
+                                <div class="container_options_title">
+                                    <p class="container_options_title_text">
+                                        Dead by Daylight installation path
+                                    </p>
+                                </div>
+                                <div class="container_options_content">
+                                    <input
+                                        type="text"
+                                        class="form-control options-text-input"
+                                        placeholder="Set your Dead by Daylight Path"
+                                        id="dbd-path"
+                                    />
+                                    <button
+                                        class="dbd-path-button set-dbd-path"
+                                    >
+                                        <svg
+                                            class="set-dbd-path"
+                                            width="38px"
+                                            height="38px"
+                                            viewBox="0 0 32 32"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                class="set-dbd-path"
+                                                stroke="#D0D0D0"
+                                                d="M3 8.2C3 7.07989 3 6.51984 3.21799 6.09202C3.40973 5.71569 3.71569 5.40973 4.09202 5.21799C4.51984 5 5.0799 5 6.2 5H9.67452C10.1637 5 10.4083 5 10.6385 5.05526C10.8425 5.10425 11.0376 5.18506 11.2166 5.29472C11.4184 5.4184 11.5914 5.59135 11.9373 5.93726L12.0627 6.06274C12.4086 6.40865 12.5816 6.5816 12.7834 6.70528C12.9624 6.81494 13.1575 6.89575 13.3615 6.94474C13.5917 7 13.8363 7 14.3255 7H17.8C18.9201 7 19.4802 7 19.908 7.21799C20.2843 7.40973 20.5903 7.71569 20.782 8.09202C21 8.51984 21 9.0799 21 10.2V15.8C21 16.9201 21 17.4802 20.782 17.908C20.5903 18.2843 20.2843 18.5903 19.908 18.782C19.4802 19 18.9201 19 17.8 19H6.2C5.07989 19 4.51984 19 4.09202 18.782C3.71569 18.5903 3.40973 18.2843 3.21799 17.908C3 17.4802 3 16.9201 3 15.8V8.2Z"
+                                                stroke="#000000"
+                                                stroke-width="2"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="container_options">
+                                <div class="container_options_title">
+                                    <p class="container_options_title_text">
+                                        Cache
+                                    </p>
+                                </div>
+                                <div class="container_options_content">
+                                    <button
+                                        id="options_clear_cache"
+                                        class="button_options_clear_cache"
+                                    >
+                                        Clear Cache
+                                    </button>
+                                    <label class="label_options_cache_size"
+                                        >---- KB</label
+                                    >
+                                </div>
+                            </div>
+                            <div class="container_options">
+                                <div class="container_options_title">
+                                    <p class="container_options_title_text">
+                                        Icon Pack Updates
+                                    </p>
+                                </div>
+                                <div class="container_options_content">
+                                    <div
+                                        id="options-toggle-autoupdate-pack"
+                                        class="checkbox-options checkbox-toggle-autoupdate-pack"
+                                    >
+                                        <svg
+                                            class="hidden"
+                                            width="18px"
+                                            height="18px"
+                                            viewBox="0 0 36 36"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                                            aria-hidden="true"
+                                            role="img"
+                                            class="iconify iconify--twemoji"
+                                            preserveAspectRatio="xMidYMid meet"
+                                        >
+                                            <path
+                                                fill="#f2f2f2"
+                                                d="M34.459 1.375a2.999 2.999 0 0 0-4.149.884L13.5 28.17l-8.198-7.58a2.999 2.999 0 1 0-4.073 4.405l10.764 9.952s.309.266.452.359a2.999 2.999 0 0 0 4.15-.884L35.343 5.524a2.999 2.999 0 0 0-.884-4.149z"
+                                            ></path>
+                                        </svg>
+                                    </div>
+                                    <label class="label-options-toggle"
+                                        >Check for Icon Pack Updates on
+                                        Startup</label
+                                    >
+                                </div>
+                                <div class="container_options_content">
+                                    <button
+                                        class="button-toggle-autoupdate-pack-check-now"
+                                    >
+                                        Check Now
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="container_options">
+                                <div class="container_options_title">
+                                    <p class="container_options_title_text">
+                                        App Updates
+                                    </p>
+                                </div>
+                                <div class="container_options_content">
+                                    <div
+                                        id="options-toggle-autoupdate-app"
+                                        class="checkbox-options checkbox-toggle-autoupdate-app"
+                                    >
+                                        <svg
+                                            class="hidden"
+                                            width="18px"
+                                            height="18px"
+                                            viewBox="0 0 36 36"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                                            aria-hidden="true"
+                                            role="img"
+                                            class="iconify iconify--twemoji"
+                                            preserveAspectRatio="xMidYMid meet"
+                                        >
+                                            <path
+                                                fill="#f2f2f2"
+                                                d="M34.459 1.375a2.999 2.999 0 0 0-4.149.884L13.5 28.17l-8.198-7.58a2.999 2.999 0 1 0-4.073 4.405l10.764 9.952s.309.266.452.359a2.999 2.999 0 0 0 4.15-.884L35.343 5.524a2.999 2.999 0 0 0-.884-4.149z"
+                                            ></path>
+                                        </svg>
+                                    </div>
+                                    <label class="label-options-toggle"
+                                        >Check for new App Version on
+                                        Startup</label
+                                    >
+                                    <a
+                                        class="label-options-autoupdate-app-new open_link hidden"
+                                        id="https://github.com/thisMicki/nightlight_pack_downloader/releases"
+                                        >New Version avalible on Github!</a
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="footer pb-3 nl-footer">
+                        <div class="container px-4">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <h3>
+                                        Night<span class="text-nl">Light</span>
+                                        <small class="text-muted fs-5"
+                                            >Icon Packs</small
+                                        >
+                                    </h3>
+                                    <p class="text-muted mb-2">
+                                        Icon Pack Tool built on top of
+                                        <a
+                                            class="open_link"
+                                            id="https://nightlight.gg/"
+                                            >Nightlight.gg</a
+                                        >
+                                        by
+                                        <a
+                                            class="open_link"
+                                            id="https://boop.pro/"
+                                            >BritishBoop</a
+                                        >
+                                    </p>
+                                    <p class="text-muted mb-2">
+                                        View the source code of this project on
+                                        <a
+                                            class="open_link"
+                                            id="https://github.com/thisMicki/nightlight_pack_downloader"
+                                            >Github</a
+                                        >
+                                    </p>
+                                    <p class="text-muted">
+                                        <small
+                                            >Not affiliated with Behaviour
+                                            Interactive, Dead by Daylight™ or
+                                            Nightlight.gg in any way</small
+                                        >
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
             </div>
-          </div>
-        </footer>
-      </div>
-    </div>
-    <div class="webview-container" id="manage-packs-page">
-      <div>
-        <main id="manage_packs_main" class="container px-4">
-          <div>
-            <h1 class="mb-2">Manage Icon Packs</h1>
-            <div class="text-muted mb-3">Manage your downloaded packs.</div>
-            <button id="reset-all-packs" class="button_icons_revert btn btn-sm w-100 d-block">Revert to default
-              Icons</button>
-          </div>
-        </main>
-        <div id="alert_bar_container"></div>
-        <div id="manage-pack-tiles" class="manage-pack-tiles"></div>
-        <div class="section-container">
-          <div class="main-section"></div>
         </div>
-        <div id="manage_packs_main" class="manage_packs_div container px-4">
-          <div>
-            <div class="text-muted mb-3">Manage wich active pack takes priority over others.</div>
-          </div>
-        </div>
-        <div class="pack-order-container-outer" id="pack-order-container-outer"></div>
-      </div>
-      <footer class="footer pb-3 nl-footer">
-        <div class="container px-4">
-          <div class="row">
-            <div class="col-xs-4">
-              <h3>Night<span class="text-nl">Light</span> <small class="text-muted fs-5">Icon Packs</small></h3>
-              <p class="text-muted mb-2">Icon Pack Tool built on top of <a class="open_link"
-                  id="https://nightlight.gg/">Nightlight.gg</a> by <a class="open_link"
-                  id="https://boop.pro/">BritishBoop</a></p>
-              <p class="text-muted mb-2">View the source code of this project on <a class="open_link"
-                  id="https://github.com/thisMicki/nightlight_pack_downloader">Github</a></p>
-              <p class="text-muted"><small>Not affiliated with Behaviour Interactive, Dead by Daylight™ or
-                  Nightlight.gg in any way</small></p>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </div>
-    <div class="webview-container" id="options-page">
-      <div>
-        <main id="options_main" class="container px-4">
-          <div>
-            <h1 class="mb-2">Options</h1>
-            <div class="text-muted mb-3">Manage Options like your DBD Path.</div>
-          </div>
-        </main>
-        <div id="alert_bar_container"></div>
-        <div class="container px-4">
-          <div id="options_main_content" class="row row-cols-1 row-cols-lg-2 row-cols-xxl-3 g-3 flex-options">
-            <div class="container_options">
-              <div class="container_options_title">
-                <p class="container_options_title_text">Dead by Daylight installation path</p>
-              </div>
-              <div class="container_options_content">
-                <input type="text" class="form-control options-text-input" placeholder="Set your Dead by Daylight Path"
-                  id="dbd-path">
-                <button class="dbd-path-button set-dbd-path">
-                  <svg class="set-dbd-path" width="38px" height="38px" viewBox="0 0 32 32" fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path class="set-dbd-path" stroke="#D0D0D0"
-                      d="M3 8.2C3 7.07989 3 6.51984 3.21799 6.09202C3.40973 5.71569 3.71569 5.40973 4.09202 5.21799C4.51984 5 5.0799 5 6.2 5H9.67452C10.1637 5 10.4083 5 10.6385 5.05526C10.8425 5.10425 11.0376 5.18506 11.2166 5.29472C11.4184 5.4184 11.5914 5.59135 11.9373 5.93726L12.0627 6.06274C12.4086 6.40865 12.5816 6.5816 12.7834 6.70528C12.9624 6.81494 13.1575 6.89575 13.3615 6.94474C13.5917 7 13.8363 7 14.3255 7H17.8C18.9201 7 19.4802 7 19.908 7.21799C20.2843 7.40973 20.5903 7.71569 20.782 8.09202C21 8.51984 21 9.0799 21 10.2V15.8C21 16.9201 21 17.4802 20.782 17.908C20.5903 18.2843 20.2843 18.5903 19.908 18.782C19.4802 19 18.9201 19 17.8 19H6.2C5.07989 19 4.51984 19 4.09202 18.782C3.71569 18.5903 3.40973 18.2843 3.21799 17.908C3 17.4802 3 16.9201 3 15.8V8.2Z"
-                      stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg></button>
-              </div>
-            </div>
-            <div class="container_options">
-              <div class="container_options_title">
-                <p class="container_options_title_text">Cache</p>
-              </div>
-              <div class="container_options_content">
-                <button id="options_clear_cache" class="button_options_clear_cache">Clear Cache</button>
-                <label class="label_options_cache_size">---- KB</label>
-              </div>
-            </div>
-            <div class="container_options">
-              <div class="container_options_title">
-                <p class="container_options_title_text">Icon Pack Updates</p>
-              </div>
-              <div class="container_options_content">
-                <div id="options-toggle-autoupdate-pack" class="checkbox-options checkbox-toggle-autoupdate-pack">
-                  <svg class="hidden" width="18px" height="18px" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
-                    class="iconify iconify--twemoji" preserveAspectRatio="xMidYMid meet">
-                    <path fill="#f2f2f2"
-                      d="M34.459 1.375a2.999 2.999 0 0 0-4.149.884L13.5 28.17l-8.198-7.58a2.999 2.999 0 1 0-4.073 4.405l10.764 9.952s.309.266.452.359a2.999 2.999 0 0 0 4.15-.884L35.343 5.524a2.999 2.999 0 0 0-.884-4.149z">
-                    </path>
-                  </svg>
-                </div>
-                <label class="label-options-toggle">Check for Icon Pack Updates on Startup</label>
-              </div>
-              <div class="container_options_content">
-                <button class="button-toggle-autoupdate-pack-check-now">Check Now</button>
-              </div>
-            </div>
+    </body>
 
-            <div class="container_options">
-              <div class="container_options_title">
-                <p class="container_options_title_text">App Updates</p>
-              </div>
-              <div class="container_options_content">
-                <div id="options-toggle-autoupdate-app" class="checkbox-options checkbox-toggle-autoupdate-app">
-                  <svg class="hidden" width="18px" height="18px" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
-                    class="iconify iconify--twemoji" preserveAspectRatio="xMidYMid meet">
-                    <path fill="#f2f2f2"
-                      d="M34.459 1.375a2.999 2.999 0 0 0-4.149.884L13.5 28.17l-8.198-7.58a2.999 2.999 0 1 0-4.073 4.405l10.764 9.952s.309.266.452.359a2.999 2.999 0 0 0 4.15-.884L35.343 5.524a2.999 2.999 0 0 0-.884-4.149z">
-                    </path>
-                  </svg>
-                </div>
-                <label class="label-options-toggle">Check for new App Version on Startup</label>
-                <a class="label-options-autoupdate-app-new open_link hidden" id="https://github.com/thisMicki/nightlight_pack_downloader/releases">New Version avalible on Github!</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <footer class="footer pb-3 nl-footer">
-          <div class="container px-4">
-            <div class="row">
-              <div class="col-xs-4">
-                <h3>Night<span class="text-nl">Light</span> <small class="text-muted fs-5">Icon Packs</small></h3>
-                <p class="text-muted mb-2">Icon Pack Tool built on top of <a class="open_link"
-                    id="https://nightlight.gg/">Nightlight.gg</a> by <a class="open_link"
-                    id="https://boop.pro/">BritishBoop</a></p>
-                <p class="text-muted mb-2">View the source code of this project on <a class="open_link"
-                    id="https://github.com/thisMicki/nightlight_pack_downloader">Github</a></p>
-                <p class="text-muted"><small>Not affiliated with Behaviour Interactive, Dead by Daylight™ or
-                    Nightlight.gg in any way</small></p>
-              </div>
-            </div>
-          </div>
-        </footer>
-      </div>
-    </div>
-  </div>
+    <script src="./js/buttonEvents.js"></script>
+    <script src="./js/updates.js"></script>
 
-  <notification id="notification">This is a Notification</notification>
+    <script src="./js/NightLight/createTiles.js"></script>
+    <script src="./js/NightLight/setup.js"></script>
 
-</body>
+    <script src="./js/ManagePacks/createTiles.js"></script>
+    <script src="./js/ManagePacks/createOrderTiles.js"></script>
 
-<script src="./js/buttonEvents.js"></script>
+    <script src="./js/Options/options.js"></script>
 
-<script src="./js/NightLight/createTiles.js"></script>
-<script src="./js/NightLight/setup.js"></script>
-
-<script src="./js/ManagePacks/createTiles.js"></script>
-<script src="./js/ManagePacks/createOrderTiles.js"></script>
-
-<script src="./js/Options/options.js"></script>
-
-<script src="./js/NightLight/renderer.js"></script>
-
+    <script src="./js/NightLight/renderer.js"></script>
 </html>
