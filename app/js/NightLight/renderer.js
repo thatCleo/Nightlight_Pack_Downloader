@@ -74,10 +74,14 @@ function createPackTiles(
 }
 
 async function showNotification(text, time, id, autohide = true) {
-  let notification = document.createElement("notification");
+  const notification = document.createElement("notification");
   notification.id = `notification-${id}`;
   notification.innerText = text;
-  document.body.appendChild(notification);
+
+  const notification_container = document.getElementById(
+    "notification-container",
+  );
+  notification_container.appendChild(notification);
 
   setTimeout(() => {
     notification.classList.add("show");
@@ -89,7 +93,7 @@ async function showNotification(text, time, id, autohide = true) {
 
       setTimeout(() => {
         // Wait for the notification to be removed
-        //notification.remove();
+        notification.remove();
       }, 125);
     }, time);
   }

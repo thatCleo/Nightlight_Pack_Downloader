@@ -28,14 +28,14 @@ notification {
     opacity: 0;
     font-size: medium;
 
+    margin: 5px 0;
+
     align-self: center;
 
     user-select: none;
 
-    position: absolute;
+    position: relative;
     bottom: -50px;
-    left: 50%;
-    transform: translateX(-50%);
 
     transition: 125ms ease-in-out;
 }
@@ -45,8 +45,20 @@ notification:hover {
 }
 
 notification.show {
-    bottom: 20px;
+    bottom: 0;
     opacity: 0.8;
+}
+
+.notification-container {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    flex-direction: column-reverse;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
 }
 
 .svg-inline {
