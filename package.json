@@ -1,6 +1,6 @@
 {
   "name": "nightlight_pack_downloader",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "App for downloading Icon Packs for Dead by Daylight from NightLight.gg",
   "main": "main.js",
   "scripts": {
