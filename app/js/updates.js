@@ -120,3 +120,16 @@ async function checkForPackUpdatesDelayed(
     is_checking_for_pack_updates = false;
   }
 }
+
+function updatePackTileBanner(pack_id, current_version, img_element) {
+  const downloadURL = `https://cdn.nightlight.gg/packs/${pack_id}/${current_version}/banner.png`;
+  const directoryPath = `${window.directory.currentPath()}/cached_images/${pack_id}_${current_version}`;
+  const fileName = `banner.png`;
+
+  window.webFunctions
+    .downloadFile(downloadURL, directoryPath, fileName)
+    .then((filePath) => {
+      const banner_div =
+        (img_element.src = `${directoryPath}/${fileName}?${pack_id}${current_version}`);
+    });
+}
