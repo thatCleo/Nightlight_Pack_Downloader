@@ -755,3 +755,16 @@ function scrollToTop() {
     behavior: "smooth",
   });
 }
+
+document
+  .getElementById("browse-per-page")
+  .addEventListener("change", function (event) {
+    const value = event.target.value;
+    packs_per_page = value;
+
+    const total_page_num = getTotalPageNum(packs_per_page, total_packs);
+    if (current_page > total_page_num) {
+      current_page = total_page_num;
+    }
+    loadPackTiles();
+  });

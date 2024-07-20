@@ -71,22 +71,6 @@ function setFilterAuthors(data) {
 }
 
 function addNavigation() {
-  let per_page = document.getElementsByClassName("d-md-inline");
-  if (per_page.length == 2) {
-    const child = per_page[0].parentElement.childNodes;
-    per_page = child[1];
-
-    const options = `
-        <option value="6">6</option>
-        <option value="12">12</option>
-        <option value="18">18</option>
-        <option value="24">24</option>`;
-
-    per_page.innerHTML = options;
-    per_page.id += "packs_per_page";
-    per_page.value = 12;
-  }
-
   const buttons = document.getElementsByClassName("btn-secondary");
 
   for (let i = 0; i < buttons.length; i++) {
@@ -99,3 +83,5 @@ function addNavigation() {
     }
   }
 }
+
+document.getElementById("browse-per-page").value = "12"; // Set the default value of the Per Page dropdown
