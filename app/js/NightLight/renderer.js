@@ -99,13 +99,26 @@ async function showNotification(text, time, id, autohide = true) {
   }
 }
 
-async function editNotification(text, id, add_text = false) {
+async function editNotification(text, id, add_text = false, time = -1) {
   const notification = document.getElementById(`notification-${id}`);
-  if (!add_text) {
-    notification.innerText = text;
+  if (add_text) {
+    notification.innerText += text;
     return;
   }
-  notification.innerText += text;
+  notification.innerText = text;
+
+  console.log(`${id}, ${text}, ${time}`);
+  if (time >= 0) {
+    console.log(`autohide ${id} after ${time}ms`);
+    setTimeout(() => {
+      notification.classList.remove("show");
+
+      setTimeout(() => {
+        // Wait for the notification to be removed
+        notification.remove();
+      }, 125);
+    }, time);
+  }
 }
 
 async function hideNotification(id, delay = 0) {

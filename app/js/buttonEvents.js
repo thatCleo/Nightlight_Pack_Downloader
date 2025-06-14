@@ -424,13 +424,6 @@ document.addEventListener("DOMContentLoaded", function () {
         last_update = "Yesterday";
       }
 
-      for (let i = 0; i < dbd_version_title.length; i++) {
-        if (dbd_version_title[i][0] == game_version) {
-          game_version = dbd_version_title[i][1];
-          break;
-        }
-      }
-
       stats.childNodes[0].childNodes[1].textContent = game_version;
       stats.getElementsByClassName("last_updated")[0].innerHTML = last_update;
       stats.getElementsByClassName("downloads")[0].innerHTML = downloads;
