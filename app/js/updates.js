@@ -96,7 +96,11 @@ async function checkForPackUpdatesDelayed(
   pack_data = JSON.parse(pack_data);
   const current_pack_data =
     await window.packFunctions.getPackMetaData(pack_url);
-  if (pack_data.data.packs[0].updated_at != current_pack_data.last_updated) {
+
+  if (
+    typeof pack_data.data.packs[0] !== "undefined" &&
+    pack_data.data.packs[0].updated_at != current_pack_data.last_updated
+  ) {
     document.getElementById(`update-${pack_url}`).classList.remove("hidden");
     updates_found_count++;
   }
