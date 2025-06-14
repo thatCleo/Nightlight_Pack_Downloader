@@ -115,11 +115,17 @@ async function checkForPackUpdatesDelayed(
       );
     }, delay);
   } else {
-    await hideNotification("checkForPackUpdates");
-    showNotification(
+    // await hideNotification("checkForPackUpdates");
+    // showNotification(
+    //   `Found ${updates_found_count} Update${updates_found_count == 1 ? "" : "s"}`,
+    //   2500,
+    //   "packUpdatesFound",
+    // );
+    editNotification(
       `Found ${updates_found_count} Update${updates_found_count == 1 ? "" : "s"}`,
+      "checkForPackUpdates",
+      false,
       2500,
-      "packUpdatesFound",
     );
     is_checking_for_pack_updates = false;
   }
