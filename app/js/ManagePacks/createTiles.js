@@ -18,13 +18,7 @@ function setPackTiles_Manage(packs) {
     window.packFunctions.getPackMetaData(pack_url).then((data) => {
       pack_data = data;
 
-      let dbd_version_title_tile = pack_data.dbd_version;
-      for (let i = 0; i < dbd_version_title.length; i++) {
-        if (dbd_version_title[i][0] == dbd_version_title_tile) {
-          dbd_version_title_tile = dbd_version_title[i][1];
-          break;
-        }
-      }
+      let dbd_version_title_tile = getVersionName(pack_data.dbd_version);
 
       let packContent = "";
       for (let i = 0; i < pack_data.has.length; i++) {

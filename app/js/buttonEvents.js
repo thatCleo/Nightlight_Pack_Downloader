@@ -383,7 +383,7 @@ document.addEventListener("DOMContentLoaded", function () {
             title = pack.title;
             current_version = pack.current_version;
             pack_version = pack.version;
-            game_version = pack.dbd_version;
+            game_version = getVersionName(pack.dbd_version);
             last_update = pack.updated_at;
             downloads = pack.downloads;
 
@@ -468,7 +468,7 @@ document.addEventListener("DOMContentLoaded", function () {
         data = JSON.parse(data);
         data = data.data.packs;
 
-        let game_version_title = data[0].dbd_version;
+        let game_version_title = getVersionName(data[0].dbd_version);
         for (let i = 0; i < dbd_version_title.length; i++) {
           if (dbd_version_title[i][0] == game_version_title) {
             game_version_title = dbd_version_title[i][1];

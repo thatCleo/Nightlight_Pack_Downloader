@@ -184,7 +184,7 @@ function setPackTiles(json) {
 
     const packTile = document.createElement('div');
 
-    let dbdVersionTitle = pack.dbd_version;
+    let dbdVersionTitle = getVersionName(pack.dbd_version);
 
     for (let i = 0; i < dbd_version_title.length; i++) {
       if (dbd_version_title[i][0] == dbdVersionTitle) {
@@ -385,7 +385,20 @@ async function downloadDefaultAvatar(user_id, avatar_id, pack_id) {
           avatar_img.src = filePath;
         }
       }
-    })
+    });
+}
+
+function getVersionName(version_id) {
+  for (let i = 0; i < dbd_version_title.length; i++) {
+    if (
+      dbd_version_title[i][0] == version_id ||
+      `${dbd_version_title[i][0]} PTB` == version_id
+    ) {
+      return dbd_version_title[i][1];
+      break;
+    }
+  }
+  return version_id;
 }
 
 function setNavElemets(current_visible_packs, packs_per_page) {
