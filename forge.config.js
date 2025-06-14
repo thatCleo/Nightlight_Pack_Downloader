@@ -19,8 +19,8 @@ module.exports = {
       name: '@electron-forge/maker-deb',
       config: {
         options: {
-          maintainer: 'thisMicki',
-          homepage: 'https://github.com/thisMicki/Nightlight_Pack_Downloader',
+          maintainer: "thatCleo",
+          homepage: "https://github.com/thatCleo/Nightlight_Pack_Downloader",
           icon: `${__dirname}/app/images/icon.png`,
         }
       },

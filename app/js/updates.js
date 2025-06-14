@@ -23,7 +23,7 @@ async function checkForAppUpdate() {
   is_checking_for_app_updates = true;
 
   let data = await window.webFunctions.httpGet(
-    `https://api.github.com/repos/thisMicki/Nightlight_Pack_Downloader/releases`,
+    `https://api.github.com/repos/thatCleo/Nightlight_Pack_Downloader/releases`,
   );
 
   data = JSON.parse(data);
