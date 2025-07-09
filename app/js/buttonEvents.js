@@ -576,6 +576,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (event.target.id == "filter_search") {
       const value = event.target.value;
       search = value;
+      current_page = 1;
       enableFilterResetButton();
       enableFilterApplyButton();
     }
