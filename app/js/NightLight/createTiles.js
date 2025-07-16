@@ -3,6 +3,7 @@ let packData;
 let variants_data;
 
 const dbd_version_title = [
+  ["9.1.0", "The Walking Dead"],
   ["9.0.0", "Five Nights at Freddy's"],
   ["8.7.0", "Steady Pulse"],
   ["8.6.0", "Tokyo Ghoul"],
