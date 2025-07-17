@@ -2,7 +2,7 @@
   "name": "nightlight_pack_downloader",
   "version": "0.2.10",
   "description": "App for downloading Icon Packs for Dead by Daylight from NightLight.gg",
-  "main": "main.js",
+  "main": "./js/main.js",
   "scripts": {
     "start": "electron-forge start",
     "test": "echo \"Error: no test specified\" && exit 1",
