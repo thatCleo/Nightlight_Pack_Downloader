@@ -12,6 +12,11 @@ function createPackTiles_Manage() {
 
 function setPackTiles_Manage(packs) {
   const manage_pack_view = document.getElementById("manage-pack-tiles");
+  var activePacks = [];
+
+  window.packFunctions.getActivePacks().then((result) => {
+    activePacks = result;
+  });
 
   packs.forEach((pack_url) => {
     let pack_data;
@@ -67,15 +72,13 @@ function setPackTiles_Manage(packs) {
       packTile.innerHTML = tile;
       packTile.classList.add("manage-pack-tile-container");
 
-      window.packFunctions.getActivePacks().then((result) => {
-        if (result.includes(pack_data.url)) {
-          console.log(`Pack ${pack_data.url} is active`);
-          const button = packTile.getElementsByClassName("manage-pack-tile")[0];
-          button.classList.add("manage-pack-tile-pack-active");
-        } else {
-          console.log(`Pack ${pack_data.url} is not active`);
-        }
-      });
+      if (activePacks.includes(pack_data.url)) {
+        console.log(`Pack ${pack_data.url} is active`);
+        const button = packTile.getElementsByClassName("manage-pack-tile")[0];
+        button.classList.add("manage-pack-tile-pack-active");
+      } else {
+        console.log(`Pack ${pack_data.url} is not active`);
+      }
 
       manage_pack_view.appendChild(packTile);
       console.log(`Added tile for ${pack_data.url}`);
