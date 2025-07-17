@@ -306,6 +306,10 @@ async function updatePack(event, url, packData) {
 
       let pack_is_active = active_packs.indexOf(url) >= 0;
 
+      if (pack_is_active) {
+        fs.writeFileSync(`${directory_path}/.active`, "");
+      }
+
       resolve(pack_is_active);
     });
   });
