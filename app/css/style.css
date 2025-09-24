@@ -825,8 +825,8 @@ notification.show {
     max-width: 100vw;
 }
 
-main {
-    margin: 20px 20px 0px 0px;
+main .main {
+    margin: 20px 20px 0px 0px !important;
 }
 
 .button_icons_revert {
