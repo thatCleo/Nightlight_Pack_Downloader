@@ -2,53 +2,6 @@ let navPageInfo;
 let packData;
 let variants_data;
 
-const dbd_version_title = [
-  ["9.1.0", "The Walking Dead"],
-  ["9.0.0", "Five Nights at Freddy's"],
-  ["8.7.0", "Steady Pulse"],
-  ["8.6.0", "Tokyo Ghoul"],
-  ["8.4.0", "Doomed Course"],
-  ["8.3.0", "Mid-Chapter"],
-  ["8.2.0", "Castlevania"],
-  ["8.1.0", "Tomb Raider"],
-  ["8.0.0", "Dungeons & Dragons"],
-  ["7.6.0", "All Things Wicked"],
-  ["7.5.0", "Alan Wake"],
-  ["7.4.0", "Chucky"],
-  ["7.2.0", "Alien"],
-  ["7.1.0", "Nicolas Cage"],
-  ["7.0.0", "End Transmission"],
-  ["6.6.0", "Tools of Torment"],
-  ["6.4.0", "Forged in Fog"],
-  ["6.2.0", "Resident Evil: Project W"],
-  ["6.0.0", "Roots of Dread"],
-  ["5.6.0", "Sadako Rising"],
-  ["5.4.0", "Portrait of a Murder"],
-  ["5.3.0", "Hour of the Witch"],
-  ["5.2.0", "Hellraiser"],
-  ["5.0.0", "Resident Evil"],
-  ["4.6.0", "All-Kill"],
-  ["4.4.0", "A Binding of Kin"],
-  ["4.2.0", "Descend Beyond"],
-  ["4.0.0", "Silent Hill"],
-  ["3.6.0", "Chains of Hate"],
-  ["3.4.0", "Cursed Legacy"],
-  ["3.0.0", "Ghost Face"],
-  ["2.6.3", "Ash vs. Evil Dead"],
-  ["2.6.0", "Demise of The Faithful"],
-  ["2.4.0", "Darkness Among Us"],
-  ["2.2.0", "Shattered Bloodline"],
-  ["2.0.0", "Curtain Call"],
-  ["1.9.0", "Saw"],
-  ["1.8.0", "A Nightmare on Elm Street"],
-  ["1.7.0", "Leatherface"],
-  ["1.6.0", "A Lullaby for the Dark"],
-  ["1.5.1", "Spark of Madness"],
-  ["1.3.1", "Of Flesh and Mud"],
-  ["1.2.1", "Halloween"],
-  ["1.1.0", "The Last Breath"],
-];
-
 const supporter_icon = `<svg focusable="false" data-prefix="fas" data-icon="crown" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="svg-inline--fa fa-crown gold supporter-icon"><path fill="currentColor" d="M309 106c11.4-7 19-19.7 19-34c0-22.1-17.9-40-40-40s-40 17.9-40 40c0 14.4 7.6 27 19 34L209.7 220.6c-9.1 18.2-32.7 23.4-48.6 10.7L72 160c5-6.7 8-15 8-24c0-22.1-17.9-40-40-40S0 113.9 0 136s17.9 40 40 40c.2 0 .5 0 .7 0L86.4 427.4c5.5 30.4 32 52.6 63 52.6H426.6c30.9 0 57.4-22.1 63-52.6L535.3 176c.2 0 .5 0 .7 0c22.1 0 40-17.9 40-40s-17.9-40-40-40s-40 17.9-40 40c0 9 3 17.3 8 24l-89.1 71.3c-15.9 12.7-39.5 7.5-48.6-10.7L309 106z"></path></svg>`;
 
 function setPackTiles(json) {
@@ -402,10 +355,10 @@ async function downloadDefaultAvatar(user_id, avatar_id, pack_id) {
 function getVersionName(version_id) {
   for (let i = 0; i < dbd_version_title.length; i++) {
     if (
-      dbd_version_title[i][0] == version_id ||
-      `${dbd_version_title[i][0]} PTB` == version_id
+      dbd_version_title[i]["number"] == version_id ||
+      `${dbd_version_title[i]["number"]} PTB` == version_id
     ) {
-      return dbd_version_title[i][1];
+      return dbd_version_title[i]["title"];
       break;
     }
   }

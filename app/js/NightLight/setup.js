@@ -43,7 +43,7 @@ function addFilters() {
   let options_dbd_version = '<option value=""></option>';
 
   dbd_version_title.forEach((version) => {
-    options_dbd_version += `<option value="${version[0]}">${version[0]} ${version[1]}</option>`;
+    options_dbd_version += `<option value="${version["number"]}">${version["number"]} ${version["title"]}</option>`;
   });
 
   filter_dbd_version.innerHTML = options_dbd_version;
