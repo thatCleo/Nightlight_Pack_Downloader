@@ -4,16 +4,19 @@ information.innerText = `App (v${versions.app()})\nChrome (v${versions.chrome()}
 /* Nightlight Page Setup */
 const webview = document.getElementById("webview-container-page");
 webview.style.display = "block";
-setWebEmbed();
 
-/* Manage Packs Page Setup */
-// removeManageNavigation();
-createPackTiles_Manage();
-createPackOrderTiles_Manage();
-checkForUpdates();
+function startRendering() {
+  setWebEmbed();
 
-/* Options Page Setup */
-setOptionValuesToElements();
+  /* Manage Packs Page Setup */
+  // removeManageNavigation();
+  createPackTiles_Manage();
+  createPackOrderTiles_Manage();
+  checkForUpdates();
+
+  /* Options Page Setup */
+  setOptionValuesToElements();
+}
 
 function setWebEmbed() {
   fixStyling();

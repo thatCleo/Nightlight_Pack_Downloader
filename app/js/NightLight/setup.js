@@ -1,21 +1,9 @@
 function fixStyling() {
-  const mainContainer = document.getElementsByClassName("main");
-  if (mainContainer.length > 0) {
-    mainContainer[0].style.marginLeft = "0px";
-  }
-
   const filter_form = document.getElementsByClassName("row");
   for (let i = 0; i < filter_form.length; i++) {
     if (i == 1) {
       filter_form[i].id = `row_${i}`;
     }
-  }
-
-  const main = document.getElementById("main");
-  if (main != null) {
-    main.style.marginLeft = "0px";
-    main.style.marginRight = "20px";
-    main.style.marginTop = "20px";
   }
 }
 
@@ -43,7 +31,7 @@ function addFilters() {
   let options_dbd_version = '<option value=""></option>';
 
   dbd_version_title.forEach((version) => {
-    options_dbd_version += `<option value="${version[0]}">${version[0]} ${version[1]}</option>`;
+    options_dbd_version += `<option value="${version["number"]}">${version["number"]} ${version["title"]}</option>`;
   });
 
   filter_dbd_version.innerHTML = options_dbd_version;
