@@ -2,7 +2,7 @@ var dbd_version_title = [[]];
 console.log("Fetching Game Versions");
 window.webFunctions
   .httpGet(
-    "https://api.github.com/repos/thatCleo/Nightlight_Pack_Downloader/contents/game-versions.json?ref=pull-gameversions-from-github-repo",
+    "https://api.github.com/repos/thatCleo/Nightlight_Pack_Downloader/contents/game-versions.json",
   )
   .then(
     (response) => {
