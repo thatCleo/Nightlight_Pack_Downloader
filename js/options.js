@@ -2,8 +2,6 @@ const path = require("path");
 const { getPathFromDialog, fileExists } = require("./fileFunctions");
 const fs = require("fs");
 const { userInfo } = require("os");
-const { checkForValidDDPath } = require("./packFunctions");
-const { dialog } = require("electron");
 
 let dbd_game_path = "";
 let pack_order = [];
@@ -56,22 +54,16 @@ async function setDBDPathFromDialog() {
 
 async function setDBDPath(event, value) {
   console.log(`Setting DBD Path...`);
+  let saveSuccess = false;
   if (fileExists(`${value}/DeadByDaylight.exe`)) {
     dbd_game_path = value;
-    console.log(`DBD Game Path: ${dbd_game_path}`);
+    console.log(`Set DBD Game Path: ${dbd_game_path}`);
     saveOptions();
-    dialog.showMessageBox({
-      type: "info",
-      message: `The path is saved.`,
-      detail: `${value}`,
-      title: "Game path saved",
-    });
-  } else {
-    dialog.showErrorBox(
-      "Invalid game path",
-      `The path (${value}) set is invalid. Please verify your Dead by Daylight installation path.`,
-    );
+    saveSuccess = true;
   }
+  return new Promise((resolve, reject) => {
+    resolve(saveSuccess);
+  });
 }
 
 function getPackOrderSync() {

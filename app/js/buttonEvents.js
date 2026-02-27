@@ -559,9 +559,6 @@ document.addEventListener("DOMContentLoaded", function () {
       dbd_version = value;
       enableFilterResetButton();
       enableFilterApplyButton();
-    } else if (event.target.id == "dbd-path") {
-      const value = event.target.value;
-      window.options.setDBDPath(value);
     } else if (event.target.id == "filter_search") {
       const value = event.target.value;
       search = value;

@@ -1,37 +1,50 @@
 function setOptionValuesToElements() {
-    console.log("Setting Option Values to Elements...");
-    const dbdPathElement = document.getElementById('dbd-path');
-    window.options.getDBDPath()
-    .then(result => {
-        dbdPathElement.value = result
-    })
+  console.log("Setting Option Values to Elements...");
+  const dbdPathElement = document.getElementById("dbd-path");
+  window.options.getDBDPath().then((result) => {
+    dbdPathElement.value = result;
+  });
 
-    const check_pack_on_startup = document.getElementById('options-toggle-autoupdate-pack').childNodes[1];
-    window.options.getCheckForPackUpdateOnStartup()
-    .then((check) => {
-        if (check) {
-            check_pack_on_startup.classList.remove('hidden');
-        }
-    });
+  const check_pack_on_startup = document.getElementById(
+    "options-toggle-autoupdate-pack",
+  ).childNodes[1];
+  window.options.getCheckForPackUpdateOnStartup().then((check) => {
+    if (check) {
+      check_pack_on_startup.classList.remove("hidden");
+    }
+  });
 
-    const check_app_on_startup = document.getElementById('options-toggle-autoupdate-app').childNodes[1];
-    window.options.getCheckForAppUpdateOnStartup()
-    .then((check) => {
-        if (check) {
-            check_app_on_startup.classList.remove('hidden');
-        }
-    });
+  const check_app_on_startup = document.getElementById(
+    "options-toggle-autoupdate-app",
+  ).childNodes[1];
+  window.options.getCheckForAppUpdateOnStartup().then((check) => {
+    if (check) {
+      check_app_on_startup.classList.remove("hidden");
+    }
+  });
 
-
-    console.log(window.options.getDBDPath());
+  // console.log(window.options.getDBDPath());
 }
 
 function removeManageNavigation() {
-    console.log("Removing Navigation for Manage Packs...");
-    const main = document.getElementById('options_main');
-    if (main != null) {
-        main.style.marginLeft = "0px";
-        main.style.marginRight = "20px";
-        main.style.marginTop = "20px";
-    }
+  console.log("Removing Navigation for Manage Packs...");
+  const main = document.getElementById("options_main");
+  if (main != null) {
+    main.style.marginLeft = "0px";
+    main.style.marginRight = "20px";
+    main.style.marginTop = "20px";
+  }
 }
+
+document
+  .getElementById("dbd-path")
+  .addEventListener("change", function (event) {
+    const value = event.target.value;
+    window.options.setDBDPath(value).then((result) => {
+      if (result) {
+        showNotification(`New path saved`, 2500, "dbdNewPath", true);
+      } else {
+        showNotification(`Something went wrong`, 2500, "dbdNewPath", true);
+      }
+    });
+  });
