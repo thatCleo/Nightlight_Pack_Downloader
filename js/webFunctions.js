@@ -1,7 +1,6 @@
 const { Buffer } = require("buffer");
 const fs = require("fs");
 const https = require("https");
-const { fileExists } = require("./fileFunctions");
 
 async function httpGet(event, url) {
   console.log(`[httpGet] Fetching ${url}...`);
@@ -9,7 +8,9 @@ async function httpGet(event, url) {
     https
       .get(
         url,
-        { headers: { "User-Agent": "Nightlight_Pack_Downloader" } },
+        {
+          headers: { "User-Agent": "Nightlight_Pack_Downloader 0.2.11-beta.1" },
+        },
         (res) => {
           const { statusCode } = res;
           const contentType = res.headers["content-type"];
@@ -26,7 +27,7 @@ async function httpGet(event, url) {
             console.error(`[httpGet] Error: ${error.message}`);
             // Consume response data to free up memory
             res.resume();
-            reject(error.message);
+            reject(statusCode);
           }
 
           res.setEncoding("utf8");

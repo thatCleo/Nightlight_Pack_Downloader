@@ -73,6 +73,21 @@ function createPackTiles(
     )
     .then((data) => {
       setPackTiles(data);
+    })
+    .catch((error) => {
+      errorCode = -1;
+      try {
+        errorCode = parseInt(
+          error.message.substring(error.message.lastIndexOf(":") + 1).trim(),
+        );
+      } catch {}
+
+      showNotification(
+        "Error while Fetching Packs: " + errorCode,
+        5000,
+        "errorFetchingPacks",
+        true,
+      );
     });
 }
 
