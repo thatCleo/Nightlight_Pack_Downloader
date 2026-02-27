@@ -2,7 +2,7 @@ const { Buffer } = require("buffer");
 const fs = require("fs");
 const https = require("https");
 
-const userAgent = "Nightlight_Pack_Downloader 0.2.11-beta.1";
+const userAgent = "Nightlight_Pack_Downloader 0.2.12-beta.1";
 
 async function httpGet(event, url) {
   console.log(`[httpGet] Fetching ${url}...`);
