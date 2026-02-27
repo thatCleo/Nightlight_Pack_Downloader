@@ -321,7 +321,7 @@ async function activatePack(event, url) {
 
   console.log(`[activatePack] activating ${url}`);
 
-  if (!checkForValidDDPath()) return;
+  if (!checkForValidDBDPath()) return;
 
   if (!fileExists(zipPath)) {
     dialog.showErrorBox(
@@ -350,7 +350,7 @@ async function activatePack(event, url) {
 function resetAllPacks() {
   console.log("[resetAllPacks] Resetting all packs...");
 
-  if (!checkForValidDDPath()) return;
+  if (!checkForValidDBDPath()) return;
 
   try {
     getDirectoriesInPath(getDBDPathSync() + dbd_icon_path).forEach(
@@ -436,7 +436,7 @@ function getPackMetaData(event, pack_url) {
   });
 }
 
-function checkForValidDDPath() {
+function checkForValidDBDPath() {
   if (!fileExists(getDBDPathSync() + "/DeadByDaylight.exe")) {
     const path = getDBDPathSync();
 
@@ -467,5 +467,5 @@ module.exports = {
   getActivePacks,
   getActivePacksInOrder,
   getPackMetaData,
-  checkForValidDDPath,
+  checkForValidDBDPath,
 };
