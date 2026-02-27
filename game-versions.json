@@ -1,5 +1,7 @@
 {
   "game-versions": [
+    { "number": "9.5.0", "title": "All Kill: Comeback" },
+    { "number": "9.4.0", "title": "Stranger Things: Chapter 2" },
     { "number": "9.2.0", "title": "Sinister Grace" },
     { "number": "9.1.0", "title": "The Walking Dead" },
     { "number": "9.0.0", "title": "Five Nights at Freddy's" },
