@@ -1,183 +1,210 @@
-const fs = require('fs');
-const path = require('path');
-const StreamZip = require('node-stream-zip');
-const { dialog } = require('electron');
-const { userInfo } = require('os');
+const fs = require("fs");
+const path = require("path");
+const StreamZip = require("node-stream-zip");
+const { dialog } = require("electron");
+const { userInfo } = require("os");
 
-const cache_path = path.join('/home/', userInfo().username, '/.local/share/nightlight_pack_downloader/cached_images');
+const cache_path = path.join(
+  "/home/",
+  userInfo().username,
+  "/.local/share/nightlight_pack_downloader/cached_images",
+);
 
 function fileExists(filePath) {
-    try {
-        fs.accessSync(filePath, fs.constants.F_OK);
-        // console.log(`[fileExists] File "${filePath}" exists.`);
-        return true;
-    } catch (err) {
-        // console.log(`[fileExists] File "${filePath}" does not exist.`);
-        return false;
-    }
+  try {
+    fs.accessSync(filePath, fs.constants.F_OK);
+    // console.log(`[fileExists] File "${filePath}" exists.`);
+    return true;
+  } catch (err) {
+    // console.log(`[fileExists] File "${filePath}" does not exist.`);
+    return false;
+  }
 }
 
 async function deleteFile(path) {
-    console.log('[deleteFile] deleting ' + path);
-    return new Promise((resolve, reject) => {
-        try {
-            fs.rmSync(path, { recursive: true }, (err) => {
-                if (err) {
-                    console.error('[deleteFile] Error deleting folder:', err);
-                    reject(err);
-                } else {
-                    console.log('[deleteFile] Folder deleted successfully');
-                    resolve();
-                }
-
-            });
-        } catch (err) {
-            console.log('[deleteFile] Error: ' + err);
-            reject(err);
+  console.log("[deleteFile] deleting " + path);
+  return new Promise((resolve, reject) => {
+    try {
+      fs.rmSync(path, { recursive: true }, (err) => {
+        if (err) {
+          console.error("[deleteFile] Error deleting folder:", err);
+          reject(err);
+        } else {
+          console.log("[deleteFile] Folder deleted successfully");
+          resolve();
         }
-    })
+      });
+    } catch (err) {
+      console.log("[deleteFile] Error: " + err);
+      reject(err);
+    }
+  });
 }
 
 async function copyFile(sourcePath, destinationPath) {
-    return new Promise((resolve, reject) => {
-        try {
-            fs.cpSync(sourcePath, destinationPath, { recursive: true });
-            console.log(`[copyFile] File "${sourcePath}" copied successfully to "${destinationPath}"`);
-        } catch (err) {
-            console.error('[copyFile] Error copying file:', err);
-        } finally {
+  return new Promise((resolve, reject) => {
+    try {
+      fs.cpSync(sourcePath, destinationPath, { recursive: true });
+      console.log(
+        `[copyFile] File "${sourcePath}" copied successfully to "${destinationPath}"`,
+      );
+    } catch (err) {
+      console.error("[copyFile] Error copying file:", err);
+      reject(err);
+    } finally {
+      resolve();
+    }
+  });
+}
+
+async function moveFile(sourcePath, destinationPath) {
+  return new Promise((resolve, reject) => {
+    copyFile(sourcePath, destinationPath)
+      .then(() => {
+        deleteFile(sourcePath)
+          .then(() => {
             resolve();
-        }
-    })
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
 }
 
 async function unzipFile(filePath, destination) {
+  return new Promise((resolve, reject) => {
+    if (!fileExists(destination)) {
+      console.log(`[unzipFile] Creating directory...`);
+      fs.mkdirSync(destination, { recursive: true });
+    } else {
+      console.log(`[unzipFile] Directory "${destination}" already exists.`);
+    }
 
-    return new Promise((resolve, reject) => {
+    if (!fileExists(filePath)) {
+      console.log(`[unzipFile] File "${filePath}" does not exist.`);
+      return;
+    }
 
-        if (!fileExists(destination)) {
-            console.log(`[unzipFile] Creating directory...`);
-            fs.mkdirSync(destination, { recursive: true });
-        } else {
-            console.log(`[unzipFile] Directory "${destination}" already exists.`);
-        }
+    const zip = new StreamZip({ file: filePath });
 
-        if (!fileExists(filePath)) {
-            console.log(`[unzipFile] File "${filePath}" does not exist.`);
-            return;
-        }
+    zip.on("error", (err) =>
+      console.error("[unzipFile] Error unzipping file:", err),
+    );
 
-        const zip = new StreamZip({ file: filePath });
-
-        zip.on('error', (err) => console.error('[unzipFile] Error unzipping file:', err));
-
-        zip.on('ready', () => {
-            console.log('[unzipFile] Unzipping file...');
-            zip.extract(null, destination, (err, count) => {
-                console.log(err ? '[unzipFile] Extract error' : `[unzipFile] Extracted ${count} entries`);
-                zip.close();
-                resolve();
-            });
-
-        });
-    })
+    zip.on("ready", () => {
+      console.log("[unzipFile] Unzipping file...");
+      zip.extract(null, destination, (err, count) => {
+        console.log(
+          err
+            ? "[unzipFile] Extract error"
+            : `[unzipFile] Extracted ${count} entries`,
+        );
+        zip.close();
+        resolve();
+      });
+    });
+  });
 }
 
 async function getPathFromDialog() {
-    const { canceled, filePaths } = await dialog.showOpenDialog({
-        properties: ['openDirectory']
-    });
+  const { canceled, filePaths } = await dialog.showOpenDialog({
+    properties: ["openDirectory"],
+  });
 
-    if (!canceled) {
-        return filePaths[0]
-    }
+  if (!canceled) {
+    return filePaths[0];
+  }
 }
 
 function getDirectorySize(directoryPath, callback) {
-    let totalSize = 0;
+  let totalSize = 0;
 
-    fs.readdir(directoryPath, (err, files) => {
+  fs.readdir(directoryPath, (err, files) => {
+    if (err) {
+      callback(err);
+      return;
+    }
+
+    let pending = files.length;
+
+    if (!pending) {
+      // If directory is empty, return 0 size
+      callback(null, 0);
+      return;
+    }
+
+    files.forEach((file) => {
+      const filePath = path.join(directoryPath, file);
+
+      fs.stat(filePath, (err, stats) => {
         if (err) {
-            callback(err);
-            return;
+          callback(err);
+          return;
         }
 
-        let pending = files.length;
-
-        if (!pending) {
-            // If directory is empty, return 0 size
-            callback(null, 0);
-            return;
+        if (stats.isDirectory()) {
+          getDirectorySize(filePath, (err, size) => {
+            if (err) {
+              callback(err);
+              return;
+            }
+            totalSize += size;
+            if (!--pending) callback(null, totalSize);
+          });
+        } else {
+          totalSize += stats.size;
+          if (!--pending) callback(null, totalSize);
         }
-
-        files.forEach(file => {
-            const filePath = path.join(directoryPath, file);
-
-            fs.stat(filePath, (err, stats) => {
-                if (err) {
-                    callback(err);
-                    return;
-                }
-
-                if (stats.isDirectory()) {
-                    getDirectorySize(filePath, (err, size) => {
-                        if (err) {
-                            callback(err);
-                            return;
-                        }
-                        totalSize += size;
-                        if (!--pending) callback(null, totalSize);
-                    });
-                } else {
-                    totalSize += stats.size;
-                    if (!--pending) callback(null, totalSize);
-                }
-            });
-        });
+      });
     });
+  });
 }
 
 function getCacheSize() {
-    return new Promise((resolve, reject) => {
-        if (!fileExists(cache_path)) {
-            resolve(0);
-            return;
-        }
-        getDirectorySize(cache_path, (err, size) => {
-            if (err) {
-                console.error('Error:', err);
-                return;
-            }
-            resolve(String(size / 1000).split('.')[0]);
-        });
-    })
+  return new Promise((resolve, reject) => {
+    if (!fileExists(cache_path)) {
+      resolve(0);
+      return;
+    }
+    getDirectorySize(cache_path, (err, size) => {
+      if (err) {
+        console.error("Error:", err);
+        return;
+      }
+      resolve(String(size / 1000).split(".")[0]);
+    });
+  });
 }
 
 async function clearCache() {
-    return new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
+    if (!fileExists(cache_path)) return;
 
-        if (!fileExists(cache_path)) return;
+    console.log("[clearCache] Clearing Cache...");
 
-        console.log('[clearCache] Clearing Cache...');
-
-        deleteFile(cache_path);
-        resolve(true);
-    });
+    deleteFile(cache_path);
+    resolve(true);
+  });
 }
 
-const getDirectoriesInPath = source =>
-    fs.readdirSync(source, { withFileTypes: true })
-        .filter(dirent => dirent.isDirectory())
-        .map(dirent => dirent.name);
-
+const getDirectoriesInPath = (source) =>
+  fs
+    .readdirSync(source, { withFileTypes: true })
+    .filter((dirent) => dirent.isDirectory())
+    .map((dirent) => dirent.name);
 
 module.exports = {
-    fileExists,
-    deleteFile,
-    copyFile,
-    unzipFile,
-    getPathFromDialog,
-    getDirectoriesInPath,
-    clearCache,
-    getCacheSize
-}
+  fileExists,
+  deleteFile,
+  copyFile,
+  moveFile,
+  unzipFile,
+  getPathFromDialog,
+  getDirectoriesInPath,
+  clearCache,
+  getCacheSize,
+};

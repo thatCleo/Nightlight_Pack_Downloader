@@ -3,6 +3,7 @@ const {
   fileExists,
   deleteFile,
   copyFile,
+  moveFile,
   unzipFile,
   getDirectoriesInPath,
 } = require("./fileFunctions");
@@ -181,143 +182,152 @@ async function downloadPack(event, url, packData) {
 
 async function updatePack(event, url, packData) {
   const download_url = `https://nightlight.gg/packs/${url}/download`;
+  const download_path = `${currentDirectory}/tmp/download`;
   const directory_path = `${currentDirectory}/packfiles/${url}`;
   const file_name = `${url}.zip`;
 
   const active_packs = getActivePacksSync();
 
-  console.log(`[updatePack] Deleting old pack files: ${url}`);
-
-  if (fileExists(directory_path)) {
-    deleteFile(directory_path);
-  }
-
   return new Promise((resolve, reject) => {
     console.log(`[updatePack] Downloading pack: ${url}`);
-    downloadFile(event, download_url, directory_path, file_name).then(() => {
-      /* Copy data from cache to pack path */
-      let id;
-      let title;
-      let version;
-      let current_version;
-      let last_updated;
-      let dbd_version;
-      let has;
+    downloadFile(event, download_url, download_path, file_name).then(
+      (result) => {
+        console.log("[updatePack] Download success? " + (result !== false));
+        if (result == false) {
+          reject();
+        }
 
-      let username = [];
-      let user_id = [];
-      let avatar_id = [];
-      let avatar_path = [];
+        console.log(`[updatePack] Deleting old pack files: ${url}`);
+        if (fileExists(directory_path)) {
+          deleteFile(directory_path);
+        }
 
-      packData.forEach((pack) => {
-        if (pack.url == url) {
-          id = pack.id;
-          title = pack.title;
-          version = pack.version;
-          current_version = pack.current_version;
-          last_updated = pack.updated_at;
-          dbd_version = pack.dbd_version;
-          has = pack.has;
+        moveFile(download_path, directory_path);
 
-          const creators = pack.creators;
-          creators.forEach((creator) => {
-            if (creator.user != null) {
-              user_id.push(creator.user.user_id);
-              avatar_id.push(creator.user.avatar_id);
-              username.push(creator.username);
+        /* Copy data from cache to pack path */
+        let id;
+        let title;
+        let version;
+        let current_version;
+        let last_updated;
+        let dbd_version;
+        let has;
 
-              let creatorAvatar = null;
-              if (
-                fileExists(
-                  `${currentDirectory}/cached_images/${creator.user.user_id}_${creator.user.avatar_id}/avatar.png`,
-                )
-              ) {
-                creatorAvatar = `${currentDirectory}/cached_images/${creator.user.user_id}_${creator.user.avatar_id}/avatar.png`;
-              }
-              if (creatorAvatar != null) {
-                fs.copyFile(
-                  `${creatorAvatar}`,
-                  `${directory_path}/${creator.user.user_id}_avatar.png`,
-                  (err) => {
-                    console.log(
-                      `[downloadPack] Copied ${creatorAvatar} to ${directory_path}/${creator.user.user_id}_avatar.png`,
-                    );
-                    if (err) {
-                      console.warn("[downloadPack] Error copying file:", err);
-                    }
-                  },
-                );
-                avatar_path.push(creatorAvatar);
+        let username = [];
+        let user_id = [];
+        let avatar_id = [];
+        let avatar_path = [];
+
+        packData.forEach((pack) => {
+          if (pack.url == url) {
+            id = pack.id;
+            title = pack.title;
+            version = pack.version;
+            current_version = pack.current_version;
+            last_updated = pack.updated_at;
+            dbd_version = pack.dbd_version;
+            has = pack.has;
+
+            const creators = pack.creators;
+            creators.forEach((creator) => {
+              if (creator.user != null) {
+                user_id.push(creator.user.user_id);
+                avatar_id.push(creator.user.avatar_id);
+                username.push(creator.username);
+
+                let creatorAvatar = null;
+                if (
+                  fileExists(
+                    `${currentDirectory}/cached_images/${creator.user.user_id}_${creator.user.avatar_id}/avatar.png`,
+                  )
+                ) {
+                  creatorAvatar = `${currentDirectory}/cached_images/${creator.user.user_id}_${creator.user.avatar_id}/avatar.png`;
+                }
+                if (creatorAvatar != null) {
+                  fs.copyFile(
+                    `${creatorAvatar}`,
+                    `${directory_path}/${creator.user.user_id}_avatar.png`,
+                    (err) => {
+                      console.log(
+                        `[downloadPack] Copied ${creatorAvatar} to ${directory_path}/${creator.user.user_id}_avatar.png`,
+                      );
+                      if (err) {
+                        console.warn("[downloadPack] Error copying file:", err);
+                      }
+                    },
+                  );
+                  avatar_path.push(creatorAvatar);
+                } else {
+                  console.warn(
+                    `No Avatar was found. If Avatars show up in later updates again, this one might be missing`,
+                  );
+                }
               } else {
-                console.warn(
-                  `No Avatar was found. If Avatars show up in later updates again, this one might be missing`,
-                );
+                user_id.push(null);
+                avatar_id.push(null);
+                username.push(creator.username);
               }
-            } else {
-              user_id.push(null);
-              avatar_id.push(null);
-              username.push(creator.username);
-            }
+            });
+          }
+        });
+
+        const users = [];
+        for (let i = 0; i < user_id.length; i++) {
+          users.push({
+            user_id: user_id[i],
+            username: username[i],
+            avatar_id: avatar_id[i],
           });
         }
-      });
 
-      const users = [];
-      for (let i = 0; i < user_id.length; i++) {
-        users.push({
-          user_id: user_id[i],
-          username: username[i],
-          avatar_id: avatar_id[i],
-        });
-      }
+        const jsonData = {
+          id: id,
+          url: url,
+          title: title,
+          version: version,
+          downloaded_at: new Date().toISOString().slice(0, 10),
+          last_updated: last_updated,
+          dbd_version: dbd_version,
+          has: has,
+          user: users,
+        };
 
-      const jsonData = {
-        id: id,
-        url: url,
-        title: title,
-        version: version,
-        downloaded_at: new Date().toISOString().slice(0, 10),
-        last_updated: last_updated,
-        dbd_version: dbd_version,
-        has: has,
-        user: users,
-      };
+        fs.writeFileSync(
+          `${directory_path}/metadata.json`,
+          JSON.stringify(jsonData),
+        );
 
-      fs.writeFileSync(
-        `${directory_path}/metadata.json`,
-        JSON.stringify(jsonData),
-      );
+        const cachePath = `${currentDirectory}/cached_images/${id}_${current_version}`;
+        fs.copyFile(
+          `${cachePath}/banner.png`,
+          `${directory_path}/banner.png`,
+          (err) => {
+            if (err) {
+              console.warn("Error copying file:", err);
+            } else {
+              console.log(
+                `[downloadPack] Copied ${cachePath}/banner.png to ${directory_path}/banner.png`,
+              );
+            }
+          },
+        );
+        console.log(`[downloadPack] Pack ${url} downloaded successfully`);
 
-      const cachePath = `${currentDirectory}/cached_images/${id}_${current_version}`;
-      fs.copyFile(
-        `${cachePath}/banner.png`,
-        `${directory_path}/banner.png`,
-        (err) => {
-          if (err) {
-            console.warn("Error copying file:", err);
-          } else {
-            console.log(
-              `[downloadPack] Copied ${cachePath}/banner.png to ${directory_path}/banner.png`,
-            );
-          }
-        },
-      );
-      console.log(`[downloadPack] Pack ${url} downloaded successfully`);
+        let pack_is_active = active_packs.indexOf(url) >= 0;
 
-      let pack_is_active = active_packs.indexOf(url) >= 0;
+        if (pack_is_active) {
+          fs.writeFileSync(`${directory_path}/.active`, "");
+        }
 
-      if (pack_is_active) {
-        fs.writeFileSync(`${directory_path}/.active`, "");
-      }
-
-      resolve(pack_is_active);
-    });
+        resolve(pack_is_active);
+      },
+    );
   });
 }
 
 async function activatePack(event, url) {
   const zipPath = `${currentDirectory}/packfiles/${url}/${url}.zip`;
-  const targetPath = `${currentDirectory}/temp/${url}/`;
+  const targetPath = `${currentDirectory}/tmp/${url}/`;
 
   console.log(`[activatePack] activating ${url}`);
 

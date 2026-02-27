@@ -80,6 +80,64 @@ function setPackTiles_Manage(packs) {
         console.log(`Pack ${pack_data.url} is not active`);
       }
 
+      packTile.addEventListener("click", function (event) {
+        deactivateDragging();
+
+        const pack_tile = event.target.parentNode;
+
+        console.log(pack_tile);
+
+        const pack_banner_img = pack_tile.getElementsByClassName(
+          "manage-pack-tile-image",
+        )[0];
+        const game_version_label = pack_tile.getElementsByClassName(
+          "manage-pack-tile-game-version",
+        )[0];
+        const pack_version_label = pack_tile.getElementsByClassName(
+          "manage-pack-tile-pack-version",
+        )[0];
+
+        console.log(pack_banner_img);
+        console.log(game_version_label);
+        console.log(pack_version_label);
+
+        event.target.classList.add("hidden");
+
+        const pack_url = event.target.id.replace("update-", "");
+        const url = `https://nightlight.gg/api/v1/packs?page=1&per_page=1&sort_by=downloads&search=${pack_url}`;
+
+        window.webFunctions.httpGet(url).then((data) => {
+          data = JSON.parse(data);
+          data = data.data.packs;
+
+          let game_version_title = getVersionName(data[0].dbd_version);
+          for (let i = 0; i < dbd_version_title.length; i++) {
+            if (dbd_version_title[i][0] == game_version_title) {
+              game_version_title = dbd_version_title[i][1];
+              break;
+            }
+          }
+
+          game_version_label.innerText = game_version_title;
+          pack_version_label.innerText = `v${data[0].version}`;
+
+          updatePackTileBanner(
+            data[0].id,
+            data[0].current_version,
+            pack_banner_img,
+          );
+
+          window.packFunctions
+            .updatePack(pack_url, data)
+            .then((pack_is_active) => {
+              if (pack_is_active) {
+                updatePackOrderTiles_Manage();
+              }
+              activateDragging();
+            });
+        });
+      });
+
       manage_pack_view.appendChild(packTile);
       console.log(`Added tile for ${pack_data.url}`);
     });

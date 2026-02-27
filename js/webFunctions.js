@@ -2,6 +2,8 @@ const { Buffer } = require("buffer");
 const fs = require("fs");
 const https = require("https");
 
+const userAgent = "Nightlight_Pack_Downloader 0.2.11-beta.1";
+
 async function httpGet(event, url) {
   console.log(`[httpGet] Fetching ${url}...`);
   return new Promise((resolve, reject) => {
@@ -9,7 +11,7 @@ async function httpGet(event, url) {
       .get(
         url,
         {
-          headers: { "User-Agent": "Nightlight_Pack_Downloader 0.2.11-beta.1" },
+          headers: { "User-Agent": userAgent },
         },
         (res) => {
           const { statusCode } = res;
@@ -55,7 +57,22 @@ async function httpGet(event, url) {
 async function downloadFile(event, downloadURL, directoryPath, fileName) {
   //console.log(`[downloadFile] Downloading ${fileName}`);
   try {
-    const response = await fetch(downloadURL);
+    let response = await fetch(downloadURL, {
+      method: "GET",
+      headers: { "User-Agent": userAgent },
+    });
+    const retryMax = 5;
+    let retryCount = 0;
+    while (!response.ok && retryCount < retryMax) {
+      response = await fetch(downloadURL, {
+        method: "GET",
+        headers: { "User-Agent": userAgent },
+      });
+      retryCount++;
+    }
+    if (!response.ok) {
+      return false;
+    }
     const arrayBuffer = await response.arrayBuffer();
     const uint8Array = new Uint8Array(arrayBuffer);
     const buffer = Buffer.from(uint8Array);
