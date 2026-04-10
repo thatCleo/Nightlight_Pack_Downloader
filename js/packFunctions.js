@@ -188,6 +188,10 @@ async function updatePack(event, url, packData) {
 
   const active_packs = getActivePacksSync();
 
+  if (url == "" || url.length == 0) {
+    return false;
+  }
+
   return new Promise((resolve, reject) => {
     console.log(`[updatePack] Downloading pack: ${url}`);
     downloadFile(event, download_url, download_path, file_name).then(
@@ -195,6 +199,7 @@ async function updatePack(event, url, packData) {
         console.log("[updatePack] Download success? " + (result !== false));
         if (result == false) {
           reject();
+          return;
         }
 
         console.log(`[updatePack] Deleting old pack files: ${url}`);
