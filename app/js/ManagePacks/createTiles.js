@@ -80,7 +80,7 @@ function setPackTiles_Manage(packs) {
         console.log(`Pack ${pack_data.url} is not active`);
       }
 
-      packTile.addEventListener("click", function (event) {
+      packTile.getElementsByClassName("manage-pack-tile-update")[0].addEventListener("click", function (event) {
         deactivateDragging();
 
         const pack_tile = event.target.parentNode;
