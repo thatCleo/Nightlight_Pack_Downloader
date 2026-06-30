@@ -1,5 +1,6 @@
 {
   "game-versions": [
+    { "number": "10.0.1", "title": "The Life Road" },
     { "number": "10.0.0", "title": "Jason" },
     { "number": "9.5.0", "title": "All Kill: Comeback" },
     { "number": "9.4.0", "title": "Stranger Things: Chapter 2" },
