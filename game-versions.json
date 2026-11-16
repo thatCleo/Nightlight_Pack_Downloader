@@ -1,5 +1,6 @@
 {
   "game-versions": [
+    { "number": "10.3.0", "title": "Terrifier" },
     { "number": "10.1.0", "title": "Chorus of Sin" },
     { "number": "10.0.1", "title": "The Life Road" },
     { "number": "10.0.0", "title": "Jason" },
